@@ -728,7 +728,7 @@ def run_daily_loop(num_posts: int = None) -> None:
     try:
         scored_results = score_pending_experiments()
         if scored_results:
-            print(f"   ✅ Scored {len(scored_results)} experiment(s)\n")
+            print(f"   ✅ Scored {scored_results} experiment(s)\n")
         else:
             print("   ℹ️  No new scores yet\n")
     except Exception as e:
