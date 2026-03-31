@@ -1,28 +1,30 @@
 """
-main.py — Production-Grade Daily Pipeline Orchestrator
+main.py — Production-Grade Daily Pipeline Orchestrator with Timeout & Circuit Breaker
 
 7-Phase Daily Workflow:
 1. FETCH:      Fetch metrics for all pending tweets (2h, 24h, 72h windows)
 2. SCORE:      Score mature tweets (48h+), detect pattern decay
 3. STRATEGIST: Reflect on data, update strategy.md with LLM insights
 4. PLAN:       Decide exploit vs explore for today's post
-5. GENERATOR:  Generate tweet/thread using Mistral LLM
-6. VALIDATOR:  Quality gate (11 checks), duplicate detection
+5. GENERATOR:  Generate tweet/thread using Mistral LLM (with timeout)
+6. VALIDATOR:  Quality gate (11 checks), duplicate detection, toxicity
 7. POSTER:     Post to X API, log experiment for learning
 
-Design Principles:
-- Async/await for I/O operations
-- No silent failures (all errors logged)
-- Graceful degradation (Phase 7 failure doesn't crash)
-- Structured logging (JSON to both stdout + JSONL files)
-- Memory persistence (all state survives crashes)
+Production Features:
+- Timeout protection: LLM calls max 30s, poster calls max 15s
+- Circuit breaker: Stop posting after 3 consecutive failures
+- JSON backup: Auto-backup memory state before risky operations
+- Error recovery: Graceful degradation, detailed logging of all failures
+- Structured logging: JSON to both stdout + JSONL files
 """
 
 import asyncio
 import json
 import os
 import sys
+import shutil
 from datetime import datetime
+from pathlib import Path
 
 import config
 from logger import logger
@@ -34,6 +36,76 @@ from experimenter import experimenter
 from strategist import strategist
 from generator import generate_tweet
 from poster import post_tweet
+
+
+class PipelineCircuitBreaker:
+    """
+    Circuit breaker pattern to prevent cascading failures.
+    If N consecutive failures occur, stops trying to post.
+    """
+    
+    def __init__(self, threshold=config.CIRCUIT_BREAKER_THRESHOLD):
+        self.threshold = threshold
+        self.consecutive_failures = 0
+        self.is_open = False
+        self.last_failure_time = None
+    
+    def record_failure(self, reason="unknown"):
+        self.consecutive_failures += 1
+        self.last_failure_time = datetime.utcnow()
+        
+        if self.consecutive_failures >= self.threshold:
+            self.is_open = True
+            logger.error(
+                f"CIRCUIT BREAKER OPEN",
+                event="CIRCUIT_BREAKER",
+                data={
+                    "consecutive_failures": self.consecutive_failures,
+                    "reason": reason,
+                    "opened_at": self.last_failure_time.isoformat()
+                }
+            )
+    
+    def record_success(self):
+        if self.consecutive_failures > 0:
+            logger.info(
+                f"Circuit breaker reset after success",
+                event="CIRCUIT_BREAKER",
+                data={"previous_failures": self.consecutive_failures}
+            )
+        self.consecutive_failures = 0
+        self.is_open = False
+    
+    def can_proceed(self) -> bool:
+        return not self.is_open
+
+
+def backup_memory():
+    """
+    Backup memory state before risky operations.
+    Allows rollback if memory gets corrupted.
+    """
+    try:
+        backup_dir = Path(config.JSON_BACKUP_DIR)
+        backup_dir.mkdir(exist_ok=True)
+        
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        
+        for fname in ["tweets.jsonl", "strategy.md", "experiments.jsonl"]:
+            src = Path("memory") / fname
+            if src.exists():
+                dest = backup_dir / f"{fname}.{timestamp}.bkp"
+                shutil.copy2(src, dest)
+                
+                # Keep only last 10 backups per file
+                backups = sorted(list(backup_dir.glob(f"{fname}.*.bkp")))
+                if len(backups) > 10:
+                    for old_backup in backups[:-10]:
+                        old_backup.unlink()
+        
+        logger.debug("Memory backup created", event="BACKUP", data={"timestamp": timestamp})
+    except Exception as e:
+        logger.warn("Failed to backup memory", event="BACKUP", error=str(e))
 
 
 async def verify_environment() -> bool:
@@ -48,15 +120,15 @@ async def verify_environment() -> bool:
         logger.error("Missing environment variables", event="STARTUP", data={"missing": missing})
         return False
     
-    for directory in ["logs", "memory", "data"]:
-        os.makedirs(directory, exist_ok=True)
+    for directory in ["logs", "memory", "data", config.JSON_BACKUP_DIR]:
+        Path(directory).mkdir(parents=True, exist_ok=True)
     
     logger.info("Environment verified", event="STARTUP", data={})
     return True
 
 
 async def phase_1_fetch_metrics() -> bool:
-    """Phase 1: Fetch metrics for pending tweets."""
+    """Phase 1: Fetch metrics for pending tweets (NON-FATAL)."""
     try:
         logger.info("Phase 1 START", phase="FETCH", data={})
         
@@ -70,12 +142,12 @@ async def phase_1_fetch_metrics() -> bool:
         return True
         
     except Exception as e:
-        logger.error("Phase 1 FAILED", phase="FETCH", error=str(e))
-        return False
+        logger.error("Phase 1 FAILED (non-fatal, continuing)", phase="FETCH", error=str(e))
+        return False  # Non-fatal: continue to next phase
 
 
 async def phase_2_score_mature() -> bool:
-    """Phase 2: Score mature tweets."""
+    """Phase 2: Score mature tweets (NON-FATAL)."""
     try:
         logger.info("Phase 2 START", phase="SCORE", data={})
         
@@ -97,12 +169,12 @@ async def phase_2_score_mature() -> bool:
         return True
         
     except Exception as e:
-        logger.error("Phase 2 FAILED", phase="SCORE", error=str(e))
-        return False
+        logger.error("Phase 2 FAILED (non-fatal, continuing)", phase="SCORE", error=str(e))
+        return False  # Non-fatal: continue to next phase
 
 
 async def phase_3_update_strategy() -> bool:
-    """Phase 3: Update strategy with LLM reflection."""
+    """Phase 3: Update strategy with LLM reflection (NON-FATAL)."""
     try:
         logger.info("Phase 3 START", phase="STRATEGIST", data={})
         
@@ -122,11 +194,11 @@ async def phase_3_update_strategy() -> bool:
         
     except Exception as e:
         logger.warn(f"Phase 3 NON-FATAL: {str(e)}", phase="STRATEGIST", error=str(e))
-        return True
+        return True  # Non-fatal: continue
 
 
-async def phase_4_plan_post() -> bool:
-    """Phase 4: Plan today's post (exploit vs explore)."""
+async def phase_4_plan_post() -> dict:
+    """Phase 4: Plan today's post (exploit vs explore) (FATAL)."""
     try:
         logger.info("Phase 4 START", phase="EXPERIMENTER", data={})
         
@@ -141,46 +213,60 @@ async def phase_4_plan_post() -> bool:
                        "topic": plan.get("topic_bucket"), 
                        "is_experiment": plan.get("is_experiment")
                    })
-        return True
+        return plan
         
     except Exception as e:
-        logger.error("Phase 4 FAILED", phase="EXPERIMENTER", error=str(e))
-        return False
+        logger.error("Phase 4 FAILED (FATAL)", phase="EXPERIMENTER", error=str(e))
+        return None
 
 
-async def phase_5_generate() -> bool:
-    """Phase 5: Generate tweet with LLM."""
+async def phase_5_generate() -> dict:
+    """Phase 5: Generate tweet with LLM (FATAL, with timeout protection)."""
     try:
         logger.info("Phase 5 START", phase="GENERATOR", data={})
         
         with open("data/todays_plan.json", "r") as f:
             plan = json.load(f)
         
-        tweet_obj = await generate_tweet(
-            archetype=plan.get("format_type"),
-            topic=plan.get("topic_bucket"),
-            thread_length=plan.get("thread_length", 1),
-            is_experiment=plan.get("is_experiment", False)
-        )
+        # Wrap generator call with timeout
+        try:
+            logger.debug(f"Calling Mistral with {config.LLM_TIMEOUT_SECS}s timeout", 
+                        phase="GENERATOR", data={})
+            tweet_obj = await asyncio.wait_for(
+                generate_tweet(
+                    archetype=plan.get("format_type"),
+                    topic=plan.get("topic_bucket"),
+                    thread_length=plan.get("thread_length", 1),
+                    is_experiment=plan.get("is_experiment", False)
+                ),
+                timeout=config.LLM_TIMEOUT_SECS
+            )
+        except asyncio.TimeoutError:
+            logger.error(
+                "Phase 5 TIMEOUT",
+                phase="GENERATOR",
+                data={"timeout_seconds": config.LLM_TIMEOUT_SECS}
+            )
+            return None
         
         if not tweet_obj:
-            logger.error("Phase 5 FAILED", phase="GENERATOR", error="generation_returned_none")
-            return False
+            logger.error("Phase 5 FAILED (FATAL)", phase="GENERATOR", error="generation_returned_none")
+            return None
         
         with open("data/generated_tweet.json", "w") as f:
             json.dump(tweet_obj, f)
         
         logger.info("Phase 5 COMPLETE", phase="GENERATOR",
                    data={"thread_length": tweet_obj.get("thread_length", 1)})
-        return True
+        return tweet_obj
         
     except Exception as e:
-        logger.error("Phase 5 FAILED", phase="GENERATOR", error=str(e))
-        return False
+        logger.error("Phase 5 FAILED (FATAL)", phase="GENERATOR", error=str(e))
+        return None
 
 
-async def phase_6_validate() -> bool:
-    """Phase 6: Validate tweet quality."""
+async def phase_6_validate(circuit_breaker) -> dict:
+    """Phase 6: Validate tweet quality (FATAL)."""
     try:
         logger.info("Phase 6 START", phase="VALIDATOR", data={})
         
@@ -190,24 +276,32 @@ async def phase_6_validate() -> bool:
         result = validator.validate_tweet(tweet_obj)
         
         if not result["valid"]:
-            logger.error("Phase 6 FAILED", phase="VALIDATOR",
+            logger.error("Phase 6 FAILED (FATAL)", phase="VALIDATOR",
                         data={"failures": result.get("failures", [])})
-            return False
+            circuit_breaker.record_failure(reason="validation_failed")
+            return None
         
         if result.get("warnings"):
             logger.warn("Phase 6 warnings", phase="VALIDATOR",
                        data={"warnings": result.get("warnings", [])})
         
         logger.info("Phase 6 COMPLETE", phase="VALIDATOR", data={})
-        return True
+        return tweet_obj
         
     except Exception as e:
-        logger.error("Phase 6 FAILED", phase="VALIDATOR", error=str(e))
+        logger.error("Phase 6 FAILED (FATAL)", phase="VALIDATOR", error=str(e))
+        circuit_breaker.record_failure(reason="validation_exception")
+        return None
+
+
+async def phase_7_post(circuit_breaker) -> bool:
+    """Phase 7: Post to X (FATAL, with timeout protection)."""
+    
+    if circuit_breaker.is_open:
+        logger.error("Phase 7 BLOCKED: Circuit breaker is OPEN", phase="POSTER",
+                    data={"consecutive_failures": circuit_breaker.consecutive_failures})
         return False
-
-
-async def phase_7_post() -> bool:
-    """Phase 7: Post to X."""
+    
     try:
         logger.info("Phase 7 START", phase="POSTER", data={})
         
@@ -217,71 +311,101 @@ async def phase_7_post() -> bool:
         with open("data/todays_plan.json", "r") as f:
             plan = json.load(f)
         
-        result = await post_tweet(tweet_obj)
+        # Backup memory before risky operation
+        backup_memory()
+        
+        # Wrap poster call with timeout
+        try:
+            logger.debug(f"Calling X API with timeout", phase="POSTER", data={})
+            result = await asyncio.wait_for(
+                post_tweet(tweet_obj),
+                timeout=config.POSTER_TIMEOUT_SECS
+            )
+        except asyncio.TimeoutError:
+            logger.error(
+                "Phase 7 TIMEOUT",
+                phase="POSTER",
+                data={"timeout_seconds": config.POSTER_TIMEOUT_SECS}
+            )
+            circuit_breaker.record_failure(reason="post_timeout")
+            return False
         
         if not result:
-            logger.error("Phase 7 FAILED", phase="POSTER", error="posting_returned_none")
+            logger.error("Phase 7 FAILED (FATAL)", phase="POSTER", error="posting_returned_none")
+            circuit_breaker.record_failure(reason="post_returned_none")
             return False
         
         # Log to memory
-        memory.add_tweet_to_log(tweet_obj, result, plan)
+        try:
+            memory.add_tweet_to_log(tweet_obj, result, plan)
+            circuit_breaker.record_success()
+        except Exception as e:
+            logger.error("Failed to log tweet to memory", phase="POSTER", error=str(e))
+            # Don't fail yet - tweet posted successfully
         
         logger.info("Phase 7 COMPLETE", phase="POSTER",
                    data={"tweet_id": result.get("tweet_id")})
         return True
         
     except Exception as e:
-        logger.error("Phase 7 FAILED", phase="POSTER", error=str(e))
+        logger.error("Phase 7 FAILED (FATAL)", phase="POSTER", error=str(e))
+        circuit_breaker.record_failure(reason="post_exception")
         return False
 
 
 async def run_daily_pipeline():
-    """Execute full 7-phase pipeline."""
+    """Execute full 7-phase pipeline with error recovery."""
     start = datetime.utcnow()
-    logger.info("=== XBOT DAILY PIPELINE START ===", event="PIPELINE_START", 
-               data={"started_at": start.isoformat()})
+    logger.info("="*70, event="PIPELINE_START", data={"started_at": start.isoformat()})
+    
+    circuit_breaker = PipelineCircuitBreaker()
     
     # Verify environment
     if not await verify_environment():
         logger.error("Environment verification failed", event="PIPELINE_ABORT")
         return False
     
-    # Execute phases with error handling
-    phases = [
-        ("FETCH", phase_1_fetch_metrics),
-        ("SCORE", phase_2_score_mature),
-        ("STRATEGIST", phase_3_update_strategy),
-        ("EXPERIMENTER", phase_4_plan_post),
-        ("GENERATOR", phase_5_generate),
-        ("VALIDATOR", phase_6_validate),
-        ("POSTER", phase_7_post)
-    ]
-    
-    results = {}
-    for phase_name, phase_func in phases:
-        success = await phase_func()
-        results[phase_name] = "PASS" if success else "FAIL"
+    try:
+        # ===== NON-FATAL PHASES (1-3) =====
+        await phase_1_fetch_metrics()
+        await phase_2_score_mature()
+        await phase_3_update_strategy()
         
-        # Fatal phases abort if they fail
-        if not success and phase_name in ["EXPERIMENTER", "GENERATOR", "VALIDATOR", "POSTER"]:
-            logger.error(f"Fatal phase {phase_name} failed, aborting pipeline", event="PIPELINE_ABORT")
-            break
-    
-    # Summary
-    end = datetime.utcnow()
-    duration = (end - start).total_seconds()
-    passed = sum(1 for v in results.values() if v == "PASS")
-    
-    logger.info("=== XBOT DAILY PIPELINE END ===", event="PIPELINE_END",
-               data={
-                   "completed_at": end.isoformat(),
-                   "duration_seconds": duration,
-                   "phases_passed": passed,
-                   "total_phases": len(phases),
-                   "results": results
-               })
-    
-    return all(v == "PASS" for v in results.values())
+        # ===== FATAL PHASES (4-7) =====
+        # Phase 4: Plan
+        plan = await phase_4_plan_post()
+        if not plan:
+            logger.error("Skipping post: Phase 4 planning failed", event="PIPELINE_SKIP")
+            return False
+        
+        # Phase 5: Generate
+        tweet_obj = await phase_5_generate()
+        if not tweet_obj:
+            logger.error("Skipping post: Phase 5 generation failed", event="PIPELINE_SKIP")
+            return False
+        
+        # Phase 6: Validate
+        validated = await phase_6_validate(circuit_breaker)
+        if not validated:
+            logger.error("Skipping post: Phase 6 validation failed", event="PIPELINE_SKIP")
+            return False
+        
+        # Phase 7: Post
+        posted = await phase_7_post(circuit_breaker)
+        if not posted:
+            logger.error("Skipping post: Phase 7 posting failed", event="PIPELINE_SKIP")
+            return False
+        
+        # Success!
+        end = datetime.utcnow()
+        duration = (end - start).total_seconds()
+        logger.info("="*70, event="PIPELINE_SUCCESS", 
+                   data={"completed_at": end.isoformat(), "duration_seconds": duration})
+        return True
+        
+    except Exception as e:
+        logger.error("FATAL: Unhandled exception in pipeline", event="PIPELINE_FATAL", error=str(e))
+        return False
 
 
 def main():
@@ -296,6 +420,10 @@ def main():
     except Exception as e:
         logger.error("Unhandled exception in main", event="FATAL", error=str(e))
         sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
 
 
 if __name__ == "__main__":

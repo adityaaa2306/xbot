@@ -198,6 +198,49 @@ LOG_FORMAT = "json"  # json or text
 MEMORY_DIR = "memory"
 MEMORY_TYPE = "json"  # json or sqlite (currently json)
 
+# ============================================================================
+# PRIORITY 1: ERROR RECOVERY & ROBUSTNESS
+# ============================================================================
+
+LLM_TIMEOUT_SECS = 30  # Timeout for Mistral/Anthropic API calls
+CIRCUIT_BREAKER_THRESHOLD = 3  # Pause if N consecutive posts fail
+JSON_BACKUP_DIR = "memory/_backups"  # Backup directory for JSON rollback
+
+# ============================================================================
+# PRIORITY 2: CONTENT QUALITY GATES
+# ============================================================================
+
+TOXICITY_THRESHOLD = 0.6  # 0-1 scale, reject if > threshold
+SEMANTIC_SIMILARITY_THRESHOLD = 0.75  # Same as duplicate check
+MIN_HOOK_LENGTH = 10  # Reject hooks shorter than this
+MAX_HOOK_LENGTH = 100  # Reject hooks longer than this
+DIVERSITY_PENALTY = 0.5  # Reduce score if format used 2+ times in 7 days
+
+# ============================================================================
+# PRIORITY 3: METRIC COLLECTION OPTIMIZATION
+# ============================================================================
+
+BATCH_FETCH_SIZE = 100  # Fetch metrics 100 tweet IDs at a time
+METRIC_ARCHIVE_DAYS = 365  # Archive tweets older than 1 year
+INCREMENTAL_STRATEGY_UPDATE = True  # Only update strategy on new mature tweets
+
+# ============================================================================
+# PRIORITY 4: PLATFORM COMPLIANCE
+# ============================================================================
+
+USER_AGENT = "XBot/1.0 (Autonomous AI Twitter agent; +https://github.com/adityaaa2306/xbot)"
+RATE_LIMIT_BUFFER = 0.8  # Stay at 80% of platform limits (50/day for X)
+HUMAN_REVIEW_MODE = False  # If True, show 5 best tweets weekly for human approval
+
+# ============================================================================
+# PRIORITY 5: ADVANCED EXPERIMENTS & TRACKING
+# ============================================================================
+
+TRACK_URL_CLICKS = True  # Log URL click tracking data
+TRACK_FOLLOWER_GROWTH = True  # Log daily follower count changes
+ANALYZE_REPLY_SENTIMENT = True  # Classify replies as positive/negative/neutral
+GENERATE_WEEKLY_DASHBOARD = True  # Generate text-based weekly report
+
 TWEET_LOG_FILE = f"{MEMORY_DIR}/tweet_log.jsonl"
 STRATEGY_LOG_FILE = f"{MEMORY_DIR}/strategy_log.jsonl"
 PATTERN_LIBRARY_FILE = f"{MEMORY_DIR}/pattern_library.jsonl"
