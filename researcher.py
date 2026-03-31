@@ -17,8 +17,20 @@ from dotenv import load_dotenv
 
 # Import from local modules
 from poster import post_tweet, append_experiment
-from scorer import score_pending_experiments, detect_declining_strategy, apply_time_decay
-from generator import generate_tweet, read_file
+# NOTE: score_pending_experiments, detect_declining_strategy, apply_time_decay are not used here
+# These functions are internal to scorer.EngagementScorer - use that class instead if needed
+from generator import generate_tweet
+
+# Helper function for reading files
+def read_file(path: str) -> str:
+    """Read file contents."""
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        return f"(File not found: {path})"
+    except Exception as e:
+        return f"(Error reading file: {str(e)})"
 
 # Load environment variables
 load_dotenv()
