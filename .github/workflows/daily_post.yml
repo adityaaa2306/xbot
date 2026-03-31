@@ -49,11 +49,13 @@ jobs:
       
       - name: Commit and push changes
         run: |
-          git add strategy.md
-          if [ -f data/experiments.jsonl ]; then
-            git add data/experiments.jsonl
-          fi
-          if ! git diff --cached --quiet; then
+          # Only commit if strategy.md has actual changes
+          if ! git diff --quiet strategy.md; then
+            git add strategy.md
+            # Also commit experiments data if it exists and has been created
+            if [ -f data/experiments.jsonl ]; then
+              git add data/experiments.jsonl
+            fi
             git commit -m "autobot: daily experiment [skip ci]"
             git push
           else
