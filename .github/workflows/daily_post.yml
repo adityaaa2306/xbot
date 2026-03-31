@@ -49,15 +49,23 @@ jobs:
       
       - name: Commit and push changes
         run: |
-          # Only commit if strategy.md has actual changes
-          if ! git diff --quiet strategy.md; then
+          # Check if strategy.md exists and has changes, or if experiments data was created
+          strategy_changed=false
+          if [ -f strategy.md ] && ! git diff --quiet strategy.md; then
+            strategy_changed=true
             git add strategy.md
-            # Also commit experiments data if it exists and has been created
-            if [ -f data/experiments.jsonl ]; then
-              git add data/experiments.jsonl
-            fi
+          fi
+          
+          # Also add experiments data if it exists
+          if [ -f data/experiments.jsonl ]; then
+            git add data/experiments.jsonl
+            strategy_changed=true
+          fi
+          
+          # Commit and push only if there are staged changes
+          if $strategy_changed; then
             git commit -m "autobot: daily experiment [skip ci]"
             git push
           else
-            echo "No changes to commit"
+            echo "✅ No changes to commit"
           fi

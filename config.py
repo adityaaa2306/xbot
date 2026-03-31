@@ -180,6 +180,7 @@ DUPLICATE_SIMILARITY_THRESHOLD = 0.75  # Cosine similarity for duplicate detecti
 # ============================================================================
 
 MAX_GENERATION_ATTEMPTS = 3
+MAX_GEN_ATTEMPTS = MAX_GENERATION_ATTEMPTS  # Backward compatibility alias
 GENERATION_TEMPERATURE = 0.8
 GENERATION_TOP_P = 0.95
 
