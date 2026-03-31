@@ -170,7 +170,7 @@ async def generate_tweet_async(
 ) -> Optional[Dict]:
     """Generate a tweet using async Mistral API with retries."""
     
-    if retry_count >= config.MAX_GEN_ATTEMPTS:
+    if retry_count >= config.MAX_GENERATION_ATTEMPTS:
         logger.error("Max generation attempts exceeded", 
                    event="GENERATE_FAILED",
                    data={"archetype": archetype, "topic": topic})
@@ -208,7 +208,7 @@ async def generate_tweet_async(
             logger.warn(f"Generated tweet failed validation", 
                       event="VALIDATION_FAILED",
                       data={"failures": validation.get("failures", [])})
-            if retry_count < config.MAX_GEN_ATTEMPTS - 1:
+            if retry_count < config.MAX_GENERATION_ATTEMPTS - 1:
                 await asyncio.sleep(1)
                 return await generate_tweet_async(archetype, topic, thread_length, is_experiment, retry_count + 1)
             return None
@@ -233,7 +233,7 @@ async def generate_tweet_async(
                        "attempt": retry_count + 1
                    })
         
-        if retry_count < config.MAX_GEN_ATTEMPTS - 1:
+        if retry_count < config.MAX_GENERATION_ATTEMPTS - 1:
             await asyncio.sleep(1)  # Brief backoff
             return await generate_tweet_async(archetype, topic, thread_length, is_experiment, retry_count + 1)
         

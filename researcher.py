@@ -17,9 +17,8 @@ from dotenv import load_dotenv
 
 # Import from local modules
 from poster import post_tweet, append_experiment
-# NOTE: score_pending_experiments, detect_declining_strategy, apply_time_decay are not used here
-# These functions are internal to scorer.EngagementScorer - use that class instead if needed
 from generator import generate_tweet
+from scorer import EngagementScorer
 
 # Helper function for reading files
 def read_file(path: str) -> str:
@@ -39,6 +38,29 @@ load_dotenv()
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
 INVOKE_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 MODEL_NAME = "mistralai/mistral-large-3-675b-instruct-2512"
+
+
+def score_pending_experiments() -> int:
+    """
+    Score all mature experiments (48h+ old engagement data).
+    
+    Uses maturity gating to ensure only tweets with sufficient engagement data
+    are scored. Returns count of newly scored tweets.
+    
+    Returns:
+        int: Number of tweets scored in this run
+    """
+    try:
+        scorer = EngagementScorer()
+        return scorer.score_all_mature()
+    except Exception as e:
+        from logger import logger
+        logger.error(
+            f"Failed to score pending experiments: {str(e)}",
+            phase="SCORE_PENDING",
+            error=str(e)
+        )
+        return 0
 
 
 def reflect_and_update_strategy(
