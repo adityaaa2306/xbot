@@ -240,18 +240,11 @@ async def generate_tweet_async(
         return None
 
 
-def generate_tweet(
+async def generate_tweet(
     archetype: str,
     topic: str,
     thread_length: int = 1,
     is_experiment: bool = False
 ) -> Optional[Dict]:
-    """Synchronous wrapper for async generation (compatibility)."""
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    try:
-        return loop.run_until_complete(
-            generate_tweet_async(archetype, topic, thread_length, is_experiment)
-        )
-    finally:
-        loop.close()
+    """Async wrapper that delegates to generate_tweet_async."""
+    return await generate_tweet_async(archetype, topic, thread_length, is_experiment)

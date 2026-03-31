@@ -338,14 +338,9 @@ async def post_tweet_async(tweet_obj: Dict) -> Optional[Dict]:
         return None
 
 
-def post_tweet(tweet_obj: Dict) -> Optional[Dict]:
-    """Synchronous wrapper for async posting (compatibility)."""
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    try:
-        return loop.run_until_complete(post_tweet_async(tweet_obj))
-    finally:
-        loop.close()
+async def post_tweet(tweet_obj: Dict) -> Optional[Dict]:
+    """Async wrapper that delegates to post_tweet_async."""
+    return await post_tweet_async(tweet_obj)
 
 
 def append_experiment(experiment: Dict) -> None:
