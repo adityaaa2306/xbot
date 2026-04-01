@@ -64,7 +64,7 @@ def _extract_auth_token(payload: Dict[str, Any]) -> Optional[str]:
 
 def _login_payload() -> Dict[str, Any]:
     payload: Dict[str, Any] = {
-        "userName": config.GETXAPI_USERNAME,
+        "username": config.GETXAPI_USERNAME,
         "password": config.GETXAPI_PASSWORD,
     }
     if config.GETXAPI_EMAIL:
@@ -98,7 +98,10 @@ async def get_auth_token_async() -> str:
         )
 
     if response.status_code >= 400:
-        raise GetXAPIError(_extract_error(response))
+        raise GetXAPIError(
+            f"GetXAPI login failed: {_extract_error(response)}. "
+            "Check GETXAPI_AUTH_TOKEN first, then verify GETXAPI_USERNAME/GETXAPI_PASSWORD/GETXAPI_EMAIL."
+        )
 
     payload = response.json()
     auth_token = _extract_auth_token(payload)
@@ -132,7 +135,10 @@ def get_auth_token_sync() -> str:
         )
 
     if response.status_code >= 400:
-        raise GetXAPIError(_extract_error(response))
+        raise GetXAPIError(
+            f"GetXAPI login failed: {_extract_error(response)}. "
+            "Check GETXAPI_AUTH_TOKEN first, then verify GETXAPI_USERNAME/GETXAPI_PASSWORD/GETXAPI_EMAIL."
+        )
 
     payload = response.json()
     auth_token = _extract_auth_token(payload)
