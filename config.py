@@ -8,6 +8,12 @@ Load from environment variables where necessary.
 import os
 from datetime import timedelta
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # ============================================================================
 # API & CREDENTIALS
 # ============================================================================
