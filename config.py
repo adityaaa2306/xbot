@@ -193,6 +193,8 @@ MAX_GENERATION_ATTEMPTS = 3
 MAX_GEN_ATTEMPTS = MAX_GENERATION_ATTEMPTS  # Backward compatibility alias
 GENERATION_TEMPERATURE = 0.8
 GENERATION_TOP_P = 0.95
+GENERATION_MAX_TOKENS_SINGLE = int(os.getenv("GENERATION_MAX_TOKENS_SINGLE", "320"))
+GENERATION_MAX_TOKENS_THREAD = int(os.getenv("GENERATION_MAX_TOKENS_THREAD", "640"))
 
 # ============================================================================
 # LOGGING
@@ -214,6 +216,12 @@ MEMORY_TYPE = "json"  # json or sqlite (currently json)
 # ============================================================================
 
 LLM_TIMEOUT_SECS = 30  # Timeout for Mistral/Anthropic API calls
+GENERATION_PHASE_TIMEOUT_SECS = int(
+    os.getenv(
+        "GENERATION_PHASE_TIMEOUT_SECS",
+        str((LLM_TIMEOUT_SECS * MAX_GENERATION_ATTEMPTS) + 10),
+    )
+)
 POSTER_TIMEOUT_SECS = 15  # Timeout for posting calls
 CIRCUIT_BREAKER_THRESHOLD = 3  # Pause if N consecutive posts fail
 JSON_BACKUP_DIR = "memory/_backups"  # Backup directory for JSON rollback

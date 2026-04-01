@@ -38,9 +38,15 @@ class MistralAsyncClient:
             "Content-Type": "application/json"
         }
     
-    async def chat(self, system_message: str, user_message: str, temperature: float = 0.7) -> Optional[str]:
+    async def chat(
+        self,
+        system_message: str,
+        user_message: str,
+        temperature: float = 0.7,
+        max_tokens: int = config.GENERATION_MAX_TOKENS_SINGLE,
+    ) -> Optional[str]:
         """Call Mistral chat API asynchronously."""
-        async with httpx.AsyncClient(timeout=30.0) as client:
+        async with httpx.AsyncClient(timeout=float(config.LLM_TIMEOUT_SECS)) as client:
             try:
                 response = await client.post(
                     MISTRAL_API_URL,
@@ -53,7 +59,7 @@ class MistralAsyncClient:
                         ],
                         "temperature": temperature,
                         "top_p": 0.95,
-                        "max_tokens": 1024
+                        "max_tokens": max_tokens,
                     }
                 )
                 
@@ -166,6 +172,13 @@ Generate a new, engaging tweet now:"""
     return system_msg, user_msg
 
 
+def get_generation_max_tokens(thread_length: int) -> int:
+    """Cap generation length tightly so single tweets return faster on CI runners."""
+    if thread_length and thread_length > 1:
+        return config.GENERATION_MAX_TOKENS_THREAD
+    return config.GENERATION_MAX_TOKENS_SINGLE
+
+
 async def generate_tweet_async(
     archetype: str,
     topic: str,
@@ -188,7 +201,11 @@ async def generate_tweet_async(
         
         # Call Mistral
         client = MistralAsyncClient(NVIDIA_API_KEY)
-        response = await client.chat(system_msg, user_msg)
+        response = await client.chat(
+            system_msg,
+            user_msg,
+            max_tokens=get_generation_max_tokens(thread_length),
+        )
         
         if not response:
             raise Exception("Mistral returned empty response")

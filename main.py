@@ -245,7 +245,8 @@ async def phase_5_generate() -> dict:
         
         # Wrap generator call with timeout
         try:
-            logger.debug(f"Calling Mistral with {config.LLM_TIMEOUT_SECS}s timeout", 
+            logger.debug(
+                f"Calling Mistral with {config.LLM_TIMEOUT_SECS}s request timeout and {config.GENERATION_PHASE_TIMEOUT_SECS}s phase timeout",
                         phase="GENERATOR", data={})
             tweet_obj = await asyncio.wait_for(
                 generate_tweet(
@@ -254,13 +255,16 @@ async def phase_5_generate() -> dict:
                     thread_length=plan.get("thread_length", 1),
                     is_experiment=plan.get("is_experiment", False)
                 ),
-                timeout=config.LLM_TIMEOUT_SECS
+                timeout=config.GENERATION_PHASE_TIMEOUT_SECS
             )
         except asyncio.TimeoutError:
             logger.error(
                 "Phase 5 TIMEOUT",
                 phase="GENERATOR",
-                data={"timeout_seconds": config.LLM_TIMEOUT_SECS}
+                data={
+                    "request_timeout_seconds": config.LLM_TIMEOUT_SECS,
+                    "phase_timeout_seconds": config.GENERATION_PHASE_TIMEOUT_SECS,
+                }
             )
             return None
         
