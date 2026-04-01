@@ -40,7 +40,7 @@
           <span class="page-icon"><i data-lucide="settings-2"></i></span>
           <div>
             <h1 class="page-title">Settings</h1>
-            <p class="page-subtitle">Current runtime snapshot and local data sources for the dashboard preview.</p>
+            <p class="page-subtitle">Current runtime snapshot and published data sources for the dashboard.</p>
           </div>
         </div>
       </header>
@@ -62,7 +62,7 @@
             <div class="kv-row"><span class="kv-label">Tweets log</span><span class="kv-value">memory/tweet_log.jsonl</span></div>
             <div class="kv-row"><span class="kv-label">Strategy log</span><span class="kv-value">memory/strategy_log.jsonl</span></div>
             <div class="kv-row"><span class="kv-label">Experiments log</span><span class="kv-value">data/experiments.jsonl</span></div>
-            <div class="kv-row"><span class="kv-label">Preview root</span><span class="kv-value">dashboard/</span></div>
+            <div class="kv-row"><span class="kv-label">Dashboard root</span><span class="kv-value">site root / dashboard preview</span></div>
           </div>
         </section>
       </div>
@@ -71,8 +71,8 @@
         <section class="card">
           <h2 class="card-title">Preview Notes</h2>
           <p class="helper-text">
-            This dashboard is currently local-only and uncommitted. It reads the repo files directly through a local static server,
-            so any new tweet or experiment written by the bot will show up here after a refresh.
+            This dashboard reads committed JSONL snapshots. Locally it can run from the <span class="mono">dashboard/</span> folder,
+            and on GitHub Pages it is published as a static site with the latest committed tweet, strategy, and experiment data.
           </p>
         </section>
       </div>

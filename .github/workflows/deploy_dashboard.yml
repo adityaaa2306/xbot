@@ -1,0 +1,60 @@
+name: Deploy Dashboard
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "dashboard/**"
+      - "memory/tweet_log.jsonl"
+      - "memory/strategy_log.jsonl"
+      - "data/experiments.jsonl"
+      - ".github/workflows/deploy_dashboard.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build static site artifact
+        shell: bash
+        run: |
+          rm -rf site
+          mkdir -p site
+          cp -R dashboard/. site/
+          mkdir -p site/memory site/data
+          cp memory/tweet_log.jsonl site/memory/tweet_log.jsonl
+          cp memory/strategy_log.jsonl site/memory/strategy_log.jsonl
+          if [ -f data/experiments.jsonl ]; then
+            cp data/experiments.jsonl site/data/experiments.jsonl
+          else
+            : > site/data/experiments.jsonl
+          fi
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

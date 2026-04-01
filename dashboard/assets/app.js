@@ -1,7 +1,10 @@
+const runningFromDashboardSubdir = window.location.pathname.includes("/dashboard/");
+const dataRoot = runningFromDashboardSubdir ? "../" : "./";
+
 const DATA_PATHS = {
-  tweets: "../memory/tweet_log.jsonl",
-  strategies: "../memory/strategy_log.jsonl",
-  experiments: "../data/experiments.jsonl",
+  tweets: `${dataRoot}memory/tweet_log.jsonl`,
+  strategies: `${dataRoot}memory/strategy_log.jsonl`,
+  experiments: `${dataRoot}data/experiments.jsonl`,
 };
 
 export async function loadJSONL(path) {
