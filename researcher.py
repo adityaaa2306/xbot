@@ -682,7 +682,7 @@ def get_strategy_mode(experiments_path: str = "data/experiments.jsonl") -> str:
     return "normal_mode"
 
 
-def run_daily_loop(num_posts: int = None, timeout_secs: int = 300) -> None:
+async def run_daily_loop(num_posts: int = None, timeout_secs: int = 300) -> None:
     """
     Execute one or more cycles of the autonomous research loop.
     
@@ -800,7 +800,7 @@ def run_daily_loop(num_posts: int = None, timeout_secs: int = 300) -> None:
         # Generate content
         generated = None
         try:
-            generated = generate_tweet(archetype=target_archetype, thread_length=target_thread_length, topic=target_topic)
+            generated = await generate_tweet(archetype=target_archetype, thread_length=target_thread_length, topic=target_topic)
             if generated.get("error"):
                 print(f"⚠️  Generation error: {generated.get('error')}\n")
                 continue
@@ -828,7 +828,7 @@ def run_daily_loop(num_posts: int = None, timeout_secs: int = 300) -> None:
         # Post to X
         posted = None
         try:
-            posted = post_tweet(generated.get("text"))
+            posted = await post_tweet(generated.get("text"))
             if posted.get("tweet_id"):
                 print(f"✅ Posted to X\n")
                 print(f"   Tweet ID: {posted.get('tweet_id')}\n")
@@ -874,4 +874,5 @@ def run_daily_loop(num_posts: int = None, timeout_secs: int = 300) -> None:
 
 
 if __name__ == "__main__":
-    run_daily_loop()
+    import asyncio
+    asyncio.run(run_daily_loop())
