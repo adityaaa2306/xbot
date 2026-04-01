@@ -250,6 +250,7 @@ async def phase_5_generate() -> dict:
                 generate_tweet(
                     archetype=plan.get("format_type"),
                     topic=plan.get("topic_bucket"),
+                    tone=plan.get("tone", "analytical"),
                     thread_length=plan.get("thread_length", 1),
                     is_experiment=plan.get("is_experiment", False)
                 ),

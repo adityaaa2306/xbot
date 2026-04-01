@@ -1,20 +1,18 @@
 """
-generator.py — Async LLM Tweet Generation
+generator.py - Async LLM Tweet Generation
 
-Generates tweets and threads using NVIDIA Mistral LLM.
-Features:
-- Async/await for non-blocking API calls
-- 3-attempt retry logic with exponential backoff
-- Anti-pattern injection (tells model what NOT to repeat)
-- Archetype/topic/thread_length guidance
-- JSON validation + fallback parsing
+Generates tweets and threads using the NVIDIA-hosted chat-completions API.
+Includes retry protection, response validation, and a deterministic fallback
+so temporary provider failures do not fail the whole posting cycle.
 """
 
 import asyncio
 import json
 import os
+import re
+from typing import Any, Dict, Optional, Tuple
+
 import httpx
-from typing import Optional, Dict, Any
 
 import config
 from logger import logger
@@ -22,22 +20,21 @@ from memory import memory
 from validator import validator
 
 
-# Globals
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY", "")
 MISTRAL_API_URL = config.NVIDIA_ENDPOINT
 MISTRAL_MODEL = config.NVIDIA_MODEL
 
 
 class MistralAsyncClient:
-    """Async wrapper for NVIDIA Mistral LLM."""
-    
+    """Async wrapper for NVIDIA chat-completions."""
+
     def __init__(self, api_key: str):
         self.api_key = api_key
         self.headers = {
             "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         }
-    
+
     async def chat(
         self,
         system_message: str,
@@ -45,7 +42,7 @@ class MistralAsyncClient:
         temperature: float = 0.7,
         max_tokens: int = config.GENERATION_MAX_TOKENS_SINGLE,
     ) -> Optional[str]:
-        """Call Mistral chat API asynchronously."""
+        """Call the model and return the first text response when present."""
         async with httpx.AsyncClient(timeout=float(config.LLM_TIMEOUT_SECS)) as client:
             try:
                 response = await client.post(
@@ -55,71 +52,130 @@ class MistralAsyncClient:
                         "model": MISTRAL_MODEL,
                         "messages": [
                             {"role": "system", "content": system_message},
-                            {"role": "user", "content": user_message}
+                            {"role": "user", "content": user_message},
                         ],
                         "temperature": temperature,
-                        "top_p": 0.95,
+                        "top_p": config.GENERATION_TOP_P,
                         "max_tokens": max_tokens,
-                    }
+                    },
                 )
-                
-                if response.status_code != 200:
-                    logger.error(
-                        "MISTRAL_ERROR",
-                        data={"status_code": response.status_code, "response": response.text},
-                    )
-                    return None
-                
-                data = response.json()
-                return data.get("choices", [{}])[0].get("message", {}).get("content")
-                
-            except Exception as e:
-                logger.error("MISTRAL_ERROR", data={"error": str(e)})
+            except Exception as exc:
+                logger.error("MISTRAL_ERROR", phase="GENERATOR", data={"error": str(exc)})
                 return None
 
+            if response.status_code != 200:
+                logger.error(
+                    "MISTRAL_ERROR",
+                    phase="GENERATOR",
+                    data={
+                        "status_code": response.status_code,
+                        "response": response.text[:400],
+                    },
+                )
+                return None
 
-async def load_context() -> Dict:
-    """Load niche.md, strategy.md, and recent patterns for prompt injection."""
-    context = {}
-    
+            try:
+                payload = response.json()
+            except json.JSONDecodeError as exc:
+                logger.error(
+                    "MISTRAL_INVALID_JSON",
+                    phase="GENERATOR",
+                    data={"response": response.text[:400]},
+                    error=exc,
+                )
+                return None
+
+            content, metadata = extract_message_content(payload)
+            if not is_valid_model_response(content):
+                logger.warn("MISTRAL_EMPTY_RESPONSE", phase="GENERATOR", data=metadata)
+                return None
+            return content
+
+
+async def load_context() -> Dict[str, Any]:
+    """Load lightweight prompt context from niche, strategy, and recent posts."""
+    context: Dict[str, Any] = {}
+
     try:
-        # Load niche
         niche_path = "config/niche.md"
         if os.path.exists(niche_path):
-            with open(niche_path, "r") as f:
-                context["niche"] = f.read()
-        
-        # Load strategy
+            with open(niche_path, "r", encoding="utf-8") as handle:
+                context["niche"] = handle.read()
+
         strategy_logs = memory.get_strategy_logs(days=1)
         if strategy_logs:
             context["strategy"] = strategy_logs[0]
-        
-        # Load recent patterns (what NOT to repeat)
+
         recent = memory.get_recent_tweets(days=7, limit=20)
         avoid_patterns = []
         for tweet in recent:
-            avoid_patterns.append({
-                "archetype": tweet.format_type,
-                "topic": tweet.topic_bucket,
-                "length": 1,
-            })
+            avoid_patterns.append(
+                {
+                    "archetype": tweet.format_type,
+                    "topic": tweet.topic_bucket,
+                    "length": 1,
+                }
+            )
         context["avoid_patterns"] = avoid_patterns
-        
         return context
-        
-    except Exception as e:
-        logger.warn("LOAD_CONTEXT_ERROR", data={"error": str(e)})
+    except Exception as exc:
+        logger.warn("LOAD_CONTEXT_ERROR", phase="GENERATOR", data={"error": str(exc)})
         return {}
 
 
-def build_generation_prompt(archetype: str, topic: str, thread_length: int, is_experiment: bool, context: Dict) -> tuple:
-    """Build system and user messages for LLM."""
-    
+def is_valid_model_response(response: Optional[str]) -> bool:
+    """Return True for non-empty text content."""
+    return bool(response and response.strip())
+
+
+def extract_message_content(payload: Dict[str, Any]) -> Tuple[Optional[str], Dict[str, Any]]:
+    """Extract text content from NVIDIA/OpenAI-style chat-completions payloads."""
+    choices = payload.get("choices")
+    if not isinstance(choices, list) or not choices:
+        return None, {"reason": "no_choices", "top_level_keys": sorted(payload.keys())[:10]}
+
+    choice = choices[0] or {}
+    message = choice.get("message") or {}
+    content = message.get("content")
+    metadata = {
+        "reason": "empty_content",
+        "finish_reason": choice.get("finish_reason"),
+        "content_type": type(content).__name__,
+        "has_message": bool(message),
+    }
+
+    if isinstance(content, str):
+        cleaned = content.strip()
+        return (cleaned or None), metadata
+
+    if isinstance(content, list):
+        blocks = []
+        for block in content:
+            if isinstance(block, dict):
+                text = block.get("text") or block.get("content")
+                if text:
+                    blocks.append(str(text).strip())
+            elif isinstance(block, str) and block.strip():
+                blocks.append(block.strip())
+        cleaned = "\n".join(part for part in blocks if part)
+        return (cleaned or None), metadata
+
+    return None, metadata
+
+
+def build_generation_prompt(
+    archetype: str,
+    topic: str,
+    tone: str,
+    thread_length: int,
+    is_experiment: bool,
+    context: Dict[str, Any],
+) -> Tuple[str, str]:
+    """Build system and user messages for the LLM."""
     niche = context.get("niche", "")
     strategy = context.get("strategy", {})
     avoid_patterns = context.get("avoid_patterns", [])
-    
-    # Build system message
+
     system_msg = f"""You are an autonomous X (Twitter) bot that generates engaging, authentic tweets.
 
 BOT IDENTITY:
@@ -131,7 +187,6 @@ CURRENT STRATEGY:
 IMPORTANT: Generate tweets that follow the bot's personality and topic expertise.
 - Be authentic and avoid overly promotional language
 - Follow X best practices for engagement
-- Include relevant hashtags if appropriate
 - Keep technical jargon accessible
 - HARD LIMIT: every single tweet must be 280 characters or fewer
 - TARGET: aim for 180-240 characters for single tweets
@@ -142,25 +197,27 @@ Return ONLY a JSON object (no other text) with structure:
   "tweet": "the tweet content here",
   "format_type": "{archetype}",
   "topic_bucket": "{topic}",
-  "tone": "analytical",
+  "tone": "{tone}",
   "hook": "opening hook",
   "thread_length": {thread_length},
   "reasoning": "why this tweet was generated"
 }}
 """
-    
-    # Build user message
-    avoid_str = "\n".join([
-        f"- {p['archetype']} + {p['topic']} (recent post)" 
-        for p in avoid_patterns[-5:]
-    ])
-    
-    experiment_note = "This is an EXPERIMENT - try something novel that we haven't tested yet." if is_experiment else "Follow current top-performing patterns."
-    
+
+    avoid_str = "\n".join(
+        [f"- {pattern['archetype']} + {pattern['topic']} (recent post)" for pattern in avoid_patterns[-5:]]
+    )
+    experiment_note = (
+        "This is an EXPERIMENT - try something novel that we haven't tested yet."
+        if is_experiment
+        else "Follow current top-performing patterns."
+    )
+
     user_msg = f"""Generate a {'thread' if thread_length > 1 else 'single'} tweet.
 
 ARCHETYPE: {archetype}
 TOPIC: {topic}
+TONE: {tone}
 THREAD_LENGTH: {thread_length}
 MODE: {experiment_note}
 
@@ -168,114 +225,204 @@ RECENTLY USED (AVOID IMMEDIATE REPETITION):
 {avoid_str}
 
 Generate a new, engaging tweet now:"""
-    
+
     return system_msg, user_msg
 
 
 def get_generation_max_tokens(thread_length: int) -> int:
-    """Cap generation length tightly so single tweets return faster on CI runners."""
+    """Cap generation length tightly so CI runners respond faster."""
     if thread_length and thread_length > 1:
         return config.GENERATION_MAX_TOKENS_THREAD
     return config.GENERATION_MAX_TOKENS_SINGLE
 
 
+def retry_delay_seconds(attempt_number: int) -> float:
+    """Exponential backoff with a cap."""
+    return min(
+        config.GENERATION_RETRY_MAX_DELAY_SECS,
+        config.GENERATION_RETRY_BASE_DELAY_SECS * (2 ** max(0, attempt_number - 1)),
+    )
+
+
+def build_template_fallback(
+    archetype: str,
+    topic: str,
+    tone: str,
+    is_experiment: bool,
+    failure_reason: str,
+) -> Dict[str, Any]:
+    """Build a deterministic fallback tweet when the provider gives no content."""
+    topic_map = {
+        "ai_ml": "AI teams",
+        "founder_reality": "founders",
+        "big_tech": "big tech companies",
+        "startup_frameworks": "startup frameworks",
+        "emerging_tech": "emerging tech",
+        "dev_culture": "developer culture",
+    }
+    subject = topic_map.get(topic, topic.replace("_", " "))
+
+    archetype_templates = {
+        "reversal": f"People think {subject} rewards more information. Most of the time it rewards faster decisions made with fewer illusions.",
+        "prediction": f"Prediction: the next wave in {subject} will come from teams cutting complexity, not adding another layer to manage it.",
+        "observation": f"The quiet pattern in {subject}: the people who look calm usually made the hard tradeoff earlier than everyone else.",
+        "unpopular_truth": f"Unpopular truth: {subject} usually does not fail because people lack ideas. It fails because they keep protecting a story that reality already rejected.",
+        "compressed_lesson": f"Short lesson from {subject}: clarity compounds faster than intensity. The team that names the real constraint usually moves first.",
+        "list": f"3 quick truths about {subject}: clarity beats hype, constraints beat wishes, and consistency beats bursts of motivation.",
+        "thread_opener": f"Thread: the biggest misunderstanding in {subject} is thinking better tools remove the need for sharper judgment. They usually raise the cost of weak judgment.",
+    }
+    tone_suffixes = {
+        "contrarian": "Most people only notice this after the cost is obvious.",
+        "analytical": "That pattern shows up long before the metrics make it undeniable.",
+        "educational": "Once you see it, a lot of second-order decisions get easier.",
+        "observational": "You can watch this happen in real time if you stop listening to the loudest narrative.",
+        "provocative": "The uncomfortable part is that almost everyone pretends not to see it until it is expensive.",
+    }
+
+    base_text = archetype_templates.get(archetype, archetype_templates["observation"])
+    suffix = tone_suffixes.get(tone, tone_suffixes["analytical"])
+    text = shorten_tweet_text(f"{base_text} {suffix}")
+    hook = text.split(".")[0].strip() or text[: config.MAX_HOOK_LENGTH]
+
+    return {
+        "tweet": text,
+        "format_type": archetype,
+        "topic_bucket": topic,
+        "tone": tone if tone in config.VALID_TONES else "analytical",
+        "hook": hook[: config.MAX_HOOK_LENGTH],
+        "thread_length": 1,
+        "reasoning": f"Template fallback used after generation retries failed ({failure_reason}).",
+        "confidence": 0.35 if is_experiment else 0.5,
+    }
+
+
 async def generate_tweet_async(
     archetype: str,
     topic: str,
+    tone: str = "analytical",
     thread_length: int = 1,
     is_experiment: bool = False,
-    retry_count: int = 0
-) -> Optional[Dict]:
-    """Generate a tweet using async Mistral API with retries."""
-    
-    if retry_count >= config.MAX_GENERATION_ATTEMPTS:
-        logger.error("GENERATE_FAILED", data={"archetype": archetype, "topic": topic})
-        return None
-    
-    try:
-        # Load context
-        context = await load_context()
-        
-        # Build prompts
-        system_msg, user_msg = build_generation_prompt(archetype, topic, thread_length, is_experiment, context)
-        
-        # Call Mistral
-        client = MistralAsyncClient(NVIDIA_API_KEY)
-        response = await client.chat(
-            system_msg,
-            user_msg,
-            max_tokens=get_generation_max_tokens(thread_length),
-        )
-        
-        if not response:
-            raise Exception("Mistral returned empty response")
-        
-        # Parse JSON
-        try:
-            tweet_obj = json.loads(response)
-        except json.JSONDecodeError:
-            # Fallback: try to extract JSON from response
-            import re
-            json_match = re.search(r'\{.*\}', response, re.DOTALL)
-            if json_match:
-                tweet_obj = json.loads(json_match.group())
-            else:
-                raise Exception(f"Could not parse JSON from response: {response[:100]}")
+) -> Optional[Dict[str, Any]]:
+    """Generate a tweet with retries and template fallback."""
+    context = await load_context()
+    system_msg, user_msg = build_generation_prompt(archetype, topic, tone, thread_length, is_experiment, context)
+    client = MistralAsyncClient(NVIDIA_API_KEY)
+    last_error = "unknown_generation_error"
 
-        tweet_obj = normalize_tweet_object(tweet_obj, archetype, topic, thread_length)
-        
-        # Validate tweet
-        validation = validator.validate_tweet(tweet_obj)
-        if not validation["valid"]:
+    for attempt in range(1, config.MAX_GENERATION_ATTEMPTS + 1):
+        try:
+            response = await client.chat(
+                system_msg,
+                user_message=user_msg,
+                temperature=config.GENERATION_TEMPERATURE,
+                max_tokens=get_generation_max_tokens(thread_length),
+            )
+
+            if not is_valid_model_response(response):
+                last_error = "empty_response"
+                raise ValueError("Mistral returned empty response")
+
+            try:
+                raw_tweet = json.loads(response)
+            except json.JSONDecodeError:
+                json_match = re.search(r"\{.*\}", response, re.DOTALL)
+                if not json_match:
+                    last_error = "unparseable_response"
+                    raise ValueError(f"Could not parse JSON from response: {response[:100]}")
+                raw_tweet = json.loads(json_match.group())
+
+            tweet_obj = normalize_tweet_object(raw_tweet, archetype, topic, thread_length, tone=tone)
+            validation = validator.validate_tweet(tweet_obj)
+            if validation["valid"]:
+                logger.info(
+                    "GENERATE_SUCCESS",
+                    phase="SYSTEM",
+                    data={
+                        "archetype": archetype,
+                        "topic": topic,
+                        "thread_length": tweet_obj.get("thread_length", 1),
+                        "attempt": attempt,
+                    },
+                )
+                return tweet_obj
+
+            last_error = "validation_failed"
             logger.warn(
                 "VALIDATION_FAILED",
-                data={"failures": validation.get("failures", [])},
+                phase="GENERATOR",
+                data={"attempt": attempt, "failures": validation.get("failures", [])},
             )
-            if retry_count < config.MAX_GENERATION_ATTEMPTS - 1:
-                await asyncio.sleep(1)
-                return await generate_tweet_async(archetype, topic, thread_length, is_experiment, retry_count + 1)
-            return None
-        
-        logger.info(
-            "GENERATE_SUCCESS",
-            data={
-                "archetype": archetype,
-                "topic": topic,
-                "thread_length": thread_length,
-                "attempt": retry_count + 1,
-            },
-        )
-        
-        return tweet_obj
-        
-    except Exception as e:
+        except Exception as exc:
+            last_error = last_error if last_error != "unknown_generation_error" else str(exc)
+            logger.error(
+                "GENERATE_ERROR",
+                phase="SYSTEM",
+                data={
+                    "error": str(exc),
+                    "archetype": archetype,
+                    "topic": topic,
+                    "attempt": attempt,
+                },
+            )
+
+        if attempt < config.MAX_GENERATION_ATTEMPTS:
+            delay = retry_delay_seconds(attempt)
+            logger.warn(
+                "GENERATE_RETRYING",
+                phase="GENERATOR",
+                data={"attempt": attempt, "backoff_seconds": delay, "reason": last_error},
+            )
+            await asyncio.sleep(delay)
+
+    if config.GENERATION_TEMPLATE_FALLBACK_ENABLED:
+        fallback_raw = build_template_fallback(archetype, topic, tone, is_experiment, last_error)
+        fallback_tweet = normalize_tweet_object(fallback_raw, archetype, topic, 1, tone=tone)
+        fallback_validation = validator.validate_tweet(fallback_tweet)
+        if fallback_validation["valid"]:
+            logger.warn(
+                "GENERATE_FALLBACK_USED",
+                phase="GENERATOR",
+                data={
+                    "archetype": archetype,
+                    "topic": topic,
+                    "tone": tone,
+                    "reason": last_error,
+                },
+            )
+            return fallback_tweet
+
         logger.error(
-            "GENERATE_ERROR",
-            data={
-                "error": str(e),
-                "archetype": archetype,
-                "attempt": retry_count + 1,
-            },
+            "GENERATE_FALLBACK_INVALID",
+            phase="GENERATOR",
+            data={"reason": last_error, "failures": fallback_validation.get("failures", [])},
         )
-        
-        if retry_count < config.MAX_GENERATION_ATTEMPTS - 1:
-            await asyncio.sleep(1)  # Brief backoff
-            return await generate_tweet_async(archetype, topic, thread_length, is_experiment, retry_count + 1)
-        
-        return None
+
+    logger.error(
+        "GENERATE_FAILED",
+        phase="GENERATOR",
+        data={"archetype": archetype, "topic": topic, "tone": tone, "reason": last_error},
+    )
+    return None
 
 
 async def generate_tweet(
     archetype: str,
     topic: str,
+    tone: str = "analytical",
     thread_length: int = 1,
-    is_experiment: bool = False
-) -> Optional[Dict]:
-    """Async wrapper that delegates to generate_tweet_async."""
-    return await generate_tweet_async(archetype, topic, thread_length, is_experiment)
+    is_experiment: bool = False,
+) -> Optional[Dict[str, Any]]:
+    """Async wrapper around the core generation routine."""
+    return await generate_tweet_async(archetype, topic, tone, thread_length, is_experiment)
 
 
-def normalize_tweet_object(raw: Dict[str, Any], archetype: str, topic: str, thread_length: int) -> Dict[str, Any]:
+def normalize_tweet_object(
+    raw: Dict[str, Any],
+    archetype: str,
+    topic: str,
+    thread_length: int,
+    tone: str = "analytical",
+) -> Dict[str, Any]:
     """Normalize model output into the validator/poster schema."""
     text = raw.get("tweet") or raw.get("text") or ""
     text_parts = raw.get("text_parts")
@@ -303,7 +450,7 @@ def normalize_tweet_object(raw: Dict[str, Any], archetype: str, topic: str, thre
         "text_parts": text_parts,
         "format_type": raw.get("format_type") or raw.get("archetype") or archetype,
         "topic_bucket": raw.get("topic_bucket") or raw.get("topic") or topic,
-        "tone": raw.get("tone") or "analytical",
+        "tone": raw.get("tone") or tone or "analytical",
         "hook": str(hook)[: config.MAX_HOOK_LENGTH],
         "thread_length": int(raw.get("thread_length") or thread_length or 1),
         "reasoning": raw.get("reasoning") or "Generated from current strategy context.",
@@ -317,8 +464,11 @@ def shorten_tweet_text(text: str, max_length: int = config.MAX_TWEET_LENGTH) -> 
     if len(compact) <= max_length:
         return compact
 
-    # Prefer trimming at sentence boundaries first.
-    sentences = [sentence.strip() for sentence in compact.replace("! ", "!|").replace("? ", "?|").replace(". ", ".|").split("|") if sentence.strip()]
+    sentences = [
+        sentence.strip()
+        for sentence in compact.replace("! ", "!|").replace("? ", "?|").replace(". ", ".|").split("|")
+        if sentence.strip()
+    ]
     if sentences:
         candidate = ""
         for sentence in sentences:
@@ -330,19 +480,18 @@ def shorten_tweet_text(text: str, max_length: int = config.MAX_TWEET_LENGTH) -> 
         if candidate:
             return candidate
 
-    # Fall back to trimming at word boundaries with an ellipsis.
     words = compact.split()
     candidate = ""
     for word in words:
         proposed = f"{candidate} {word}".strip()
-        if len(proposed) + 1 <= max_length:
+        if len(proposed) + 3 <= max_length:
             candidate = proposed
         else:
             break
 
     candidate = candidate.rstrip(" ,;:-")
     if not candidate:
-        return compact[: max_length - 1].rstrip() + "…"
+        return compact[: max_length - 3].rstrip() + "..."
     if len(candidate) < len(compact):
-        return candidate[: max_length - 1].rstrip(" ,;:-") + "…"
+        return candidate[: max_length - 3].rstrip(" ,;:-") + "..."
     return candidate
