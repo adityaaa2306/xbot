@@ -122,14 +122,12 @@ async def verify_environment() -> bool:
         logger.error("STARTUP", data={"missing": missing})
         return False
 
-    has_direct_auth = bool(os.getenv("GETXAPI_AUTH_TOKEN"))
-    has_login_flow = bool(os.getenv("GETXAPI_USERNAME")) and bool(os.getenv("GETXAPI_PASSWORD"))
-    if not (has_direct_auth or has_login_flow):
+    if not os.getenv("GETXAPI_AUTH_TOKEN"):
         logger.error(
             "STARTUP",
             data={
                 "missing": [
-                    "GETXAPI_AUTH_TOKEN or GETXAPI_USERNAME/GETXAPI_PASSWORD"
+                    "GETXAPI_AUTH_TOKEN"
                 ]
             },
         )

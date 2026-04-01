@@ -103,8 +103,6 @@ class XAPIAsyncClient:
         }
         if reply_to_tweet_id:
             payload["reply_to_tweet_id"] = str(reply_to_tweet_id)
-        if config.GETXAPI_PROXY:
-            payload["proxy"] = config.GETXAPI_PROXY
 
         async with httpx.AsyncClient(timeout=config.POSTER_TIMEOUT_SECS) as client:
             response = await client.post(
@@ -145,7 +143,7 @@ class XAPIAsyncClient:
             if "402" in lowered or "credits" in lowered or "payment required" in lowered:
                 data["remediation"] = "Add GetXAPI credits or upgrade the GetXAPI account plan."
             elif "401" in lowered or "invalid auth_token" in lowered:
-                data["remediation"] = "Refresh GETXAPI_AUTH_TOKEN or provide GETXAPI_USERNAME/GETXAPI_PASSWORD for auto-login."
+                data["remediation"] = "Refresh GETXAPI_AUTH_TOKEN and update the repository secret."
             logger.error(f"GetXAPI tweet post failed: {error_text}", phase="POSTER", data=data, error=error_text)
             return None
     
@@ -170,7 +168,7 @@ class XAPIAsyncClient:
                 if "402" in lowered or "credits" in lowered or "payment required" in lowered:
                     data["remediation"] = "Add GetXAPI credits or upgrade the GetXAPI account plan."
                 elif "401" in lowered or "invalid auth_token" in lowered:
-                    data["remediation"] = "Refresh GETXAPI_AUTH_TOKEN or provide GETXAPI_USERNAME/GETXAPI_PASSWORD for auto-login."
+                    data["remediation"] = "Refresh GETXAPI_AUTH_TOKEN and update the repository secret."
                 logger.error(
                     f"GetXAPI thread post failed on part {len(results)+1}: {error_text}",
                     phase="POSTER",

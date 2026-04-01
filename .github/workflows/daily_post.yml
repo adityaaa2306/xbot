@@ -42,11 +42,6 @@ jobs:
         env:
           GETXAPI_API_KEY: ${{ secrets.GETXAPI_API_KEY }}
           GETXAPI_AUTH_TOKEN: ${{ secrets.GETXAPI_AUTH_TOKEN }}
-          GETXAPI_USERNAME: ${{ secrets.GETXAPI_USERNAME }}
-          GETXAPI_PASSWORD: ${{ secrets.GETXAPI_PASSWORD }}
-          GETXAPI_EMAIL: ${{ secrets.GETXAPI_EMAIL }}
-          GETXAPI_TOTP_SECRET: ${{ secrets.GETXAPI_TOTP_SECRET }}
-          GETXAPI_PROXY: ${{ secrets.GETXAPI_PROXY }}
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
       
       - name: Configure git
