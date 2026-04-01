@@ -426,8 +426,7 @@ async def run_daily_pipeline():
 def main():
     """Entry point."""
     try:
-        loop = asyncio.get_event_loop()
-        success = loop.run_until_complete(run_daily_pipeline())
+        success = asyncio.run(run_daily_pipeline())
         sys.exit(0 if success else 1)
     except KeyboardInterrupt:
         logger.info("INTERRUPT")

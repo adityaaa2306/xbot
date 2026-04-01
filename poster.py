@@ -126,8 +126,14 @@ class XAPIAsyncClient:
                 "thread_length": 1,
             }
         except Exception as e:
-            logger.error(f"X API tweet post failed: {str(e)}", 
-                        phase="POSTER", error=str(e))
+            error_text = str(e)
+            data = {}
+            if "appropriate oauth1 app permissions" in error_text.lower():
+                data["remediation"] = (
+                    "Enable write permissions for the X app, then regenerate the access token and access token secret "
+                    "and update the repository secrets."
+                )
+            logger.error(f"X API tweet post failed: {error_text}", phase="POSTER", data=data, error=error_text)
             return None
     
     async def post_thread(self, tweets: List[str]) -> Optional[Dict]:
@@ -152,8 +158,19 @@ class XAPIAsyncClient:
                 })
                 reply_to_id = result.data["id"]  # Link next tweet to this one
             except Exception as e:
-                logger.error(f"X API thread post failed on part {len(results)+1}: {str(e)}", 
-                            phase="POSTER", error=str(e))
+                error_text = str(e)
+                data = {}
+                if "appropriate oauth1 app permissions" in error_text.lower():
+                    data["remediation"] = (
+                        "Enable write permissions for the X app, then regenerate the access token and access token secret "
+                        "and update the repository secrets."
+                    )
+                logger.error(
+                    f"X API thread post failed on part {len(results)+1}: {error_text}",
+                    phase="POSTER",
+                    data=data,
+                    error=error_text,
+                )
                 return None
         
         return {
