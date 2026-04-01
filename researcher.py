@@ -143,7 +143,7 @@ Output ONLY the complete, updated strategy.md content in markdown format. No pre
             "stream": False
         }
         
-        response = requests.post(INVOKE_URL, headers=headers, json=payload)
+        response = requests.post(INVOKE_URL, headers=headers, json=payload, timeout=30)
         response.raise_for_status()
         
         result = response.json()
@@ -161,6 +161,9 @@ Output ONLY the complete, updated strategy.md content in markdown format. No pre
         print(f"✅ Strategy updated and saved to {strategy_path}")
         return new_strategy
         
+    except requests.Timeout:
+        print(f"❌ TIMEOUT: NVIDIA API took too long (>30s) during strategy reflection - skipping")
+        return None
     except requests.RequestException as e:
         print(f"❌ Error updating strategy (API request failed): {str(e)}")
         return None
@@ -679,7 +682,7 @@ def get_strategy_mode(experiments_path: str = "data/experiments.jsonl") -> str:
     return "normal_mode"
 
 
-def run_daily_loop(num_posts: int = None) -> None:
+def run_daily_loop(num_posts: int = None, timeout_secs: int = 300) -> None:
     """
     Execute one or more cycles of the autonomous research loop.
     
@@ -688,6 +691,7 @@ def run_daily_loop(num_posts: int = None) -> None:
     
     Args:
         num_posts (int): Number of posts to make this cycle (1-3). If None, decides randomly: usually 1-2.
+        timeout_secs (int): Maximum seconds to run before aborting (default 300s = 5 minutes)
     
     Steps per post:
     1. Decide thread length and topic
@@ -700,6 +704,7 @@ def run_daily_loop(num_posts: int = None) -> None:
     """
     
     start_time = datetime.utcnow()
+    timeout_deadline = start_time + timedelta(seconds=timeout_secs)
     
     # Decide how many posts to make (1-3, but usually 1-2)
     if num_posts is None:
@@ -726,6 +731,12 @@ def run_daily_loop(num_posts: int = None) -> None:
     # ONCE PER CYCLE: Score pending experiments
     print("📍 Scoring pending experiments...")
     try:
+        # Check timeout before scoring
+        if datetime.utcnow() > timeout_deadline:
+            print(f"⏱️  TIMEOUT: Pipeline exceeded {timeout_secs}s limit, aborting cycle")
+            print(f"{'='*70}\n")
+            return
+        
         scored_results = score_pending_experiments()
         if scored_results:
             print(f"   ✅ Scored {scored_results} experiment(s)\n")
@@ -737,6 +748,12 @@ def run_daily_loop(num_posts: int = None) -> None:
     # ONCE PER CYCLE: Reflect on strategy
     print("📍 Analyzing strategy and patterns...")
     try:
+        # Check timeout before strategy update
+        if datetime.utcnow() > timeout_deadline:
+            print(f"⏱️  TIMEOUT: Pipeline exceeded {timeout_secs}s limit, aborting strategy update")
+            print(f"{'='*70}\n")
+            return
+        
         reflect_and_update_strategy()
         print("   ✅ Strategy updated\n")
     except Exception as e:
@@ -749,6 +766,13 @@ def run_daily_loop(num_posts: int = None) -> None:
         print(f"\n{'─'*70}")
         print(f"📝 Content Piece {i}/{num_posts}")
         print(f"{'─'*70}\n")
+        
+        # Safety check: Don't start new post if we're running out of time
+        elapsed = (datetime.utcnow() - start_time).total_seconds()
+        remaining = timeout_secs - elapsed
+        if remaining < 60:  # Less than 1 minute left
+            print(f"⏱️  TIMEOUT: Only {remaining:.0f}s left, aborting remaining posts")
+            break
         
         # Get strategy mode and decide archetype, thread length, and topic
         target_archetype = "The Controversial Opinion"

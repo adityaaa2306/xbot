@@ -17,6 +17,7 @@ on:
 jobs:
   autobot_research_loop:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     
     steps:
       - name: Checkout repository
