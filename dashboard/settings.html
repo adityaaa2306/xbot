@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XBot Dashboard - Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark"><i data-lucide="bot"></i></span>
+        <span><span style="color:#7c3aed">X</span>Bot</span>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">Monitor</p>
+        <a class="nav-link" data-nav="overview" href="./index.html"><i data-lucide="layout-dashboard"></i><span>Overview</span></a>
+        <a class="nav-link" data-nav="tweets" href="./tweets.html"><i data-lucide="twitter"></i><span>Tweets</span></a>
+        <a class="nav-link" data-nav="experiments" href="./experiments.html"><i data-lucide="flask-conical"></i><span>Experiments</span></a>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">Learn</p>
+        <a class="nav-link" data-nav="strategy" href="./strategy.html"><i data-lucide="brain-circuit"></i><span>Strategy</span></a>
+        <a class="nav-link" data-nav="patterns" href="./patterns.html"><i data-lucide="chart-column"></i><span>Patterns</span></a>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">System</p>
+        <a class="nav-link" data-nav="settings" href="./settings.html"><i data-lucide="settings-2"></i><span>Settings</span></a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="page-header">
+        <div class="page-title-wrap">
+          <span class="page-icon"><i data-lucide="settings-2"></i></span>
+          <div>
+            <h1 class="page-title">Settings</h1>
+            <p class="page-subtitle">Current runtime snapshot and local data sources for the dashboard preview.</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="settings-tabs">
+        <span class="settings-tab active">Runtime</span>
+        <span class="settings-tab">Data</span>
+        <span class="settings-tab">Preview</span>
+      </div>
+
+      <div class="settings-grid">
+        <section class="card">
+          <h2 class="card-title">Runtime Snapshot</h2>
+          <div class="kv-list" id="runtimeRoot"></div>
+        </section>
+        <section class="card">
+          <h2 class="card-title">Data Sources</h2>
+          <div class="kv-list">
+            <div class="kv-row"><span class="kv-label">Tweets log</span><span class="kv-value">memory/tweet_log.jsonl</span></div>
+            <div class="kv-row"><span class="kv-label">Strategy log</span><span class="kv-value">memory/strategy_log.jsonl</span></div>
+            <div class="kv-row"><span class="kv-label">Experiments log</span><span class="kv-value">data/experiments.jsonl</span></div>
+            <div class="kv-row"><span class="kv-label">Preview root</span><span class="kv-value">dashboard/</span></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="content-grid" style="margin-top:20px;">
+        <section class="card">
+          <h2 class="card-title">Preview Notes</h2>
+          <p class="helper-text">
+            This dashboard is currently local-only and uncommitted. It reads the repo files directly through a local static server,
+            so any new tweet or experiment written by the bot will show up here after a refresh.
+          </p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { loadDataset, mountActiveNav, latestRunSnapshot, formatDate, formatNumber } from "./assets/app.js";
+
+    mountActiveNav("settings");
+
+    const dataset = await loadDataset();
+    const snapshot = latestRunSnapshot(dataset);
+    document.getElementById("runtimeRoot").innerHTML = `
+      <div class="kv-row"><span class="kv-label">Tweets loaded</span><span class="kv-value">${formatNumber(dataset.tweets.length)}</span></div>
+      <div class="kv-row"><span class="kv-label">Mature tweets</span><span class="kv-value">${formatNumber(dataset.matureTweets.length)}</span></div>
+      <div class="kv-row"><span class="kv-label">Experiments loaded</span><span class="kv-value">${formatNumber(dataset.experiments.length)}</span></div>
+      <div class="kv-row"><span class="kv-label">Strategy snapshots</span><span class="kv-value">${formatNumber(dataset.strategies.length)}</span></div>
+      <div class="kv-row"><span class="kv-label">Latest tweet</span><span class="kv-value">${snapshot.latestTweet?.tweet_id || "N/A"}</span></div>
+      <div class="kv-row"><span class="kv-label">Latest tweet time</span><span class="kv-value">${formatDate(snapshot.latestTweet?.posted_at, { dateStyle: "medium", timeStyle: "short" })}</span></div>
+      <div class="kv-row"><span class="kv-label">Latest experiment</span><span class="kv-value">${snapshot.latestExperiment?.archetype || "N/A"}</span></div>
+      <div class="kv-row"><span class="kv-label">Latest strategy</span><span class="kv-value">${snapshot.latestStrategy?.confidence_level || "N/A"}</span></div>
+    `;
+  </script>
+</body>
+</html>

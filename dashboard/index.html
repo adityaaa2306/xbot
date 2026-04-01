@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XBot Dashboard - Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark"><i data-lucide="bot"></i></span>
+        <span><span style="color:#7c3aed">X</span>Bot</span>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">Monitor</p>
+        <a class="nav-link" data-nav="overview" href="./index.html"><i data-lucide="layout-dashboard"></i><span>Overview</span></a>
+        <a class="nav-link" data-nav="tweets" href="./tweets.html"><i data-lucide="twitter"></i><span>Tweets</span></a>
+        <a class="nav-link" data-nav="experiments" href="./experiments.html"><i data-lucide="flask-conical"></i><span>Experiments</span></a>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">Learn</p>
+        <a class="nav-link" data-nav="strategy" href="./strategy.html"><i data-lucide="brain-circuit"></i><span>Strategy</span></a>
+        <a class="nav-link" data-nav="patterns" href="./patterns.html"><i data-lucide="chart-column"></i><span>Patterns</span></a>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">System</p>
+        <a class="nav-link" data-nav="settings" href="./settings.html"><i data-lucide="settings-2"></i><span>Settings</span></a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="page-header">
+        <div class="page-title-wrap">
+          <span class="page-icon"><i data-lucide="layout-dashboard"></i></span>
+          <div>
+            <h1 class="page-title">Overview</h1>
+            <p class="page-subtitle">Your bot's performance at a glance. Updated after each daily run.</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-grid">
+        <section class="stats-grid">
+          <div class="card">
+            <div class="stat-label">Total Tweets Posted</div>
+            <div class="stat-value" id="totalTweets">0</div>
+            <div class="stat-subtext">All-time posted records</div>
+            <div class="delta neutral" id="totalTweetsDelta">No comparison data</div>
+          </div>
+          <div class="card">
+            <div class="stat-label">Avg Engagement Score</div>
+            <div class="stat-value" id="avgScore">N/A</div>
+            <div class="stat-subtext">Across mature tweets only</div>
+            <div class="delta neutral" id="avgScoreDelta">No comparison data</div>
+          </div>
+          <div class="card">
+            <div class="stat-label">Best Tweet Score</div>
+            <div class="stat-value" id="bestScore">N/A</div>
+            <div class="stat-subtext" id="bestScoreSub">No scored tweets yet</div>
+            <div class="delta neutral">Peak performance record</div>
+          </div>
+          <div class="card">
+            <div class="stat-label">Current Confidence Level</div>
+            <div class="stat-value" id="confidenceValue">N/A</div>
+            <div class="stat-subtext" id="confidenceSub">Awaiting strategy snapshots</div>
+            <div id="confidencePillRow" class="pill-row"></div>
+          </div>
+        </section>
+
+        <section class="split-grid">
+          <div class="card">
+            <h2 class="card-title">Engagement Score Over Time</h2>
+            <div class="chart-wrap"><canvas id="engagementChart"></canvas></div>
+          </div>
+          <div class="card">
+            <h2 class="card-title">Topic Performance</h2>
+            <div class="chart-wrap"><canvas id="topicChart"></canvas></div>
+          </div>
+        </section>
+
+        <section class="split-grid">
+          <div class="card">
+            <h2 class="card-title">Format Leaderboard</h2>
+            <div id="formatLeaderboard" class="list-table"></div>
+          </div>
+          <div class="card">
+            <h2 class="card-title">Today's Strategy</h2>
+            <div id="latestStrategyCard"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import {
+      loadDataset, mountActiveNav, formatNumber, formatDate, average, comparePeriods,
+      deltaClass, deltaText, createChart, chartDefaults, groupBy, renderEmpty, buildPill,
+      confidenceBadge, truncate
+    } from "./assets/app.js";
+
+    mountActiveNav("overview");
+
+    const dataset = await loadDataset();
+    const { tweets, matureTweets, latestStrategy } = dataset;
+
+    document.getElementById("totalTweets").textContent = formatNumber(tweets.length);
+    const totalDelta = comparePeriods(tweets, () => 1, 7, false);
+    const totalDeltaEl = document.getElementById("totalTweetsDelta");
+    totalDeltaEl.className = `delta ${deltaClass(totalDelta)}`;
+    totalDeltaEl.textContent = deltaText(totalDelta);
+
+    const avgScore = average(matureTweets.map((tweet) => tweet.engagement_score));
+    document.getElementById("avgScore").textContent = avgScore === null ? "N/A" : formatNumber(avgScore, 1);
+    const avgDelta = comparePeriods(matureTweets, (tweet) => tweet.engagement_score, 7, true);
+    const avgDeltaEl = document.getElementById("avgScoreDelta");
+    avgDeltaEl.className = `delta ${deltaClass(avgDelta)}`;
+    avgDeltaEl.textContent = deltaText(avgDelta);
+
+    const bestTweet = [...matureTweets].sort((a, b) => (b.engagement_score || 0) - (a.engagement_score || 0))[0];
+    document.getElementById("bestScore").textContent = bestTweet ? formatNumber(bestTweet.engagement_score, 1) : "N/A";
+    document.getElementById("bestScoreSub").textContent = bestTweet ? `Tweet ${bestTweet.tweet_id}` : "No scored tweets yet";
+
+    document.getElementById("confidenceValue").textContent = latestStrategy?.confidence_level?.toUpperCase() || "N/A";
+    document.getElementById("confidenceSub").textContent = latestStrategy
+      ? `Updated ${formatDate(latestStrategy.date || latestStrategy.created_at || latestStrategy.updated_at)}`
+      : "Awaiting strategy snapshots";
+    if (latestStrategy?.confidence_level) {
+      document.getElementById("confidencePillRow").innerHTML = buildPill(
+        latestStrategy.confidence_level.toUpperCase(),
+        confidenceBadge(latestStrategy.confidence_level)
+      );
+    }
+
+    const engagementCanvas = document.getElementById("engagementChart");
+    if (matureTweets.length) {
+      const series = [...matureTweets].sort((a, b) => new Date(a.posted_at) - new Date(b.posted_at));
+      createChart(engagementCanvas, {
+        type: "line",
+        data: {
+          labels: series.map((tweet) => formatDate(tweet.posted_at, { dateStyle: "short" })),
+          datasets: [{
+            data: series.map((tweet) => tweet.engagement_score),
+            borderColor: "#7c3aed",
+            backgroundColor: "rgba(124, 58, 237, 0.1)",
+            fill: true,
+            tension: 0.35,
+            pointRadius: 4,
+            pointHoverRadius: 5,
+          }],
+        },
+        options: {
+          ...chartDefaults(),
+          plugins: {
+            ...chartDefaults().plugins,
+            tooltip: {
+              ...chartDefaults().plugins.tooltip,
+              callbacks: {
+                label(context) {
+                  const tweet = series[context.dataIndex];
+                  return `${formatNumber(context.raw, 1)} | ${truncate(tweet.content, 72)}`;
+                },
+              },
+            },
+          },
+        },
+      });
+    } else {
+      renderEmpty(engagementCanvas.parentElement);
+    }
+
+    const topicCanvas = document.getElementById("topicChart");
+    const byTopic = Object.entries(groupBy(matureTweets, (tweet) => tweet.topic_bucket))
+      .map(([topic, rows]) => ({ topic, score: average(rows.map((row) => row.engagement_score)) || 0 }))
+      .sort((a, b) => b.score - a.score);
+    if (byTopic.length) {
+      createChart(topicCanvas, {
+        type: "bar",
+        data: {
+          labels: byTopic.map((item) => item.topic),
+          datasets: [{
+            data: byTopic.map((item) => item.score),
+            backgroundColor: "#7c3aed",
+            borderRadius: 8,
+          }],
+        },
+        options: {
+          ...chartDefaults(),
+          indexAxis: "y",
+        },
+      });
+    } else {
+      renderEmpty(topicCanvas.parentElement);
+    }
+
+    const leaderboardRoot = document.getElementById("formatLeaderboard");
+    const byFormat = Object.entries(groupBy(matureTweets, (tweet) => tweet.format_type))
+      .map(([format, rows]) => {
+        const now = Date.now();
+        const recent = rows.filter((row) => now - new Date(row.posted_at).getTime() <= 14 * 86400000);
+        const prior = rows.filter((row) => {
+          const age = now - new Date(row.posted_at).getTime();
+          return age > 14 * 86400000 && age <= 28 * 86400000;
+        });
+        const recentAvg = average(recent.map((row) => row.engagement_score));
+        const priorAvg = average(prior.map((row) => row.engagement_score));
+        const trend = recentAvg !== null && priorAvg !== null && priorAvg !== 0
+          ? ((recentAvg - priorAvg) / Math.abs(priorAvg)) * 100
+          : null;
+        return {
+          format,
+          avg: average(rows.map((row) => row.engagement_score)) || 0,
+          count: rows.length,
+          trend,
+        };
+      })
+      .sort((a, b) => b.avg - a.avg);
+
+    if (!byFormat.length) {
+      renderEmpty(leaderboardRoot);
+    } else {
+      leaderboardRoot.innerHTML = byFormat.map((item) => `
+        <div class="table-row">
+          <div class="row-main">
+            <span class="row-avatar">${item.format.slice(0, 2).toUpperCase()}</span>
+            <div>
+              <div class="row-label">${item.format}</div>
+              <div class="row-sublabel">${item.count} mature tweets</div>
+            </div>
+          </div>
+          <div class="mono">${formatNumber(item.avg, 1)}</div>
+          <div class="mono">${formatNumber(item.count)}</div>
+          <div class="delta ${deltaClass(item.trend)}">${deltaText(item.trend)}</div>
+        </div>
+      `).join("");
+    }
+
+    const strategyRoot = document.getElementById("latestStrategyCard");
+    if (!latestStrategy) {
+      renderEmpty(strategyRoot);
+    } else {
+      strategyRoot.innerHTML = `
+        <div class="tweet-card">
+          <div class="score-badge">${buildPill(latestStrategy.confidence_level?.toUpperCase() || "N/A", confidenceBadge(latestStrategy.confidence_level))}</div>
+          <p class="section-label">Top Formats</p>
+          <div class="pill-row">${(latestStrategy.top_formats || []).map((item) => buildPill(item, "accent")).join("") || buildPill("None yet", "muted")}</div>
+          <p class="section-label" style="margin-top:18px;">Top Topics</p>
+          <div class="pill-row">${(latestStrategy.top_topics || []).map((item) => buildPill(item, "accent")).join("") || buildPill("None yet", "muted")}</div>
+          <p class="section-label" style="margin-top:18px;">Avoid Formats</p>
+          <div class="pill-row">${(latestStrategy.avoid_formats || []).map((item) => buildPill(item, "danger", "strike")).join("") || buildPill("No avoid list", "muted")}</div>
+          <p class="reasoning-text" style="margin-top:18px;"><em>${latestStrategy.reasoning || "No reasoning captured yet."}</em></p>
+          <p class="footer-note">Last updated ${formatDate(latestStrategy.date || latestStrategy.created_at || latestStrategy.updated_at, { dateStyle: "medium", timeStyle: "short" })}</p>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XBot Dashboard - Patterns</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark"><i data-lucide="bot"></i></span>
+        <span><span style="color:#7c3aed">X</span>Bot</span>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">Monitor</p>
+        <a class="nav-link" data-nav="overview" href="./index.html"><i data-lucide="layout-dashboard"></i><span>Overview</span></a>
+        <a class="nav-link" data-nav="tweets" href="./tweets.html"><i data-lucide="twitter"></i><span>Tweets</span></a>
+        <a class="nav-link" data-nav="experiments" href="./experiments.html"><i data-lucide="flask-conical"></i><span>Experiments</span></a>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">Learn</p>
+        <a class="nav-link" data-nav="strategy" href="./strategy.html"><i data-lucide="brain-circuit"></i><span>Strategy</span></a>
+        <a class="nav-link" data-nav="patterns" href="./patterns.html"><i data-lucide="chart-column"></i><span>Patterns</span></a>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">System</p>
+        <a class="nav-link" data-nav="settings" href="./settings.html"><i data-lucide="settings-2"></i><span>Settings</span></a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="page-header">
+        <div class="page-title-wrap">
+          <span class="page-icon"><i data-lucide="chart-column"></i></span>
+          <div>
+            <h1 class="page-title">Patterns</h1>
+            <p class="page-subtitle">What your bot has learned about its own content.</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-grid">
+        <section class="card">
+          <h2 class="card-title">Best Performing Combinations</h2>
+          <div id="heatmapRoot"></div>
+          <p class="caption">Only combinations with 3+ mature tweets are shown.</p>
+        </section>
+
+        <section class="split-grid">
+          <div class="card">
+            <h2 class="card-title">Tone Performance</h2>
+            <div class="chart-wrap short"><canvas id="toneChart"></canvas></div>
+          </div>
+          <div class="card">
+            <h2 class="card-title">Timing Analysis</h2>
+            <div class="chart-wrap short"><canvas id="timingChart"></canvas></div>
+          </div>
+        </section>
+
+        <section class="split-grid">
+          <div class="card">
+            <h2 class="card-title">Diversity Score History</h2>
+            <div class="chart-wrap short"><canvas id="diversityChart"></canvas></div>
+          </div>
+          <div class="card">
+            <h2 class="card-title">Top 5 Tweets</h2>
+            <div id="topTweetsRoot" class="content-grid"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import {
+      loadDataset, mountActiveNav, groupBy, average, renderEmpty, createChart, chartDefaults, formatNumber,
+      buildPill, scoreColor, uniqueValues, metricValue, formatDate, escapeHtml
+    } from "./assets/app.js";
+
+    mountActiveNav("patterns");
+
+    const dataset = await loadDataset();
+    const matureTweets = dataset.matureTweets;
+
+    const heatmapRoot = document.getElementById("heatmapRoot");
+    const formats = uniqueValues(matureTweets, "format_type");
+    const topics = uniqueValues(matureTweets, "topic_bucket");
+    const cells = [];
+
+    for (const format of formats) {
+      for (const topic of topics) {
+        const matches = matureTweets.filter((tweet) => tweet.format_type === format && tweet.topic_bucket === topic);
+        if (matches.length >= 3) {
+          cells.push({ format, topic, score: average(matches.map((tweet) => tweet.engagement_score)), count: matches.length });
+        }
+      }
+    }
+
+    if (!cells.length) {
+      renderEmpty(heatmapRoot);
+    } else {
+      const scores = cells.map((cell) => cell.score);
+      const min = Math.min(...scores);
+      const max = Math.max(...scores);
+      heatmapRoot.innerHTML = `
+        <div class="heatmap">
+          <div class="heatmap-row" style="grid-template-columns: 160px repeat(${topics.length}, minmax(110px, 1fr));">
+            <div class="heatmap-cell label">Format / Topic</div>
+            ${topics.map((topic) => `<div class="heatmap-cell label">${topic}</div>`).join("")}
+          </div>
+          ${formats.map((format) => `
+            <div class="heatmap-row" style="grid-template-columns: 160px repeat(${topics.length}, minmax(110px, 1fr));">
+              <div class="heatmap-cell label">${format}</div>
+              ${topics.map((topic) => {
+                const match = cells.find((cell) => cell.format === format && cell.topic === topic);
+                if (!match) return `<div class="heatmap-cell muted">-</div>`;
+                return `<div class="heatmap-cell" style="background:${scoreColor(match.score, min, max)};">${formatNumber(match.score, 1)}</div>`;
+              }).join("")}
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    const toneGroups = Object.entries(groupBy(matureTweets, (tweet) => tweet.tone || "unknown"))
+      .map(([tone, rows]) => ({ tone, score: average(rows.map((row) => row.engagement_score)) || 0 }))
+      .sort((a, b) => b.score - a.score);
+    const toneCanvas = document.getElementById("toneChart");
+    if (!toneGroups.length) {
+      renderEmpty(toneCanvas.parentElement);
+    } else {
+      createChart(toneCanvas, {
+        type: "bar",
+        data: { labels: toneGroups.map((item) => item.tone), datasets: [{ data: toneGroups.map((item) => item.score), backgroundColor: "#7c3aed", borderRadius: 8 }] },
+        options: { ...chartDefaults(), indexAxis: "y" },
+      });
+    }
+
+    const timingCanvas = document.getElementById("timingChart");
+    const byHour = Array.from({ length: 24 }, (_, hour) => {
+      const hits = matureTweets.filter((tweet) => new Date(tweet.posted_at).getHours() === hour);
+      return { hour, score: average(hits.map((tweet) => tweet.engagement_score)), count: hits.length };
+    });
+    if (!byHour.some((item) => item.count)) {
+      renderEmpty(timingCanvas.parentElement);
+    } else {
+      createChart(timingCanvas, {
+        type: "bar",
+        data: {
+          labels: byHour.map((item) => `${String(item.hour).padStart(2, "0")}:00`),
+          datasets: [{ data: byHour.map((item) => item.score || 0), backgroundColor: "#7c3aed", borderRadius: 6 }],
+        },
+        options: chartDefaults(),
+      });
+    }
+
+    const diversityCanvas = document.getElementById("diversityChart");
+    const diversityPoints = [];
+    for (let i = 0; i < dataset.tweets.length; i += 1) {
+      const window = dataset.tweets.slice(i, i + 14);
+      if (!window.length) continue;
+      const uniqueFormats = new Set(window.map((tweet) => tweet.format_type).filter(Boolean)).size / 5;
+      const uniqueTopics = new Set(window.map((tweet) => tweet.topic_bucket).filter(Boolean)).size / 6;
+      const uniqueTones = new Set(window.map((tweet) => tweet.tone).filter(Boolean)).size / 4;
+      diversityPoints.push({ date: window[0].posted_at, score: (uniqueFormats + uniqueTopics + uniqueTones) / 3 });
+    }
+
+    if (!diversityPoints.length) {
+      renderEmpty(diversityCanvas.parentElement);
+    } else {
+      createChart(diversityCanvas, {
+        type: "line",
+        data: {
+          labels: diversityPoints.map((point) => formatDate(point.date, { dateStyle: "short" })),
+          datasets: [
+            { data: diversityPoints.map((point) => point.score), borderColor: "#7c3aed", backgroundColor: "rgba(124, 58, 237, 0.08)", fill: true, tension: 0.3 },
+            { data: diversityPoints.map(() => 0.5), borderColor: "#f59e0b", pointRadius: 0, borderDash: [6, 6] },
+          ],
+        },
+        options: chartDefaults(),
+      });
+    }
+
+    const topTweets = [...matureTweets].sort((a, b) => Number(b.engagement_score ?? -1) - Number(a.engagement_score ?? -1)).slice(0, 5);
+    const topTweetsRoot = document.getElementById("topTweetsRoot");
+    if (!topTweets.length) {
+      renderEmpty(topTweetsRoot);
+    } else {
+      topTweetsRoot.innerHTML = topTweets.map((tweet) => `
+        <article class="top-tweet-card">
+          <div class="score-badge">${buildPill(formatNumber(tweet.engagement_score, 1), "accent")}</div>
+          <p class="tweet-text">${escapeHtml(tweet.content || "No content captured.")}</p>
+          <div class="metrics-row">
+            <div class="metric-box"><div class="label">Impressions</div><div class="value">${formatNumber(metricValue(tweet, "impressions"))}</div></div>
+            <div class="metric-box"><div class="label">Likes</div><div class="value">${formatNumber(metricValue(tweet, "likes"))}</div></div>
+            <div class="metric-box"><div class="label">Retweets</div><div class="value">${formatNumber(metricValue(tweet, "retweets"))}</div></div>
+            <div class="metric-box"><div class="label">Replies</div><div class="value">${formatNumber(metricValue(tweet, "replies"))}</div></div>
+            <div class="metric-box"><div class="label">Quotes</div><div class="value">${formatNumber(metricValue(tweet, "quote_tweets"))}</div></div>
+          </div>
+          <div class="meta-row">
+            ${buildPill(tweet.format_type || "n/a", "accent")}
+            ${buildPill(tweet.topic_bucket || "n/a", "muted")}
+            ${buildPill(tweet.tone || "n/a", "warning")}
+          </div>
+        </article>
+      `).join("");
+    }
+  </script>
+</body>
+</html>

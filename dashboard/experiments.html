@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XBot Dashboard - Experiments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark"><i data-lucide="bot"></i></span>
+        <span><span style="color:#7c3aed">X</span>Bot</span>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">Monitor</p>
+        <a class="nav-link" data-nav="overview" href="./index.html"><i data-lucide="layout-dashboard"></i><span>Overview</span></a>
+        <a class="nav-link" data-nav="tweets" href="./tweets.html"><i data-lucide="twitter"></i><span>Tweets</span></a>
+        <a class="nav-link" data-nav="experiments" href="./experiments.html"><i data-lucide="flask-conical"></i><span>Experiments</span></a>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">Learn</p>
+        <a class="nav-link" data-nav="strategy" href="./strategy.html"><i data-lucide="brain-circuit"></i><span>Strategy</span></a>
+        <a class="nav-link" data-nav="patterns" href="./patterns.html"><i data-lucide="chart-column"></i><span>Patterns</span></a>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">System</p>
+        <a class="nav-link" data-nav="settings" href="./settings.html"><i data-lucide="settings-2"></i><span>Settings</span></a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="page-header">
+        <div class="page-title-wrap">
+          <span class="page-icon"><i data-lucide="flask-conical"></i></span>
+          <div>
+            <h1 class="page-title">Experiments</h1>
+            <p class="page-subtitle">Controlled format tests and their outcomes.</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-grid">
+        <section class="stats-grid three">
+          <div class="card">
+            <div class="stat-label">Total Experiments Run</div>
+            <div class="stat-value" id="expCount">0</div>
+            <div class="stat-subtext">All recorded experiments</div>
+          </div>
+          <div class="card">
+            <div class="stat-label">Avg Experiment Score</div>
+            <div class="stat-value" id="expAvg">N/A</div>
+            <div class="stat-subtext">Mean score across experiments</div>
+          </div>
+          <div class="card">
+            <div class="stat-label">Best Experiment</div>
+            <div class="stat-value" id="expBest">N/A</div>
+            <div class="stat-subtext" id="expBestSub">Awaiting scored tests</div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="inline-split" style="margin-bottom: 18px;">
+            <div>
+              <h2 class="card-title" style="margin:0;">Experiment Cards</h2>
+              <p class="card-subtitle" style="margin-top:6px;">Review format tests by score or by recency.</p>
+            </div>
+            <div class="card-actions">
+              <button class="btn" id="sortToggle">Sort: Score</button>
+            </div>
+          </div>
+          <div id="experimentGrid" class="grid-cards"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { loadDataset, mountActiveNav, formatNumber, average, renderEmpty, buildPill, formatDate, escapeHtml } from "./assets/app.js";
+
+    mountActiveNav("experiments");
+
+    const dataset = await loadDataset();
+    const experiments = [...dataset.experiments];
+    let sortMode = "score";
+
+    document.getElementById("expCount").textContent = formatNumber(experiments.length);
+    const avg = average(experiments.map((item) => item.score));
+    document.getElementById("expAvg").textContent = avg == null ? "N/A" : formatNumber(avg, 1);
+
+    const best = [...experiments].sort((a, b) => Number(b.score ?? -1) - Number(a.score ?? -1))[0];
+    document.getElementById("expBest").textContent = best?.archetype || "N/A";
+    document.getElementById("expBestSub").textContent = best ? `${formatNumber(best.score, 1)} score on ${best.topic}` : "Awaiting scored tests";
+
+    function render() {
+      const root = document.getElementById("experimentGrid");
+      const rows = [...experiments].sort((a, b) => sortMode === "date"
+        ? new Date(b.posted_at) - new Date(a.posted_at)
+        : Number(b.score ?? -1) - Number(a.score ?? -1));
+
+      document.getElementById("sortToggle").textContent = `Sort: ${sortMode === "score" ? "Score" : "Date"}`;
+
+      if (!rows.length) {
+        renderEmpty(root);
+        return;
+      }
+
+      root.innerHTML = rows.map((experiment) => `
+        <article class="experiment-card">
+          <div class="score-badge">${buildPill(experiment.score == null ? "N/A" : formatNumber(experiment.score, 1), "accent")}</div>
+          <h3 class="experiment-title">${escapeHtml(experiment.archetype || "Untitled Experiment")}</h3>
+          <p class="card-subtitle">${escapeHtml(experiment.topic || "No topic")}</p>
+          <p class="body-copy">${escapeHtml(experiment.hypothesis || "No hypothesis recorded.")}</p>
+          <div class="meta-row">
+            ${buildPill(experiment.format_used || "n/a", "accent")}
+            ${buildPill(`hour:${experiment.posted_hour ?? "n/a"}`, "muted")}
+          </div>
+          <div class="subtle-divider"></div>
+          <div class="inline-split">
+            <div>
+              <div class="stat-label">Posted</div>
+              <div class="mono">${formatDate(experiment.posted_at, { dateStyle: "medium", timeStyle: "short" })}</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="stat-label">Thread Length</div>
+              <div class="mono">${formatNumber(experiment.thread_length || 0)}</div>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    document.getElementById("sortToggle").addEventListener("click", () => {
+      sortMode = sortMode === "score" ? "date" : "score";
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

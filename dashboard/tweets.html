@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XBot Dashboard - Tweets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark"><i data-lucide="bot"></i></span>
+        <span><span style="color:#7c3aed">X</span>Bot</span>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">Monitor</p>
+        <a class="nav-link" data-nav="overview" href="./index.html"><i data-lucide="layout-dashboard"></i><span>Overview</span></a>
+        <a class="nav-link" data-nav="tweets" href="./tweets.html"><i data-lucide="twitter"></i><span>Tweets</span></a>
+        <a class="nav-link" data-nav="experiments" href="./experiments.html"><i data-lucide="flask-conical"></i><span>Experiments</span></a>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">Learn</p>
+        <a class="nav-link" data-nav="strategy" href="./strategy.html"><i data-lucide="brain-circuit"></i><span>Strategy</span></a>
+        <a class="nav-link" data-nav="patterns" href="./patterns.html"><i data-lucide="chart-column"></i><span>Patterns</span></a>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">System</p>
+        <a class="nav-link" data-nav="settings" href="./settings.html"><i data-lucide="settings-2"></i><span>Settings</span></a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="page-header">
+        <div class="page-title-wrap">
+          <span class="page-icon"><i data-lucide="twitter"></i></span>
+          <div>
+            <h1 class="page-title">Tweets</h1>
+            <p class="page-subtitle">Every tweet posted by XBot with full engagement breakdown.</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-grid">
+        <section class="card compact">
+          <div class="controls-bar" id="controlsBar"></div>
+        </section>
+
+        <section class="card">
+          <div class="inline-split" style="margin-bottom: 16px;">
+            <h2 class="card-title" style="margin:0;">Tweet Archive</h2>
+            <div class="mono muted" id="tweetCountMeta">0 rows</div>
+          </div>
+          <div id="tweetTable"></div>
+          <div class="pagination" id="pagination"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import {
+      loadDataset, mountActiveNav, uniqueValues, renderEmpty, buildPill, maturityBadge, formatDate,
+      formatNumber, metricValue, truncate, escapeHtml
+    } from "./assets/app.js";
+
+    mountActiveNav("tweets");
+
+    const dataset = await loadDataset();
+    const tweets = dataset.tweets;
+    const PAGE_SIZE = 20;
+    const expanded = new Set();
+    const state = { topic: "all", format: "all", maturity: "all", sort: "date", page: 1 };
+
+    const controls = [
+      { key: "topic", label: "Topic Bucket", options: ["all", ...uniqueValues(tweets, "topic_bucket")] },
+      { key: "format", label: "Format Type", options: ["all", ...uniqueValues(tweets, "format_type")] },
+      { key: "maturity", label: "Metrics Maturity", options: ["all", "fresh", "settling", "mature"] },
+      { key: "sort", label: "Sort By", options: ["date", "engagement", "likes", "replies"] },
+    ];
+
+    document.getElementById("controlsBar").innerHTML = controls.map(({ key, label, options }) => `
+      <label class="control-group">
+        <span class="control-label">${label}</span>
+        <select class="control-select" data-control="${key}">
+          ${options.map((option) => `<option value="${option}">${option === "all" ? "All" : option}</option>`).join("")}
+        </select>
+      </label>
+    `).join("");
+
+    document.querySelectorAll("[data-control]").forEach((select) => {
+      select.value = state[select.dataset.control];
+      select.addEventListener("change", (event) => {
+        state[event.target.dataset.control] = event.target.value;
+        state.page = 1;
+        render();
+      });
+    });
+
+    function filteredTweets() {
+      const list = tweets.filter((tweet) => {
+        const topicOk = state.topic === "all" || tweet.topic_bucket === state.topic;
+        const formatOk = state.format === "all" || tweet.format_type === state.format;
+        const maturityOk = state.maturity === "all" || tweet.metrics_maturity === state.maturity;
+        return topicOk && formatOk && maturityOk;
+      });
+
+      const sorters = {
+        date: (a, b) => new Date(b.posted_at) - new Date(a.posted_at),
+        engagement: (a, b) => Number(b.engagement_score ?? -1) - Number(a.engagement_score ?? -1),
+        likes: (a, b) => metricValue(b, "likes") - metricValue(a, "likes"),
+        replies: (a, b) => metricValue(b, "replies") - metricValue(a, "replies"),
+      };
+
+      return list.sort(sorters[state.sort]);
+    }
+
+    function render() {
+      const rows = filteredTweets();
+      document.getElementById("tweetCountMeta").textContent = `${formatNumber(rows.length)} rows`;
+      const start = (state.page - 1) * PAGE_SIZE;
+      const pageRows = rows.slice(start, start + PAGE_SIZE);
+      const table = document.getElementById("tweetTable");
+
+      if (!pageRows.length) {
+        renderEmpty(table);
+      } else {
+        table.innerHTML = `
+          <div class="table-head" style="grid-template-columns: 120px minmax(0,1fr) 120px 120px 120px 70px 70px 70px 70px 90px;">
+            <div>Posted</div><div>Tweet Content</div><div>Format</div><div>Topic</div><div>Maturity</div>
+            <div>Score</div><div>Impr.</div><div>Likes</div><div>RTs</div><div>Replies</div>
+          </div>
+          <div class="expandable">
+            ${pageRows.map((tweet) => `
+              <div class="expandable-item ${expanded.has(tweet.tweet_id) ? "open" : ""}" data-tweet-id="${tweet.tweet_id}">
+                <div class="expandable-summary">
+                  <div class="mono muted">${formatDate(tweet.posted_at, { dateStyle: "short" })}</div>
+                  <div title="${escapeHtml(tweet.content || "")}">${escapeHtml(truncate(tweet.content || "", 100))}</div>
+                  <div>${buildPill(tweet.format_type || "n/a", "accent")}</div>
+                  <div>${buildPill(tweet.topic_bucket || "n/a", "muted")}</div>
+                  <div>${buildPill(tweet.metrics_maturity || "unknown", maturityBadge(tweet.metrics_maturity))}</div>
+                  <div class="mono">${tweet.engagement_score == null ? "N/A" : formatNumber(tweet.engagement_score, 1)}</div>
+                  <div class="mono">${formatNumber(metricValue(tweet, "impressions"))}</div>
+                  <div class="mono">${formatNumber(metricValue(tweet, "likes"))}</div>
+                  <div class="mono">${formatNumber(metricValue(tweet, "retweets"))}</div>
+                  <div class="mono">${formatNumber(metricValue(tweet, "replies"))}</div>
+                </div>
+                <div class="expandable-details">
+                  <div class="detail-grid">
+                    <div class="detail-card">
+                      <p class="section-label">Full Tweet</p>
+                      <p class="tweet-text">${escapeHtml(tweet.content || "No content recorded.")}</p>
+                      <div class="meta-row">
+                        ${buildPill(tweet.tone || "tone n/a", "accent")}
+                        ${tweet.is_experiment ? buildPill(`experiment:${tweet.experiment_type || "yes"}`, "warning") : buildPill("organic", "muted")}
+                        ${buildPill(`hook:${formatNumber(tweet.hook_score || 0, 2)}`, "muted")}
+                      </div>
+                    </div>
+                    <div class="detail-card">
+                      <p class="section-label">Metadata</p>
+                      <div class="kv-list">
+                        <div class="kv-row"><span class="kv-label">Tweet ID</span><span class="kv-value">${tweet.tweet_id || "N/A"}</span></div>
+                        <div class="kv-row"><span class="kv-label">Hook</span><span class="kv-value">${escapeHtml(truncate(tweet.hook || "N/A", 60))}</span></div>
+                        <div class="kv-row"><span class="kv-label">Quote Tweets</span><span class="kv-value">${formatNumber(metricValue(tweet, "quote_tweets"))}</span></div>
+                        <div class="kv-row"><span class="kv-label">Fetched</span><span class="kv-value">${formatDate(tweet.metrics_fetched_at, { dateStyle: "short", timeStyle: "short" })}</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="detail-card" style="margin-top:16px;">
+                    <p class="section-label">Reasoning</p>
+                    <p class="reasoning-text">${escapeHtml(tweet.reasoning || "No reasoning saved.")}</p>
+                  </div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        `;
+
+        table.querySelectorAll(".expandable-item").forEach((item) => {
+          item.querySelector(".expandable-summary").addEventListener("click", () => {
+            const id = item.dataset.tweetId;
+            if (expanded.has(id)) expanded.delete(id); else expanded.add(id);
+            render();
+          });
+        });
+      }
+
+      const pageCount = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+      state.page = Math.min(state.page, pageCount);
+      document.getElementById("pagination").innerHTML = `
+        <button class="btn" ${state.page === 1 ? "disabled" : ""} data-page="prev">Previous</button>
+        <span>Page ${formatNumber(state.page)} / ${formatNumber(pageCount)}</span>
+        <button class="btn" ${state.page === pageCount ? "disabled" : ""} data-page="next">Next</button>
+      `;
+      document.querySelectorAll("[data-page]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.page += button.dataset.page === "next" ? 1 : -1;
+          render();
+        });
+      });
+    }
+
+    render();
+  </script>
+</body>
+</html>

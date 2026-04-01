@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XBot Dashboard - Strategy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark"><i data-lucide="bot"></i></span>
+        <span><span style="color:#7c3aed">X</span>Bot</span>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">Monitor</p>
+        <a class="nav-link" data-nav="overview" href="./index.html"><i data-lucide="layout-dashboard"></i><span>Overview</span></a>
+        <a class="nav-link" data-nav="tweets" href="./tweets.html"><i data-lucide="twitter"></i><span>Tweets</span></a>
+        <a class="nav-link" data-nav="experiments" href="./experiments.html"><i data-lucide="flask-conical"></i><span>Experiments</span></a>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">Learn</p>
+        <a class="nav-link" data-nav="strategy" href="./strategy.html"><i data-lucide="brain-circuit"></i><span>Strategy</span></a>
+        <a class="nav-link" data-nav="patterns" href="./patterns.html"><i data-lucide="chart-column"></i><span>Patterns</span></a>
+      </div>
+      <div class="nav-section">
+        <p class="nav-label">System</p>
+        <a class="nav-link" data-nav="settings" href="./settings.html"><i data-lucide="settings-2"></i><span>Settings</span></a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="page-header">
+        <div class="page-title-wrap">
+          <span class="page-icon"><i data-lucide="brain-circuit"></i></span>
+          <div>
+            <h1 class="page-title">Strategy</h1>
+            <p class="page-subtitle">How the bot's content strategy evolves daily.</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-grid">
+        <section class="card">
+          <h2 class="card-title">Confidence Over Time</h2>
+          <div class="chart-wrap short"><canvas id="confidenceChart"></canvas></div>
+        </section>
+
+        <section class="card">
+          <h2 class="card-title">Strategy Timeline</h2>
+          <div id="timelineRoot" class="timeline"></div>
+        </section>
+
+        <section class="card">
+          <h2 class="card-title">Analytics Snapshot</h2>
+          <div class="two-col" id="analyticsRoot"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import {
+      loadDataset, mountActiveNav, renderEmpty, formatDate, buildPill, confidenceBadge,
+      createChart, chartDefaults, formatNumber, formatPercent, escapeHtml
+    } from "./assets/app.js";
+
+    mountActiveNav("strategy");
+
+    const dataset = await loadDataset();
+    const strategies = [...dataset.strategies].reverse();
+    const latestStrategy = dataset.latestStrategy;
+    const confidenceLevels = { low: 1, medium: 2, high: 3 };
+
+    const chartRoot = document.getElementById("confidenceChart");
+    if (!dataset.strategies.length) {
+      renderEmpty(chartRoot.parentElement);
+    } else {
+      createChart(chartRoot, {
+        type: "line",
+        data: {
+          labels: dataset.strategies.map((item) => formatDate(item.date || item.created_at || item.updated_at, { dateStyle: "short" })),
+          datasets: [{
+            data: dataset.strategies.map((item) => confidenceLevels[String(item.confidence_level || "").toLowerCase()] || 0),
+            borderColor: "#7c3aed",
+            stepped: true,
+            tension: 0,
+            fill: false,
+          }],
+        },
+        options: {
+          ...chartDefaults(),
+          scales: {
+            ...chartDefaults().scales,
+            y: {
+              min: 0,
+              max: 3,
+              ticks: {
+                color: "#6b6b8a",
+                callback(value) { return ["", "LOW", "MED", "HIGH"][value] || ""; },
+                font: { family: "DM Mono", size: 11 },
+              },
+              grid: { color: "rgba(30, 30, 46, 0.45)", drawBorder: false },
+            },
+          },
+        },
+      });
+    }
+
+    const timelineRoot = document.getElementById("timelineRoot");
+    if (!strategies.length) {
+      renderEmpty(timelineRoot);
+    } else {
+      timelineRoot.innerHTML = strategies.map((strategy) => `
+        <div class="timeline-entry">
+          <span class="timeline-dot"></span>
+          <article class="strategy-card">
+            <div class="timeline-header">
+              <div>
+                <div class="timeline-title">${formatDate(strategy.date || strategy.created_at || strategy.updated_at)}</div>
+                <div class="helper-text">Based on ${formatNumber(strategy.confidence_data_count || 0)} mature tweets</div>
+              </div>
+              ${buildPill((strategy.confidence_level || "n/a").toUpperCase(), confidenceBadge(strategy.confidence_level))}
+            </div>
+            <div class="triple-grid">
+              <div>
+                <p class="section-label">Promote</p>
+                <div class="pill-row">
+                  ${(strategy.top_formats || []).map((item) => buildPill(item, "accent")).join("")}
+                  ${(strategy.top_topics || []).map((item) => buildPill(item, "accent")).join("")}
+                  ${(strategy.top_tones || []).map((item) => buildPill(item, "accent")).join("")}
+                  ${!(strategy.top_formats || []).length && !(strategy.top_topics || []).length && !(strategy.top_tones || []).length ? buildPill("No promote list", "muted") : ""}
+                </div>
+              </div>
+              <div>
+                <p class="section-label">Avoid</p>
+                <div class="pill-row">
+                  ${(strategy.avoid_formats || []).map((item) => buildPill(item, "danger", "strike")).join("")}
+                  ${(strategy.avoid_topics || []).map((item) => buildPill(item, "danger", "strike")).join("")}
+                  ${!(strategy.avoid_formats || []).length && !(strategy.avoid_topics || []).length ? buildPill("Nothing flagged", "muted") : ""}
+                </div>
+              </div>
+              <div>
+                <p class="section-label">Experiment</p>
+                <div class="pill-row">${buildPill(strategy.experiment_slot || "No experiment slot", "warning")}</div>
+              </div>
+            </div>
+            <p class="reasoning-text" style="margin-top:16px;"><em>${escapeHtml(strategy.reasoning || "No reasoning recorded.")}</em></p>
+          </article>
+        </div>
+      `).join("");
+    }
+
+    const analyticsRoot = document.getElementById("analyticsRoot");
+    if (!latestStrategy) {
+      renderEmpty(analyticsRoot);
+    } else {
+      const withUrls = latestStrategy.avg_score_with_urls;
+      const withoutUrls = latestStrategy.avg_score_without_urls;
+      const replySentiment = latestStrategy.reply_sentiment || {};
+      analyticsRoot.innerHTML = `
+        <div class="card compact">
+          <h3 class="settings-title">URL Performance</h3>
+          <div class="metrics-row">
+            <div class="metric-box"><div class="label">With URL</div><div class="value">${withUrls == null ? "N/A" : formatNumber(withUrls, 1)}</div></div>
+            <div class="metric-box"><div class="label">Without URL</div><div class="value">${withoutUrls == null ? "N/A" : formatNumber(withoutUrls, 1)}</div></div>
+          </div>
+          <p class="footer-note">${latestStrategy.url_lift_percent == null ? "No URL lift data yet" : `${formatPercent(latestStrategy.url_lift_percent)} lift`}</p>
+        </div>
+        <div class="card compact">
+          <h3 class="settings-title">Follower Growth Estimate</h3>
+          <div class="kv-list">
+            <div class="kv-row"><span class="kv-label">Daily growth est.</span><span class="kv-value">${latestStrategy.estimated_daily_growth == null ? "N/A" : formatNumber(latestStrategy.estimated_daily_growth, 1)}</span></div>
+            <div class="kv-row"><span class="kv-label">High performers</span><span class="kv-value">${formatNumber(latestStrategy.high_performance_tweets || 0)}</span></div>
+            <div class="kv-row"><span class="kv-label">Best tweet id</span><span class="kv-value">${latestStrategy.best_tweet_id || "N/A"}</span></div>
+          </div>
+        </div>
+        <div class="card compact">
+          <h3 class="settings-title">Reply Sentiment</h3>
+          <div class="kv-list">
+            <div class="kv-row"><span class="kv-label">Positive</span><span class="kv-value">${formatNumber(replySentiment.positive || 0)}</span></div>
+            <div class="kv-row"><span class="kv-label">Neutral</span><span class="kv-value">${formatNumber(replySentiment.neutral || 0)}</span></div>
+            <div class="kv-row"><span class="kv-label">Negative</span><span class="kv-value">${formatNumber(replySentiment.negative || 0)}</span></div>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
