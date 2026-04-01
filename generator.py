@@ -127,6 +127,9 @@ IMPORTANT: Generate tweets that follow the bot's personality and topic expertise
 - Follow X best practices for engagement
 - Include relevant hashtags if appropriate
 - Keep technical jargon accessible
+- HARD LIMIT: every single tweet must be 280 characters or fewer
+- TARGET: aim for 180-240 characters for single tweets
+- If you cannot fit the idea cleanly, simplify it instead of exceeding the limit
 
 Return ONLY a JSON object (no other text) with structure:
 {{
@@ -268,6 +271,12 @@ def normalize_tweet_object(raw: Dict[str, Any], archetype: str, topic: str, thre
         parts = [part.strip() for part in str(text).split("\n\n") if part.strip()]
         text_parts = parts if parts else [str(text)]
 
+    if isinstance(text_parts, list):
+        text_parts = [shorten_tweet_text(str(part)) for part in text_parts]
+        text = "\n\n".join(text_parts)
+    else:
+        text = shorten_tweet_text(str(text))
+
     lines = [line.strip() for line in str(text).splitlines() if line.strip()]
     hook = raw.get("hook") or (lines[0] if lines else str(text)[: config.MAX_HOOK_LENGTH])
 
@@ -283,3 +292,40 @@ def normalize_tweet_object(raw: Dict[str, Any], archetype: str, topic: str, thre
         "reasoning": raw.get("reasoning") or "Generated from current strategy context.",
         "confidence": raw.get("confidence", 0.8),
     }
+
+
+def shorten_tweet_text(text: str, max_length: int = config.MAX_TWEET_LENGTH) -> str:
+    """Trim overlong model output to a tweet-safe length while preserving readability."""
+    compact = " ".join(text.split())
+    if len(compact) <= max_length:
+        return compact
+
+    # Prefer trimming at sentence boundaries first.
+    sentences = [sentence.strip() for sentence in compact.replace("! ", "!|").replace("? ", "?|").replace(". ", ".|").split("|") if sentence.strip()]
+    if sentences:
+        candidate = ""
+        for sentence in sentences:
+            proposed = f"{candidate} {sentence}".strip()
+            if len(proposed) <= max_length:
+                candidate = proposed
+            else:
+                break
+        if candidate:
+            return candidate
+
+    # Fall back to trimming at word boundaries with an ellipsis.
+    words = compact.split()
+    candidate = ""
+    for word in words:
+        proposed = f"{candidate} {word}".strip()
+        if len(proposed) + 1 <= max_length:
+            candidate = proposed
+        else:
+            break
+
+    candidate = candidate.rstrip(" ,;:-")
+    if not candidate:
+        return compact[: max_length - 1].rstrip() + "…"
+    if len(candidate) < len(compact):
+        return candidate[: max_length - 1].rstrip(" ,;:-") + "…"
+    return candidate
