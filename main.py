@@ -115,12 +115,24 @@ async def verify_environment() -> bool:
     """Verify all credentials and directories."""
     logger.info("STARTUP", data={"status": "verifying"})
     
-    required_vars = ["NVIDIA_API_KEY", "X_API_KEY", "X_API_SECRET", 
-                     "X_ACCESS_TOKEN", "X_ACCESS_TOKEN_SECRET", "X_BEARER_TOKEN"]
+    required_vars = ["NVIDIA_API_KEY", "GETXAPI_API_KEY"]
     missing = [v for v in required_vars if not os.getenv(v)]
     
     if missing:
         logger.error("STARTUP", data={"missing": missing})
+        return False
+
+    has_direct_auth = bool(os.getenv("GETXAPI_AUTH_TOKEN"))
+    has_login_flow = bool(os.getenv("GETXAPI_USERNAME")) and bool(os.getenv("GETXAPI_PASSWORD"))
+    if not (has_direct_auth or has_login_flow):
+        logger.error(
+            "STARTUP",
+            data={
+                "missing": [
+                    "GETXAPI_AUTH_TOKEN or GETXAPI_USERNAME/GETXAPI_PASSWORD"
+                ]
+            },
+        )
         return False
     
     for directory in ["logs", "memory", "data", config.JSON_BACKUP_DIR]:

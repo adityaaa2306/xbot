@@ -11,24 +11,24 @@ Priority 3 Enhancements:
 - Smart scheduling: Respect rate limits with exponential backoff
 """
 
-import os
 import time
-from typing import Optional, Dict, Any, List
-from datetime import datetime, timedelta
+from typing import Optional, Dict, List
+from datetime import datetime
 
-import tweepy
+import httpx
 
 import config
+from getxapi import api_headers
 from logger import logger
 from memory import TweetMetrics
 
 
 class MetricsFetcher:
-    """Fetch public metrics for tweets using X API v2 with batch processing."""
+    """Fetch public metrics for tweets using GetXAPI."""
 
     def __init__(self):
-        self.bearer_token = config.X_BEARER_TOKEN
-        self.client = tweepy.Client(bearer_token=self.bearer_token) if self.bearer_token else None
+        self.api_key = config.GETXAPI_API_KEY
+        self.base_url = config.GETXAPI_BASE_URL.rstrip("/")
         self.backoff_multiplier = config.BACKOFF_MULTIPLIER
         self.backoff_current = config.BACKOFF_INITIAL
         self.batch_size = config.BATCH_FETCH_SIZE  # Default 100
@@ -43,46 +43,19 @@ class MetricsFetcher:
         Returns:
             TweetMetrics object or None if fetch failed
         """
+        if not self.api_key:
+            logger.warn("Fetch skipped: GetXAPI API key is not configured", phase="FETCHER")
+            return None
+
         try:
-            if not self.client:
-                logger.warn("Fetch skipped: X bearer token is not configured", phase="FETCHER")
-                return None
-            response = self.client.get_tweet(
-                id=tweet_id,
-                tweet_fields=["public_metrics", "created_at"]
-            )
-
-            if not response.data:
-                logger.warn(
-                    "Tweet not found or not public",
-                    phase="FETCHER",
-                    data={"tweet_id": tweet_id}
+            with httpx.Client(timeout=config.POSTER_TIMEOUT_SECS) as client:
+                response = client.get(
+                    f"{self.base_url}/twitter/tweet/detail",
+                    params={"id": tweet_id},
+                    headers=api_headers(),
                 )
-                return None
 
-            metrics_dict = response.data.public_metrics
-            
-            metrics = TweetMetrics(
-                impressions=metrics_dict.get("impression_count", 0),
-                likes=metrics_dict.get("like_count", 0),
-                retweets=metrics_dict.get("retweet_count", 0),
-                replies=metrics_dict.get("reply_count", 0),
-                quote_tweets=metrics_dict.get("quote_tweet_count", 0),
-            )
-
-            # Reset backoff on success
-            self.backoff_current = config.BACKOFF_INITIAL
-            
-            logger.debug(
-                "Fetched metrics",
-                phase="FETCHER",
-                data={"tweet_id": tweet_id, "metrics": metrics.to_dict()}
-            )
-            
-            return metrics
-
-        except tweepy.TweepyException as e:
-            if e.response.status_code == 429:  # Rate limited
+            if response.status_code == 429:
                 logger.warn(
                     "Rate limited during fetch",
                     phase="FETCHER",
@@ -93,16 +66,36 @@ class MetricsFetcher:
                     self.backoff_current * self.backoff_multiplier,
                     config.BACKOFF_MAX
                 )
-                # Retry once after backoff
                 return self.fetch_metrics(tweet_id)
-            else:
+
+            if response.status_code >= 400:
                 logger.error(
                     "Failed to fetch metrics",
                     phase="FETCHER",
-                    data={"tweet_id": tweet_id},
-                    error=str(e)
+                    data={"tweet_id": tweet_id, "status_code": response.status_code},
+                    error=response.text.strip(),
                 )
                 return None
+
+            payload = response.json()
+            data = payload.get("data", {}) if isinstance(payload, dict) else {}
+            metrics = TweetMetrics(
+                impressions=data.get("viewCount", 0) or 0,
+                likes=data.get("likeCount", 0) or 0,
+                retweets=data.get("retweetCount", 0) or 0,
+                replies=data.get("replyCount", 0) or 0,
+                quote_tweets=data.get("quoteCount", 0) or 0,
+            )
+
+            self.backoff_current = config.BACKOFF_INITIAL
+
+            logger.debug(
+                "Fetched metrics",
+                phase="FETCHER",
+                data={"tweet_id": tweet_id, "metrics": metrics.to_dict()}
+            )
+
+            return metrics
 
         except Exception as e:
             logger.error(
@@ -133,77 +126,19 @@ class MetricsFetcher:
         tweet_ids = tweet_ids[:self.batch_size]
         
         try:
-            if not self.client:
-                logger.warn("Batch fetch skipped: X bearer token is not configured", phase="FETCHER")
-                return results
-            # Fetch all tweets in one request
-            response = self.client.get_tweets(
-                ids=tweet_ids,
-                tweet_fields=["public_metrics", "created_at"]
-            )
-            
-            if not response.data:
-                logger.warn(
-                    "No tweets found in batch fetch",
-                    phase="FETCHER",
-                    data={"batch_size": len(tweet_ids)}
-                )
-                return results
-            
-            # Process each tweet
-            for tweet in response.data:
-                tweet_id = tweet.id
-                metrics_dict = tweet.public_metrics
-                
-                metrics = TweetMetrics(
-                    impressions=metrics_dict.get("impression_count", 0),
-                    likes=metrics_dict.get("like_count", 0),
-                    retweets=metrics_dict.get("retweet_count", 0),
-                    replies=metrics_dict.get("reply_count", 0),
-                    quote_tweets=metrics_dict.get("quote_tweet_count", 0),
-                )
-                
-                results[tweet_id] = metrics
-            
-            # Reset backoff on success
-            self.backoff_current = config.BACKOFF_INITIAL
-            
+            for idx, tweet_id in enumerate(tweet_ids):
+                results[tweet_id] = self.fetch_metrics(tweet_id)
+                if idx < len(tweet_ids) - 1:
+                    time.sleep(0.1)
+
             logger.info(
-                f"Batch fetched metrics",
+                "Batch fetched metrics",
                 phase="FETCHER",
-                data={"batch_size": len(tweet_ids), "successful": len(results)}
+                data={"batch_size": len(tweet_ids), "successful": len([v for v in results.values() if v])}
             )
-            
+
             return results
-            
-        except tweepy.TweepyException as e:
-            if e.response.status_code == 429:  # Rate limited
-                logger.warn(
-                    "Rate limited during batch fetch",
-                    phase="FETCHER",
-                    data={"batch_size": len(tweet_ids), "backoff_seconds": self.backoff_current}
-                )
-                time.sleep(self.backoff_current)
-                self.backoff_current = min(
-                    self.backoff_current * self.backoff_multiplier,
-                    config.BACKOFF_MAX
-                )
-                # Retry with smaller batch
-                half = len(tweet_ids) // 2
-                if half > 0:
-                    results.update(self.fetch_batch(tweet_ids[:half]))
-                    time.sleep(0.5)
-                    results.update(self.fetch_batch(tweet_ids[half:]))
-                return results
-            else:
-                logger.error(
-                    "Failed batch fetch",
-                    phase="FETCHER",
-                    data={"batch_size": len(tweet_ids)},
-                    error=str(e)
-                )
-                return results
-        
+
         except Exception as e:
             logger.error(
                 "Unexpected error during batch fetch",

@@ -20,9 +20,7 @@ Priority 4 Enhancements:
 
 import asyncio
 import json
-import os
 from typing import Optional, Dict, List
-from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
 try:
@@ -32,19 +30,12 @@ try:
 except ImportError:
     SKLEARN_AVAILABLE = False
 
-import tweepy
+import httpx
 import config
+from getxapi import GetXAPIError, api_headers, get_auth_token_async
 from logger import logger
 from memory import memory
 from validator import validator
-
-
-# X API Keys from environment
-X_API_KEY = os.getenv("X_API_KEY", "")
-X_API_SECRET = os.getenv("X_API_SECRET", "")
-X_ACCESS_TOKEN = os.getenv("X_ACCESS_TOKEN", "")
-X_ACCESS_TOKEN_SECRET = os.getenv("X_ACCESS_TOKEN_SECRET", "")
-X_BEARER_TOKEN = os.getenv("X_BEARER_TOKEN", "")
 
 
 class RateLimitTracker:
@@ -98,42 +89,63 @@ class RateLimitTracker:
 
 
 class XAPIAsyncClient:
-    """Async wrapper for tweepy X API client with compliance headers."""
+    """Async wrapper for GetXAPI create tweet endpoint."""
     
     def __init__(self):
-        self.client = tweepy.Client(
-            consumer_key=X_API_KEY,
-            consumer_secret=X_API_SECRET,
-            access_token=X_ACCESS_TOKEN,
-            access_token_secret=X_ACCESS_TOKEN_SECRET,
-            bearer_token=X_BEARER_TOKEN or None,
-            wait_on_rate_limit=True,
-        )
-        self.executor = ThreadPoolExecutor(max_workers=1)
+        self.base_url = config.GETXAPI_BASE_URL.rstrip("/")
+
+    async def _create_tweet(self, text: str, reply_to_tweet_id: Optional[str] = None) -> Dict:
+        auth_token = await get_auth_token_async()
+        payload: Dict[str, str] = {
+            "auth_token": auth_token,
+            "text": text,
+        }
+        if reply_to_tweet_id:
+            payload["reply_to_tweet_id"] = str(reply_to_tweet_id)
+        if config.GETXAPI_PROXY:
+            payload["proxy"] = config.GETXAPI_PROXY
+
+        async with httpx.AsyncClient(timeout=config.POSTER_TIMEOUT_SECS) as client:
+            response = await client.post(
+                f"{self.base_url}/twitter/tweet/create",
+                headers=api_headers(),
+                json=payload,
+            )
+
+        if response.status_code >= 400:
+            raise GetXAPIError(response.text.strip() or f"HTTP {response.status_code}")
+
+        result = response.json()
+        data = result.get("data", {}) if isinstance(result, dict) else {}
+        tweet_id = data.get("id")
+        if not tweet_id:
+            raise GetXAPIError("GetXAPI did not return a tweet ID.")
+
+        return {
+            "tweet_id": str(tweet_id),
+            "text": data.get("text", text),
+            "posted_at": datetime.utcnow().isoformat() + "Z",
+        }
     
     async def post_tweet(self, text: str) -> Optional[Dict]:
         """Post a single tweet asynchronously."""
-        loop = asyncio.get_event_loop()
         try:
-            result = await loop.run_in_executor(
-                self.executor,
-                lambda: self.client.create_tweet(text=text)
-            )
+            result = await self._create_tweet(text=text)
             return {
-                "tweet_id": str(result.data["id"]),
-                "text": text,
-                "posted_at": datetime.utcnow().isoformat() + "Z",
+                "tweet_id": result["tweet_id"],
+                "text": result["text"],
+                "posted_at": result["posted_at"],
                 "thread_length": 1,
             }
         except Exception as e:
             error_text = str(e)
             data = {}
-            if "appropriate oauth1 app permissions" in error_text.lower():
-                data["remediation"] = (
-                    "Enable write permissions for the X app, then regenerate the access token and access token secret "
-                    "and update the repository secrets."
-                )
-            logger.error(f"X API tweet post failed: {error_text}", phase="POSTER", data=data, error=error_text)
+            lowered = error_text.lower()
+            if "402" in lowered or "credits" in lowered or "payment required" in lowered:
+                data["remediation"] = "Add GetXAPI credits or upgrade the GetXAPI account plan."
+            elif "401" in lowered or "invalid auth_token" in lowered:
+                data["remediation"] = "Refresh GETXAPI_AUTH_TOKEN or provide GETXAPI_USERNAME/GETXAPI_PASSWORD for auto-login."
+            logger.error(f"GetXAPI tweet post failed: {error_text}", phase="POSTER", data=data, error=error_text)
             return None
     
     async def post_thread(self, tweets: List[str]) -> Optional[Dict]:
@@ -142,31 +154,24 @@ class XAPIAsyncClient:
         reply_to_id = None
         
         for text in tweets:
-            loop = asyncio.get_event_loop()
             try:
-                result = await loop.run_in_executor(
-                    self.executor,
-                    lambda t=text, rid=reply_to_id: self.client.create_tweet(
-                        text=t, 
-                        in_reply_to_tweet_id=rid
-                    )
-                )
+                result = await self._create_tweet(text=text, reply_to_tweet_id=reply_to_id)
                 results.append({
-                    "tweet_id": str(result.data["id"]),
-                    "text": text,
-                    "posted_at": datetime.utcnow().isoformat() + "Z",
+                    "tweet_id": result["tweet_id"],
+                    "text": result["text"],
+                    "posted_at": result["posted_at"],
                 })
-                reply_to_id = result.data["id"]  # Link next tweet to this one
+                reply_to_id = result["tweet_id"]
             except Exception as e:
                 error_text = str(e)
                 data = {}
-                if "appropriate oauth1 app permissions" in error_text.lower():
-                    data["remediation"] = (
-                        "Enable write permissions for the X app, then regenerate the access token and access token secret "
-                        "and update the repository secrets."
-                    )
+                lowered = error_text.lower()
+                if "402" in lowered or "credits" in lowered or "payment required" in lowered:
+                    data["remediation"] = "Add GetXAPI credits or upgrade the GetXAPI account plan."
+                elif "401" in lowered or "invalid auth_token" in lowered:
+                    data["remediation"] = "Refresh GETXAPI_AUTH_TOKEN or provide GETXAPI_USERNAME/GETXAPI_PASSWORD for auto-login."
                 logger.error(
-                    f"X API thread post failed on part {len(results)+1}: {error_text}",
+                    f"GetXAPI thread post failed on part {len(results)+1}: {error_text}",
                     phase="POSTER",
                     data=data,
                     error=error_text,

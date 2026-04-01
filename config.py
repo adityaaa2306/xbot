@@ -12,11 +12,14 @@ from datetime import timedelta
 # API & CREDENTIALS
 # ============================================================================
 
-X_API_KEY = os.getenv("X_API_KEY")
-X_API_SECRET = os.getenv("X_API_SECRET")
-X_ACCESS_TOKEN = os.getenv("X_ACCESS_TOKEN")
-X_ACCESS_TOKEN_SECRET = os.getenv("X_ACCESS_TOKEN_SECRET")
-X_BEARER_TOKEN = os.getenv("X_BEARER_TOKEN")
+GETXAPI_API_KEY = os.getenv("GETXAPI_API_KEY")
+GETXAPI_AUTH_TOKEN = os.getenv("GETXAPI_AUTH_TOKEN")
+GETXAPI_USERNAME = os.getenv("GETXAPI_USERNAME")
+GETXAPI_PASSWORD = os.getenv("GETXAPI_PASSWORD")
+GETXAPI_EMAIL = os.getenv("GETXAPI_EMAIL")
+GETXAPI_TOTP_SECRET = os.getenv("GETXAPI_TOTP_SECRET")
+GETXAPI_PROXY = os.getenv("GETXAPI_PROXY")
+GETXAPI_BASE_URL = os.getenv("GETXAPI_BASE_URL", "https://api.getxapi.com")
 
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 ANTHROPIC_MODEL = "claude-sonnet-4-20250514"
@@ -232,7 +235,7 @@ INCREMENTAL_STRATEGY_UPDATE = True  # Only update strategy on new mature tweets
 # ============================================================================
 
 USER_AGENT = "XBot/1.0 (Autonomous AI Twitter agent; +https://github.com/adityaaa2306/xbot)"
-RATE_LIMIT_BUFFER = 0.8  # Stay at 80% of platform limits (50/day for X)
+RATE_LIMIT_BUFFER = 0.8  # Stay at 80% of platform limits
 HUMAN_REVIEW_MODE = False  # If True, show 5 best tweets weekly for human approval
 
 # ============================================================================
@@ -271,12 +274,7 @@ BACKOFF_MULTIPLIER = 2
 # ============================================================================
 
 REQUIRED_ENV_VARS = [
-    "X_API_KEY",
-    "X_API_SECRET",
-    "X_ACCESS_TOKEN",
-    "X_ACCESS_TOKEN_SECRET",
-    "X_BEARER_TOKEN",
-    "ANTHROPIC_API_KEY",
+    "GETXAPI_API_KEY",
     "NVIDIA_API_KEY",
 ]
 

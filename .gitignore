@@ -6,3 +6,4 @@ __pycache__
 .venv
 logs/*.jsonl
 memory/_backups/
+data/pycache/
