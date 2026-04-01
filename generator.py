@@ -24,8 +24,8 @@ from validator import validator
 
 # Globals
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY", "")
-MISTRAL_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
-MISTRAL_MODEL = "mistral.large"
+MISTRAL_API_URL = config.NVIDIA_ENDPOINT
+MISTRAL_MODEL = config.NVIDIA_MODEL
 
 
 class MistralAsyncClient:
@@ -173,9 +173,7 @@ async def generate_tweet_async(
     """Generate a tweet using async Mistral API with retries."""
     
     if retry_count >= config.MAX_GENERATION_ATTEMPTS:
-        logger.error("Max generation attempts exceeded", 
-                   data={"archetype": archetype, "topic": topic},
-                   event="GENERATE_FAILED")
+        logger.error("GENERATE_FAILED", data={"archetype": archetype, "topic": topic})
         return None
     
     try:
@@ -218,25 +216,27 @@ async def generate_tweet_async(
                 return await generate_tweet_async(archetype, topic, thread_length, is_experiment, retry_count + 1)
             return None
         
-        logger.info("Tweet generated successfully",
-                  event="GENERATE_SUCCESS",
-                  data={
-                      "archetype": archetype,
-                      "topic": topic,
-                      "thread_length": thread_length,
-                      "attempt": retry_count + 1
-                  })
+        logger.info(
+            "GENERATE_SUCCESS",
+            data={
+                "archetype": archetype,
+                "topic": topic,
+                "thread_length": thread_length,
+                "attempt": retry_count + 1,
+            },
+        )
         
         return tweet_obj
         
     except Exception as e:
-        logger.error(f"Generation failed (attempt {retry_count + 1}): {str(e)}",
-                   event="GENERATE_ERROR",
-                   data={
-                       "error": str(e),
-                       "archetype": archetype,
-                       "attempt": retry_count + 1
-                   })
+        logger.error(
+            "GENERATE_ERROR",
+            data={
+                "error": str(e),
+                "archetype": archetype,
+                "attempt": retry_count + 1,
+            },
+        )
         
         if retry_count < config.MAX_GENERATION_ATTEMPTS - 1:
             await asyncio.sleep(1)  # Brief backoff

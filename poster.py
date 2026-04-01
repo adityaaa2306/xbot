@@ -254,8 +254,7 @@ async def post_tweet_async(tweet_obj: Dict) -> Optional[Dict]:
     """Post tweet/thread to X after validation."""
     
     try:
-        logger.info("Posting tweet to X", phase="POSTER", event="POSTER_START",
-                   data={"thread_length": tweet_obj.get("thread_length", 1)})
+        logger.info("POSTER_START", phase="POSTER", data={"thread_length": tweet_obj.get("thread_length", 1)})
         
         # Pre-post validation
         if not await pre_post_validation(tweet_obj):
@@ -282,13 +281,14 @@ async def post_tweet_async(tweet_obj: Dict) -> Optional[Dict]:
         # PRIORITY 4: Record post for rate limit tracking
         rate_limit_tracker.record_post()
         
-        logger.info("Post SUCCESS",
-                  phase="POSTER",
-                  event="POST_SUCCESS",
-                  data={
-                      "tweet_id": result.get("tweet_id"),
-                      "thread_length": result.get("thread_length", 1)
-                  })
+        logger.info(
+            "POST_SUCCESS",
+            phase="POSTER",
+            data={
+                "tweet_id": result.get("tweet_id"),
+                "thread_length": result.get("thread_length", 1),
+            },
+        )
         
         # Schedule metric fetches
         try:
@@ -302,8 +302,7 @@ async def post_tweet_async(tweet_obj: Dict) -> Optional[Dict]:
         return result
         
     except Exception as e:
-        logger.error(f"Post FAILED with exception: {str(e)}",
-                   phase="POSTER", event="POSTER_ERROR", error=str(e))
+        logger.error("POSTER_ERROR", phase="POSTER", data={"error": str(e)})
         return None
 
 

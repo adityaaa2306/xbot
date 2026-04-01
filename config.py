@@ -23,6 +23,7 @@ ANTHROPIC_MODEL = "claude-sonnet-4-20250514"
 
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
 NVIDIA_ENDPOINT = "https://integrate.api.nvidia.com/v1/chat/completions"
+NVIDIA_MODEL = os.getenv("NVIDIA_MODEL", "qwen/qwen3.5-122b-a10b")
 
 # ============================================================================
 # POSTING
