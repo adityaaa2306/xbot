@@ -21,8 +21,7 @@ Priority 4 Enhancements:
 import asyncio
 import json
 import os
-import time
-from typing import Optional, Dict
+from typing import Optional, Dict, List
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
@@ -102,38 +101,15 @@ class XAPIAsyncClient:
     """Async wrapper for tweepy X API client with compliance headers."""
     
     def __init__(self):
-        # OAuth1.0a authentication (User Context)
-        auth = tweepy.OAuth1UserHandler(
-            X_API_KEY,
-            X_API_SECRET,
-            X_ACCESS_TOKEN,
-            X_ACCESS_TOKEN_SECRET
+        self.client = tweepy.Client(
+            consumer_key=X_API_KEY,
+            consumer_secret=X_API_SECRET,
+            access_token=X_ACCESS_TOKEN,
+            access_token_secret=X_ACCESS_TOKEN_SECRET,
+            bearer_token=X_BEARER_TOKEN or None,
+            wait_on_rate_limit=True,
         )
-        self.client = tweepy.API(auth)
         self.executor = ThreadPoolExecutor(max_workers=1)
-        
-        # PRIORITY 4: Add User-Agent header for compliance
-        self.user_agent = config.USER_AGENT
-        self._setup_headers()
-    
-    def _setup_headers(self):
-        """PRIORITY 4: Configure User-Agent header identifying XBot."""
-        try:
-            # Set User-Agent on the client
-            self.client.request_headers = {
-                "User-Agent": self.user_agent
-            }
-            logger.info(
-                "X API headers configured",
-                phase="POSTER",
-                data={"user_agent": self.user_agent}
-            )
-        except Exception as e:
-            logger.warn(
-                "Failed to set User-Agent header",
-                phase="POSTER",
-                error=str(e)
-            )
     
     async def post_tweet(self, text: str) -> Optional[Dict]:
         """Post a single tweet asynchronously."""
@@ -144,16 +120,17 @@ class XAPIAsyncClient:
                 lambda: self.client.create_tweet(text=text)
             )
             return {
-                "tweet_id": result.id,
-                "text": result.text,
-                "created_at": str(result.created_at)
+                "tweet_id": str(result.data["id"]),
+                "text": text,
+                "posted_at": datetime.utcnow().isoformat() + "Z",
+                "thread_length": 1,
             }
         except Exception as e:
             logger.error(f"X API tweet post failed: {str(e)}", 
                         phase="POSTER", error=str(e))
             return None
     
-    async def post_thread(self, tweets: list) -> Optional[Dict]:
+    async def post_thread(self, tweets: List[str]) -> Optional[Dict]:
         """Post a thread (replies linked)."""
         results = []
         reply_to_id = None
@@ -165,15 +142,15 @@ class XAPIAsyncClient:
                     self.executor,
                     lambda t=text, rid=reply_to_id: self.client.create_tweet(
                         text=t, 
-                        in_reply_to_status_id=rid
+                        in_reply_to_tweet_id=rid
                     )
                 )
                 results.append({
-                    "tweet_id": result.id,
-                    "text": result.text,
-                    "created_at": str(result.created_at)
+                    "tweet_id": str(result.data["id"]),
+                    "text": text,
+                    "posted_at": datetime.utcnow().isoformat() + "Z",
                 })
-                reply_to_id = result.id  # Link next tweet to this one
+                reply_to_id = result.data["id"]  # Link next tweet to this one
             except Exception as e:
                 logger.error(f"X API thread post failed on part {len(results)+1}: {str(e)}", 
                             phase="POSTER", error=str(e))
@@ -195,8 +172,7 @@ async def pre_post_validation(tweet_obj: Dict) -> bool:
     
     # PRIORITY 4: Check rate limits first
     if not rate_limit_tracker.can_post():
-        logger.error("Pre-post validation FAILED: Rate limit buffer reached",
-                   phase="POSTER", event="RATE_LIMIT_EXCEEDED")
+        logger.error("RATE_LIMIT_EXCEEDED", phase="POSTER")
         return False
     
     # Run validator
@@ -209,11 +185,10 @@ async def pre_post_validation(tweet_obj: Dict) -> bool:
     
     # Check for duplicates
     if await is_duplicate(tweet_obj):
-        logger.error("Pre-post validation FAILED: DUPLICATE detected",
-                   phase="POSTER", event="DUPLICATE_ERROR")
+        logger.error("DUPLICATE_ERROR", phase="POSTER")
         return False
     
-    logger.info("Pre-post validation PASSED", phase="POSTER", event="VALIDATION_OK")
+    logger.info("VALIDATION_OK", phase="POSTER")
     return True
 
 
@@ -230,7 +205,7 @@ async def is_duplicate(tweet_obj: Dict, threshold: float = 0.75) -> bool:
         if not recent or len(recent) == 0:
             return False  # No data to compare against
         
-        recent_texts = [t.get("text", "") for t in recent if t.get("text")]
+        recent_texts = [t.content for t in recent if t.content]
         if not recent_texts:
             return False
         
@@ -284,8 +259,7 @@ async def post_tweet_async(tweet_obj: Dict) -> Optional[Dict]:
         
         # Pre-post validation
         if not await pre_post_validation(tweet_obj):
-            logger.error("Post ABORTED due to validation failure",
-                       phase="POSTER", event="POST_ABORTED")
+            logger.error("POST_ABORTED", phase="POSTER")
             return None
         
         # Initialize X API client
@@ -302,15 +276,11 @@ async def post_tweet_async(tweet_obj: Dict) -> Optional[Dict]:
             result = await client.post_tweet(tweet_obj.get("text", ""))
         
         if not result:
-            logger.error("Post FAILED: X API returned None",
-                       phase="POSTER", event="POST_FAILED")
+            logger.error("POST_FAILED", phase="POSTER")
             return None
         
         # PRIORITY 4: Record post for rate limit tracking
         rate_limit_tracker.record_post()
-        
-        # Log to memory
-        memory.add_tweet_to_log(tweet_obj, result, {})
         
         logger.info("Post SUCCESS",
                   phase="POSTER",
@@ -327,8 +297,7 @@ async def post_tweet_async(tweet_obj: Dict) -> Optional[Dict]:
             memory.schedule_metric_fetch(tweet_id, delay_hours=24)
             memory.schedule_metric_fetch(tweet_id, delay_hours=72)
         except Exception as e:
-            logger.warn(f"Failed to schedule metric fetches: {str(e)}", 
-                      phase="POSTER", event="SCHEDULE_FAILED")
+            logger.warn("SCHEDULE_FAILED", phase="POSTER", data={"error": str(e)})
         
         return result
         

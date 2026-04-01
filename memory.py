@@ -61,6 +61,18 @@ class TweetRecord:
     # Experiment tracking
     is_experiment: bool = False
     experiment_type: str = ""
+
+    @property
+    def text(self) -> str:
+        return self.content
+
+    @property
+    def like_count(self) -> int:
+        return self.metrics.likes if self.metrics else 0
+
+    @property
+    def reply_count(self) -> int:
+        return self.metrics.replies if self.metrics else 0
     
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
@@ -223,9 +235,22 @@ class MemoryManager:
             if datetime.fromisoformat(t.posted_at.replace("Z", "+00:00")).timestamp() > cutoff
         ]
 
+    def get_recent_tweets(self, days: int = 30, limit: Optional[int] = None) -> List[TweetRecord]:
+        """Compatibility wrapper for the production pipeline."""
+        tweets = sorted(self.load_recent_tweets(days=days), key=lambda tweet: tweet.posted_at, reverse=True)
+        return tweets[:limit] if limit else tweets
+
     def load_mature_tweets(self) -> List[TweetRecord]:
         """Load only tweets with mature metrics (48h+)."""
         return [t for t in self.load_all_tweets() if t.metrics_maturity == "mature"]
+
+    def get_mature_tweets(self) -> List[TweetRecord]:
+        """Compatibility wrapper for the production pipeline."""
+        return self.load_mature_tweets()
+
+    def update_score(self, tweet_id: str, score: float) -> None:
+        """Compatibility wrapper for the production pipeline."""
+        self.update_tweet_score(tweet_id, score)
 
     def _write_tweet_log(self, tweets: List[TweetRecord]) -> None:
         """Rewrite entire tweet log (for updates)."""
@@ -240,8 +265,23 @@ class MemoryManager:
     def save_strategy(self, strategy: StrategySnapshot) -> None:
         """Append strategy snapshot to log."""
         try:
+            if isinstance(strategy, dict):
+                strategy = StrategySnapshot(
+                    date=strategy.get("date", datetime.utcnow().isoformat() + "Z"),
+                    version=int(strategy.get("version", len(self.load_all_strategies()) + 1)),
+                    top_formats=list(strategy.get("top_formats", [])),
+                    top_topics=list(strategy.get("top_topics", [])),
+                    top_tones=list(strategy.get("top_tones", [])),
+                    avoid_formats=list(strategy.get("avoid_formats", [])),
+                    avoid_topics=list(strategy.get("avoid_topics", [])),
+                    experiment_slot=strategy.get("experiment_slot", {"type": strategy.get("next_experiment", "continue_exploration")}),
+                    confidence_level=strategy.get("confidence_level", "low"),
+                    confidence_data_count=int(strategy.get("confidence_data_count", 0)),
+                    reasoning=strategy.get("reasoning", ""),
+                )
             with open(self.strategy_log_path, "a", encoding="utf-8") as f:
                 f.write(json.dumps(strategy.to_dict()) + "\n")
+            self._write_strategy_markdown(strategy)
             logger.info("Saved strategy snapshot", phase="MEMORY", data={"version": strategy.version})
         except IOError as e:
             logger.error("Failed to save strategy", phase="MEMORY", error=e)
@@ -271,6 +311,20 @@ class MemoryManager:
         except Exception as e:
             logger.error("Failed to load strategies", phase="MEMORY", error=e)
         return strategies
+
+    def get_strategy_logs(self, days: int = 30) -> List[Dict[str, Any]]:
+        """Return recent strategies as dictionaries for prompt context."""
+        cutoff = datetime.utcnow().timestamp() - (days * 86400)
+        recent = []
+        for strategy in self.load_all_strategies():
+            try:
+                ts = datetime.fromisoformat(strategy.date.replace("Z", "+00:00")).timestamp()
+                if ts > cutoff:
+                    recent.append(strategy.to_dict())
+            except ValueError:
+                recent.append(strategy.to_dict())
+        recent.sort(key=lambda item: item.get("date", ""), reverse=True)
+        return recent
 
     # ========================================================================
     # PATTERN LIBRARY
@@ -309,6 +363,83 @@ class MemoryManager:
     def load_active_patterns(self) -> List[PatternRecord]:
         """Load only active (non-decaying) patterns."""
         return [p for p in self.load_all_patterns() if p.status == "active"]
+
+    def _write_strategy_markdown(self, strategy: StrategySnapshot) -> None:
+        """Keep the repo-level strategy.md aligned with the latest snapshot."""
+        lines = [
+            "# Content Strategy - Autonomous Learning Log",
+            "",
+            f"Last Updated: {strategy.date}",
+            "",
+            "## Current Best Formats",
+        ]
+        if strategy.top_formats:
+            for fmt, topic, tone in zip(strategy.top_formats, strategy.top_topics, strategy.top_tones):
+                lines.append(f"- `{fmt}` on `{topic}` with `{tone}` tone.")
+        else:
+            lines.append("- Not enough mature tweets yet.")
+
+        lines.extend(["", "## Avoid For Now"])
+        if strategy.avoid_formats:
+            for fmt, topic in zip(strategy.avoid_formats, strategy.avoid_topics):
+                lines.append(f"- Reduce `{fmt}` on `{topic}`.")
+        else:
+            lines.append("- No weak cohorts identified yet.")
+
+        lines.extend(
+            [
+                "",
+                "## Active Hypothesis",
+                f"- {strategy.experiment_slot.get('type', 'continue_exploration')}",
+                "",
+                "## Confidence",
+                f"- Level: `{strategy.confidence_level}` from {strategy.confidence_data_count} mature tweets.",
+                "",
+                "## Reasoning",
+                strategy.reasoning or "No reasoning recorded.",
+                "",
+            ]
+        )
+
+        with open("strategy.md", "w", encoding="utf-8") as handle:
+            handle.write("\n".join(lines))
+
+    def add_tweet_to_log(self, tweet_obj: Dict[str, Any], result: Dict[str, Any], plan: Dict[str, Any]) -> TweetRecord:
+        """Persist a posted tweet using the canonical memory schema."""
+        raw_text = tweet_obj.get("text") or tweet_obj.get("tweet") or ""
+        if isinstance(raw_text, list):
+            content = "\n".join(raw_text)
+        else:
+            content = str(raw_text)
+
+        posted_at = result.get("posted_at") or result.get("created_at") or datetime.utcnow().isoformat() + "Z"
+        tweet_record = TweetRecord(
+            tweet_id=str(result.get("tweet_id") or result.get("thread_id")),
+            content=content,
+            posted_at=posted_at,
+            format_type=tweet_obj.get("format_type") or plan.get("format_type") or "observation",
+            topic_bucket=tweet_obj.get("topic_bucket") or plan.get("topic_bucket") or "ai_ml",
+            tone=tweet_obj.get("tone") or plan.get("tone") or "analytical",
+            hook=tweet_obj.get("hook", ""),
+            reasoning=tweet_obj.get("reasoning", ""),
+            metrics=None,
+            engagement_score=None,
+            metrics_fetched_at=None,
+            metrics_maturity="fresh",
+            hook_score=float(tweet_obj.get("hook_score", 0.0)),
+            is_experiment=bool(plan.get("is_experiment", False)),
+            experiment_type=plan.get("experiment_type") or "",
+        )
+        self.save_tweet(tweet_record)
+        return tweet_record
+
+    def schedule_metric_fetch(self, tweet_id: str, delay_hours: int) -> None:
+        """Compatibility hook for poster scheduling."""
+        logger.debug(
+            "Metric fetch scheduled",
+            phase="MEMORY",
+            data={"tweet_id": tweet_id, "delay_hours": delay_hours},
+        )
 
 
 # Global memory manager instance

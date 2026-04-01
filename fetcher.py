@@ -28,10 +28,7 @@ class MetricsFetcher:
 
     def __init__(self):
         self.bearer_token = config.X_BEARER_TOKEN
-        if not self.bearer_token:
-            raise ValueError("X_BEARER_TOKEN not set in environment")
-        
-        self.client = tweepy.Client(bearer_token=self.bearer_token)
+        self.client = tweepy.Client(bearer_token=self.bearer_token) if self.bearer_token else None
         self.backoff_multiplier = config.BACKOFF_MULTIPLIER
         self.backoff_current = config.BACKOFF_INITIAL
         self.batch_size = config.BATCH_FETCH_SIZE  # Default 100
@@ -47,6 +44,9 @@ class MetricsFetcher:
             TweetMetrics object or None if fetch failed
         """
         try:
+            if not self.client:
+                logger.warn("Fetch skipped: X bearer token is not configured", phase="FETCHER")
+                return None
             response = self.client.get_tweet(
                 id=tweet_id,
                 tweet_fields=["public_metrics", "created_at"]
@@ -133,6 +133,9 @@ class MetricsFetcher:
         tweet_ids = tweet_ids[:self.batch_size]
         
         try:
+            if not self.client:
+                logger.warn("Batch fetch skipped: X bearer token is not configured", phase="FETCHER")
+                return results
             # Fetch all tweets in one request
             response = self.client.get_tweets(
                 ids=tweet_ids,

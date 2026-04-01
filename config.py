@@ -204,6 +204,7 @@ MEMORY_TYPE = "json"  # json or sqlite (currently json)
 # ============================================================================
 
 LLM_TIMEOUT_SECS = 30  # Timeout for Mistral/Anthropic API calls
+POSTER_TIMEOUT_SECS = 15  # Timeout for posting calls
 CIRCUIT_BREAKER_THRESHOLD = 3  # Pause if N consecutive posts fail
 JSON_BACKUP_DIR = "memory/_backups"  # Backup directory for JSON rollback
 

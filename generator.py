@@ -14,7 +14,7 @@ import asyncio
 import json
 import os
 import httpx
-from typing import Optional, Dict
+from typing import Optional, Dict, Any
 
 import config
 from logger import logger
@@ -58,16 +58,17 @@ class MistralAsyncClient:
                 )
                 
                 if response.status_code != 200:
-                    logger.error(f"Mistral API error: {response.status_code}", 
-                               event="MISTRAL_ERROR", 
-                               error=response.text)
+                    logger.error(
+                        "MISTRAL_ERROR",
+                        data={"status_code": response.status_code, "response": response.text},
+                    )
                     return None
                 
                 data = response.json()
                 return data.get("choices", [{}])[0].get("message", {}).get("content")
                 
             except Exception as e:
-                logger.error(f"Mistral API exception: {str(e)}", event="MISTRAL_ERROR", error=str(e))
+                logger.error("MISTRAL_ERROR", data={"error": str(e)})
                 return None
 
 
@@ -92,16 +93,16 @@ async def load_context() -> Dict:
         avoid_patterns = []
         for tweet in recent:
             avoid_patterns.append({
-                "archetype": tweet.get("archetype"),
-                "topic": tweet.get("topic"),
-                "length": tweet.get("thread_length")
+                "archetype": tweet.format_type,
+                "topic": tweet.topic_bucket,
+                "length": 1,
             })
         context["avoid_patterns"] = avoid_patterns
         
         return context
         
     except Exception as e:
-        logger.warn(f"Failed to load context: {str(e)}", event="LOAD_CONTEXT_ERROR", error=str(e))
+        logger.warn("LOAD_CONTEXT_ERROR", data={"error": str(e)})
         return {}
 
 
@@ -129,11 +130,12 @@ IMPORTANT: Generate tweets that follow the bot's personality and topic expertise
 
 Return ONLY a JSON object (no other text) with structure:
 {{
-  "text": "the tweet content here",
-  "archetype": "{archetype}",
-  "topic": "{topic}",
+  "tweet": "the tweet content here",
+  "format_type": "{archetype}",
+  "topic_bucket": "{topic}",
+  "tone": "analytical",
+  "hook": "opening hook",
   "thread_length": {thread_length},
-  "confidence": 0.8,
   "reasoning": "why this tweet was generated"
 }}
 """
@@ -172,8 +174,8 @@ async def generate_tweet_async(
     
     if retry_count >= config.MAX_GENERATION_ATTEMPTS:
         logger.error("Max generation attempts exceeded", 
-                   event="GENERATE_FAILED",
-                   data={"archetype": archetype, "topic": topic})
+                   data={"archetype": archetype, "topic": topic},
+                   event="GENERATE_FAILED")
         return None
     
     try:
@@ -201,13 +203,16 @@ async def generate_tweet_async(
                 tweet_obj = json.loads(json_match.group())
             else:
                 raise Exception(f"Could not parse JSON from response: {response[:100]}")
+
+        tweet_obj = normalize_tweet_object(tweet_obj, archetype, topic, thread_length)
         
         # Validate tweet
         validation = validator.validate_tweet(tweet_obj)
         if not validation["valid"]:
-            logger.warn(f"Generated tweet failed validation", 
-                      event="VALIDATION_FAILED",
-                      data={"failures": validation.get("failures", [])})
+            logger.warn(
+                "VALIDATION_FAILED",
+                data={"failures": validation.get("failures", [])},
+            )
             if retry_count < config.MAX_GENERATION_ATTEMPTS - 1:
                 await asyncio.sleep(1)
                 return await generate_tweet_async(archetype, topic, thread_length, is_experiment, retry_count + 1)
@@ -248,3 +253,33 @@ async def generate_tweet(
 ) -> Optional[Dict]:
     """Async wrapper that delegates to generate_tweet_async."""
     return await generate_tweet_async(archetype, topic, thread_length, is_experiment)
+
+
+def normalize_tweet_object(raw: Dict[str, Any], archetype: str, topic: str, thread_length: int) -> Dict[str, Any]:
+    """Normalize model output into the validator/poster schema."""
+    text = raw.get("tweet") or raw.get("text") or ""
+    text_parts = raw.get("text_parts")
+
+    if isinstance(text, list):
+        text_parts = text
+        text = "\n\n".join(text)
+
+    if thread_length > 1 and not text_parts:
+        parts = [part.strip() for part in str(text).split("\n\n") if part.strip()]
+        text_parts = parts if parts else [str(text)]
+
+    lines = [line.strip() for line in str(text).splitlines() if line.strip()]
+    hook = raw.get("hook") or (lines[0] if lines else str(text)[: config.MAX_HOOK_LENGTH])
+
+    return {
+        "tweet": str(text),
+        "text": str(text),
+        "text_parts": text_parts,
+        "format_type": raw.get("format_type") or raw.get("archetype") or archetype,
+        "topic_bucket": raw.get("topic_bucket") or raw.get("topic") or topic,
+        "tone": raw.get("tone") or "analytical",
+        "hook": str(hook)[: config.MAX_HOOK_LENGTH],
+        "thread_length": int(raw.get("thread_length") or thread_length or 1),
+        "reasoning": raw.get("reasoning") or "Generated from current strategy context.",
+        "confidence": raw.get("confidence", 0.8),
+    }

@@ -133,6 +133,13 @@ class TweetValidator:
         else:
             return True, warnings
 
+    def validate_tweet(self, tweet_obj: Dict[str, Any]) -> Dict[str, Any]:
+        """Structured validation result used by the pipeline."""
+        valid, messages = self.validate_all(tweet_obj)
+        if valid:
+            return {"valid": True, "warnings": messages}
+        return {"valid": False, "failures": messages}
+
     def _check_toxicity(self, text: str) -> float:
         """
         Score toxicity (0.0 = clean, 1.0 = extremely toxic).

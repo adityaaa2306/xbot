@@ -60,44 +60,53 @@ class StructuredLogger:
 
     def info(
         self,
-        event: str,
+        event: Optional[str] = None,
         phase: str = "SYSTEM",
         data: Optional[Dict[str, Any]] = None,
         tweet_id: Optional[str] = None,
+        **kwargs: Any,
     ) -> None:
         """Log informational message."""
+        event = kwargs.pop("event", event) or kwargs.pop("message", None) or "INFO"
         self._log("INFO", event, phase, data, tweet_id)
 
     def warn(
         self,
-        event: str,
+        event: Optional[str] = None,
         phase: str = "SYSTEM",
         data: Optional[Dict[str, Any]] = None,
         tweet_id: Optional[str] = None,
+        **kwargs: Any,
     ) -> None:
         """Log warning message."""
-        self._log("WARN", event, phase, data, tweet_id)
+        error = kwargs.pop("error", None)
+        event = kwargs.pop("event", event) or kwargs.pop("message", None) or "WARN"
+        self._log("WARN", event, phase, data, tweet_id, error)
 
     def error(
         self,
-        event: str,
+        event: Optional[str] = None,
         phase: str = "SYSTEM",
         data: Optional[Dict[str, Any]] = None,
         tweet_id: Optional[str] = None,
-        error: Optional[Exception] = None,
+        error: Optional[Any] = None,
+        **kwargs: Any,
     ) -> None:
         """Log error message."""
+        event = kwargs.pop("event", event) or kwargs.pop("message", None) or "ERROR"
         self._log("ERROR", event, phase, data, tweet_id, error)
 
     def debug(
         self,
-        event: str,
+        event: Optional[str] = None,
         phase: str = "SYSTEM",
         data: Optional[Dict[str, Any]] = None,
         tweet_id: Optional[str] = None,
+        **kwargs: Any,
     ) -> None:
         """Log debug message."""
         if config.LOG_LEVEL == "DEBUG":
+            event = kwargs.pop("event", event) or kwargs.pop("message", None) or "DEBUG"
             self._log("DEBUG", event, phase, data, tweet_id)
 
 

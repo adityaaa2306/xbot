@@ -35,7 +35,7 @@ from validator import validator
 from experimenter import experimenter
 from strategist import strategist
 from generator import generate_tweet
-from poster import post_tweet
+from poster import post_tweet, append_experiment
 
 
 class PipelineCircuitBreaker:
@@ -57,8 +57,7 @@ class PipelineCircuitBreaker:
         if self.consecutive_failures >= self.threshold:
             self.is_open = True
             logger.error(
-                f"CIRCUIT BREAKER OPEN",
-                event="CIRCUIT_BREAKER",
+                "CIRCUIT_BREAKER",
                 data={
                     "consecutive_failures": self.consecutive_failures,
                     "reason": reason,
@@ -69,8 +68,7 @@ class PipelineCircuitBreaker:
     def record_success(self):
         if self.consecutive_failures > 0:
             logger.info(
-                f"Circuit breaker reset after success",
-                event="CIRCUIT_BREAKER",
+                "CIRCUIT_BREAKER",
                 data={"previous_failures": self.consecutive_failures}
             )
         self.consecutive_failures = 0
@@ -91,39 +89,44 @@ def backup_memory():
         
         timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         
-        for fname in ["tweets.jsonl", "strategy.md", "experiments.jsonl"]:
-            src = Path("memory") / fname
+        for src in [
+            Path(config.TWEET_LOG_FILE),
+            Path(config.STRATEGY_LOG_FILE),
+            Path(config.PATTERN_LIBRARY_FILE),
+            Path("strategy.md"),
+            Path("data/experiments.jsonl"),
+        ]:
             if src.exists():
-                dest = backup_dir / f"{fname}.{timestamp}.bkp"
+                dest = backup_dir / f"{src.name}.{timestamp}.bkp"
                 shutil.copy2(src, dest)
                 
                 # Keep only last 10 backups per file
-                backups = sorted(list(backup_dir.glob(f"{fname}.*.bkp")))
+                backups = sorted(list(backup_dir.glob(f"{src.name}.*.bkp")))
                 if len(backups) > 10:
                     for old_backup in backups[:-10]:
                         old_backup.unlink()
         
-        logger.debug("Memory backup created", event="BACKUP", data={"timestamp": timestamp})
+        logger.debug("BACKUP", data={"timestamp": timestamp})
     except Exception as e:
-        logger.warn("Failed to backup memory", event="BACKUP", error=str(e))
+        logger.warn("BACKUP", data={"error": str(e)})
 
 
 async def verify_environment() -> bool:
     """Verify all credentials and directories."""
-    logger.info("Verifying environment", event="STARTUP", data={})
+    logger.info("STARTUP", data={"status": "verifying"})
     
     required_vars = ["NVIDIA_API_KEY", "X_API_KEY", "X_API_SECRET", 
                      "X_ACCESS_TOKEN", "X_ACCESS_TOKEN_SECRET", "X_BEARER_TOKEN"]
     missing = [v for v in required_vars if not os.getenv(v)]
     
     if missing:
-        logger.error("Missing environment variables", event="STARTUP", data={"missing": missing})
+        logger.error("STARTUP", data={"missing": missing})
         return False
     
     for directory in ["logs", "memory", "data", config.JSON_BACKUP_DIR]:
         Path(directory).mkdir(parents=True, exist_ok=True)
     
-    logger.info("Environment verified", event="STARTUP", data={})
+    logger.info("STARTUP", data={"status": "verified"})
     return True
 
 
@@ -137,7 +140,7 @@ async def phase_1_fetch_metrics() -> bool:
             logger.info("Phase 1 SKIP", phase="FETCH", data={"reason": "no_pending"})
             return True
         
-        updated = await fetcher.fetch_all_pending(pending)
+        updated = fetcher.fetch_all_pending(memory)
         logger.info("Phase 1 COMPLETE", phase="FETCH", data={"updated": updated})
         return True
         
@@ -160,10 +163,10 @@ async def phase_2_score_mature() -> bool:
         for tweet in mature:
             try:
                 score = scorer.score_tweet(tweet)
-                memory.update_score(tweet["tweet_id"], score)
+                memory.update_score(tweet.tweet_id, score)
                 scored += 1
             except Exception as e:
-                logger.warn(f"Score failed for {tweet.get('tweet_id')}", phase="SCORE", error=str(e))
+                logger.warn(f"Score failed for {tweet.tweet_id}", phase="SCORE", error=str(e))
         
         logger.info("Phase 2 COMPLETE", phase="SCORE", data={"scored": scored})
         return True
@@ -338,6 +341,18 @@ async def phase_7_post(circuit_breaker) -> bool:
         # Log to memory
         try:
             memory.add_tweet_to_log(tweet_obj, result, plan)
+            append_experiment({
+                "tweet_id": result.get("tweet_id") or result.get("thread_id"),
+                "text": tweet_obj.get("text"),
+                "archetype": tweet_obj.get("format_type"),
+                "thread_length": tweet_obj.get("thread_length", 1),
+                "topic": tweet_obj.get("topic_bucket"),
+                "posted_hour": datetime.utcnow().hour,
+                "hypothesis": plan.get("experiment_type") or tweet_obj.get("reasoning"),
+                "format_used": tweet_obj.get("format_type"),
+                "posted_at": result.get("posted_at"),
+                "score": None,
+            })
             circuit_breaker.record_success()
         except Exception as e:
             logger.error("Failed to log tweet to memory", phase="POSTER", error=str(e))
@@ -356,13 +371,13 @@ async def phase_7_post(circuit_breaker) -> bool:
 async def run_daily_pipeline():
     """Execute full 7-phase pipeline with error recovery."""
     start = datetime.utcnow()
-    logger.info("="*70, event="PIPELINE_START", data={"started_at": start.isoformat()})
+    logger.info("PIPELINE_START", data={"started_at": start.isoformat()})
     
     circuit_breaker = PipelineCircuitBreaker()
     
     # Verify environment
     if not await verify_environment():
-        logger.error("Environment verification failed", event="PIPELINE_ABORT")
+        logger.error("PIPELINE_ABORT", data={"reason": "environment_verification_failed"})
         return False
     
     try:
@@ -375,36 +390,36 @@ async def run_daily_pipeline():
         # Phase 4: Plan
         plan = await phase_4_plan_post()
         if not plan:
-            logger.error("Skipping post: Phase 4 planning failed", event="PIPELINE_SKIP")
+            logger.error("PIPELINE_SKIP", data={"phase": 4})
             return False
         
         # Phase 5: Generate
         tweet_obj = await phase_5_generate()
         if not tweet_obj:
-            logger.error("Skipping post: Phase 5 generation failed", event="PIPELINE_SKIP")
+            logger.error("PIPELINE_SKIP", data={"phase": 5})
             return False
         
         # Phase 6: Validate
         validated = await phase_6_validate(circuit_breaker)
         if not validated:
-            logger.error("Skipping post: Phase 6 validation failed", event="PIPELINE_SKIP")
+            logger.error("PIPELINE_SKIP", data={"phase": 6})
             return False
         
         # Phase 7: Post
         posted = await phase_7_post(circuit_breaker)
         if not posted:
-            logger.error("Skipping post: Phase 7 posting failed", event="PIPELINE_SKIP")
+            logger.error("PIPELINE_SKIP", data={"phase": 7})
             return False
         
         # Success!
         end = datetime.utcnow()
         duration = (end - start).total_seconds()
-        logger.info("="*70, event="PIPELINE_SUCCESS", 
+        logger.info("PIPELINE_SUCCESS", 
                    data={"completed_at": end.isoformat(), "duration_seconds": duration})
         return True
         
     except Exception as e:
-        logger.error("FATAL: Unhandled exception in pipeline", event="PIPELINE_FATAL", error=str(e))
+        logger.error("PIPELINE_FATAL", data={"error": str(e)})
         return False
 
 
@@ -415,15 +430,11 @@ def main():
         success = loop.run_until_complete(run_daily_pipeline())
         sys.exit(0 if success else 1)
     except KeyboardInterrupt:
-        logger.info("Pipeline interrupted by user", event="INTERRUPT")
+        logger.info("INTERRUPT")
         sys.exit(1)
     except Exception as e:
-        logger.error("Unhandled exception in main", event="FATAL", error=str(e))
+        logger.error("FATAL", data={"error": str(e)})
         sys.exit(1)
-
-
-if __name__ == "__main__":
-    main()
 
 
 if __name__ == "__main__":

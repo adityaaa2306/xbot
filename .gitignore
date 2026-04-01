@@ -1,4 +1,8 @@
 .env
 data/experiments.jsonl
+data/generated_tweet.json
+data/todays_plan.json
 __pycache__
 .venv
+logs/*.jsonl
+memory/_backups/
