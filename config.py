@@ -34,6 +34,7 @@ NVIDIA_MODEL = os.getenv("NVIDIA_MODEL", "qwen/qwen3.5-122b-a10b")
 # ============================================================================
 
 DAILY_POST_TIME = os.getenv("POST_TIME_UTC", "09:00")  # HH:MM in UTC
+BOT_TIMEZONE = os.getenv("BOT_TIMEZONE", "Asia/Calcutta")
 MAX_POSTS_PER_DAY = int(os.getenv("MAX_POSTS_PER_DAY", "1"))
 MAX_TWEET_LENGTH = 280
 OPTIMAL_TWEET_LENGTH = 220  # Leave buffer
@@ -126,11 +127,11 @@ FETCH_SCHEDULE = {
 
 # Weights favor replies/quotes over likes (real engagement > passive approval)
 ENGAGEMENT_WEIGHTS = {
-    "impression": 0.05,
-    "like": 2.0,
-    "retweet": 6.0,
-    "reply": 7.0,
-    "quote_tweet": 8.0,
+    "impression": 0.03,
+    "like": 1.5,
+    "retweet": 5.0,
+    "reply": 8.0,
+    "quote_tweet": 9.0,
 }
 
 # ============================================================================
@@ -138,22 +139,23 @@ ENGAGEMENT_WEIGHTS = {
 # ============================================================================
 
 VALID_FORMATS = [
-    "reversal",
-    "prediction",
-    "observation",
-    "unpopular_truth",
-    "compressed_lesson",
-    "list",
+    "brutal_truth",
+    "most_people_vs_smart_people",
+    "if_you_understand_this",
+    "kill_a_belief",
+    "equation",
+    "stacked_insight",
+    "identity_shift",
+    "contrarian_insight",
+    "reframe",
     "thread_opener",
 ]
 
 VALID_TOPICS = [
-    "ai_ml",
-    "founder_reality",
-    "big_tech",
-    "startup_frameworks",
-    "emerging_tech",
-    "dev_culture",
+    "wealth_leverage",
+    "creator_economy",
+    "psychology",
+    "freedom",
 ]
 
 VALID_TONES = [
@@ -164,6 +166,21 @@ VALID_TONES = [
     "provocative",
 ]
 
+THREAD_ONLY_FORMATS = ["thread_opener"]
+THREAD_PREFERRED_WEEKDAY = 5  # Saturday
+THREAD_LENGTH_MIN = 4
+THREAD_LENGTH_MAX = 7
+
+TOPIC_WEEKDAY_ROTATION = {
+    0: "wealth_leverage",  # Monday
+    1: "creator_economy",  # Tuesday
+    2: "psychology",       # Wednesday
+    3: "freedom",          # Thursday
+    4: "wealth_leverage",  # Friday
+    5: "creator_economy",  # Saturday (thread preferred)
+    6: "psychology",       # Sunday
+}
+
 # ============================================================================
 # VALIDATION
 # ============================================================================
@@ -171,11 +188,35 @@ VALID_TONES = [
 BANNED_WORDS = [
     "game-changing",
     "disruptive",
+    "passionate",
+    "excited to share",
     "synergy",
     "democratizing",
     "innovative",
-    "exciting",
-    "inspiring",
+    "hustle harder",
+    "grind",
+    "wake up at 5am",
+    "success mindset",
+    "millionaire mindset",
+    "manifestation",
+    "abundance",
+    "unpacking",
+    "let's dive in",
+    "in conclusion",
+    "to summarize",
+    "hot take",
+    "unpopular opinion",
+    "agree?",
+    "rt if",
+    "what do you think?",
+    "i'm thrilled",
+    "i'm excited",
+    "as an ai",
+    "leverage points",
+    "paradigm shift",
+    "move the needle",
+    "circle back",
+    "bandwidth",
 ]
 
 DUPLICATE_SIMILARITY_THRESHOLD = 0.75  # Cosine similarity for duplicate detection

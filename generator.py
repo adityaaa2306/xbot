@@ -97,7 +97,7 @@ async def load_context() -> Dict[str, Any]:
     context: Dict[str, Any] = {}
 
     try:
-        niche_path = "config/niche.md"
+        niche_path = config.NICHE_CONFIG_PATH
         if os.path.exists(niche_path):
             with open(niche_path, "r", encoding="utf-8") as handle:
                 context["niche"] = handle.read()
@@ -253,23 +253,24 @@ def build_template_fallback(
 ) -> Dict[str, Any]:
     """Build a deterministic fallback tweet when the provider gives no content."""
     topic_map = {
-        "ai_ml": "AI teams",
-        "founder_reality": "founders",
-        "big_tech": "big tech companies",
-        "startup_frameworks": "startup frameworks",
-        "emerging_tech": "emerging tech",
-        "dev_culture": "developer culture",
+        "wealth_leverage": "wealth and leverage",
+        "creator_economy": "one-person businesses",
+        "psychology": "performance psychology",
+        "freedom": "freedom-first living",
     }
     subject = topic_map.get(topic, topic.replace("_", " "))
 
     archetype_templates = {
-        "reversal": f"People think {subject} rewards more information. Most of the time it rewards faster decisions made with fewer illusions.",
-        "prediction": f"Prediction: the next wave in {subject} will come from teams cutting complexity, not adding another layer to manage it.",
-        "observation": f"The quiet pattern in {subject}: the people who look calm usually made the hard tradeoff earlier than everyone else.",
-        "unpopular_truth": f"Unpopular truth: {subject} usually does not fail because people lack ideas. It fails because they keep protecting a story that reality already rejected.",
-        "compressed_lesson": f"Short lesson from {subject}: clarity compounds faster than intensity. The team that names the real constraint usually moves first.",
-        "list": f"3 quick truths about {subject}: clarity beats hype, constraints beat wishes, and consistency beats bursts of motivation.",
-        "thread_opener": f"Thread: the biggest misunderstanding in {subject} is thinking better tools remove the need for sharper judgment. They usually raise the cost of weak judgment.",
+        "brutal_truth": f"Nobody tells you this: {subject} rewards ownership more than effort. The people who look lucky usually built leverage before they needed it.",
+        "most_people_vs_smart_people": f"Most people use {subject} to feel productive. Smart people use it to buy back their time.",
+        "if_you_understand_this": f"If you understand this, you win: {subject} compounds when you build assets, not when you keep renting out your hours.",
+        "kill_a_belief": f"Stop believing that harder work fixes {subject}. The real shift comes when you redesign the system producing the result.",
+        "equation": f"Clarity + leverage = better {subject}. Better {subject} + time = freedom.",
+        "stacked_insight": f"Learn to think clearly about {subject}. Learn to build assets around {subject}. Learn to wait while {subject} compounds.",
+        "identity_shift": f"You're not behind in {subject}. You're just still measuring progress with the wrong scoreboard.",
+        "contrarian_insight": f"The real problem isn't effort in {subject}. It's building a life that still depends on effort after you learn better.",
+        "reframe": f"{subject.title()} is not about doing more. {subject.title()} is about needing less force to create the same result.",
+        "thread_opener": f"Most people never get free through {subject}. They just find a more impressive version of dependence. Here's what they miss:",
     }
     tone_suffixes = {
         "contrarian": "Most people only notice this after the cost is obvious.",
@@ -279,7 +280,7 @@ def build_template_fallback(
         "provocative": "The uncomfortable part is that almost everyone pretends not to see it until it is expensive.",
     }
 
-    base_text = archetype_templates.get(archetype, archetype_templates["observation"])
+    base_text = archetype_templates.get(archetype, archetype_templates["brutal_truth"])
     suffix = tone_suffixes.get(tone, tone_suffixes["analytical"])
     text = shorten_tweet_text(f"{base_text} {suffix}")
     hook = text.split(".")[0].strip() or text[: config.MAX_HOOK_LENGTH]
