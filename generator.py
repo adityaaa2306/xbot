@@ -402,9 +402,9 @@ def strip_thread_counters(parts: List[str]) -> List[str]:
         if _THREAD_COUNTER_RE.match(stripped):
             continue
         # Strip a counter that was tacked onto the end of real content
-        stripped = _THREAD_COUNTER_SUFFIX_RE.sub("", stripped).rstrip()
-        if stripped:
-            cleaned.append(stripped)
+        without_counter = _THREAD_COUNTER_SUFFIX_RE.sub("", stripped).rstrip()
+        if without_counter:
+            cleaned.append(without_counter)
     return cleaned
 
 
