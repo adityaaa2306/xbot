@@ -360,7 +360,14 @@ async def phase_7_post(circuit_breaker) -> bool:
         
         # Wrap poster call with timeout
         try:
-            logger.debug(f"Calling X API with timeout", phase="POSTER", data={})
+            logger.debug(
+                "Calling X API with poster timeouts",
+                phase="POSTER",
+                data={
+                    "request_timeout_seconds": config.POSTER_REQUEST_TIMEOUT_SECS,
+                    "phase_timeout_seconds": config.POSTER_TIMEOUT_SECS,
+                },
+            )
             result = await asyncio.wait_for(
                 post_tweet(tweet_obj),
                 timeout=config.POSTER_TIMEOUT_SECS
@@ -369,7 +376,10 @@ async def phase_7_post(circuit_breaker) -> bool:
             logger.error(
                 "Phase 7 TIMEOUT",
                 phase="POSTER",
-                data={"timeout_seconds": config.POSTER_TIMEOUT_SECS}
+                data={
+                    "request_timeout_seconds": config.POSTER_REQUEST_TIMEOUT_SECS,
+                    "phase_timeout_seconds": config.POSTER_TIMEOUT_SECS,
+                },
             )
             circuit_breaker.record_failure(reason="post_timeout")
             return False

@@ -104,7 +104,7 @@ class XAPIAsyncClient:
         if reply_to_tweet_id:
             payload["reply_to_tweet_id"] = str(reply_to_tweet_id)
 
-        async with httpx.AsyncClient(timeout=config.POSTER_TIMEOUT_SECS) as client:
+        async with httpx.AsyncClient(timeout=config.POSTER_REQUEST_TIMEOUT_SECS) as client:
             response = await client.post(
                 f"{self.base_url}/twitter/tweet/create",
                 headers=api_headers(),

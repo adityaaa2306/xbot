@@ -297,7 +297,15 @@ GENERATION_PHASE_TIMEOUT_SECS = int(
         str((LLM_TIMEOUT_SECS * MAX_GENERATION_ATTEMPTS) + 10),
     )
 )
-POSTER_TIMEOUT_SECS = 15  # Timeout for posting calls
+POSTER_REQUEST_TIMEOUT_SECS = int(
+    os.getenv("POSTER_REQUEST_TIMEOUT_SECS", "30")
+)
+POSTER_TIMEOUT_SECS = int(
+    os.getenv(
+        "POSTER_TIMEOUT_SECS",
+        str(POSTER_REQUEST_TIMEOUT_SECS + 20),
+    )
+)  # Overall phase timeout, includes validation + API call overhead
 CIRCUIT_BREAKER_THRESHOLD = 3  # Pause if N consecutive posts fail
 JSON_BACKUP_DIR = "memory/_backups"  # Backup directory for JSON rollback
 
