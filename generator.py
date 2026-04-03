@@ -11,7 +11,7 @@ import json
 import os
 import re
 from datetime import datetime
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import config
 from ingestion.storage import load_json
@@ -383,6 +383,31 @@ async def generate_tweet(
     return await generate_tweet_async(archetype, topic, tone, thread_length, is_experiment)
 
 
+_THREAD_COUNTER_RE = re.compile(r"^\d+\s*/\s*\d+$")
+_THREAD_COUNTER_SUFFIX_RE = re.compile(r"\s+\d+\s*/\s*\d+\s*$")
+
+
+def strip_thread_counters(parts: List[str]) -> List[str]:
+    """Remove LLM-generated thread counter artifacts (e.g. '1/4') from tweet parts.
+
+    Handles two common patterns produced by the LLM:
+    - A part that is *only* a counter, e.g. ``["1/4"]`` → dropped entirely.
+    - A counter appended at the end of a part, e.g. ``"Great content 1/4"`` →
+      trailing counter stripped, leaving ``"Great content"``.
+    """
+    cleaned = []
+    for part in parts:
+        stripped = part.strip()
+        # Drop parts that consist solely of a thread counter
+        if _THREAD_COUNTER_RE.match(stripped):
+            continue
+        # Strip a counter that was tacked onto the end of real content
+        stripped = _THREAD_COUNTER_SUFFIX_RE.sub("", stripped).rstrip()
+        if stripped:
+            cleaned.append(stripped)
+    return cleaned
+
+
 def normalize_tweet_object(
     raw: Dict[str, Any],
     archetype: str,
@@ -400,9 +425,11 @@ def normalize_tweet_object(
 
     if thread_length > 1 and not text_parts:
         parts = [part.strip() for part in str(text).split("\n\n") if part.strip()]
+        parts = strip_thread_counters(parts)
         text_parts = parts if parts else [str(text)]
 
     if isinstance(text_parts, list):
+        text_parts = strip_thread_counters([str(part) for part in text_parts])
         text_parts = [shorten_tweet_text(str(part)) for part in text_parts]
         text = "\n\n".join(text_parts)
     else:
