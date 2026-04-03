@@ -1,24 +1,25 @@
 {
-  "generated_at": "2026-04-03T21:36:22.423537Z",
+  "generated_at": "2026-04-03T23:43:43.496158Z",
   "top_insights": [
-    "Nobody is coming to save you; your salvation is a byproduct of your own discipline.",
-    "True wealth isn't about the number in your bank, but the freedom to ignore the noise.",
-    "The smartest people aren't those with degrees, but those who taught themselves to think.",
-    "Stop waiting for permission. The most powerful person in the room is the one who acts.",
-    "Your story is your only real asset; everyone else is just selling you a script."
+    "True wealth is the freedom to stop at $299 million.",
+    "The smartest minds are self-taught, regardless of their degrees.",
+    "AI is just a polished interface for human Reddit history.",
+    "Panic, not data, is the primary architect of modern policy.",
+    "Nobody is coming to save you; start acting like it."
   ],
   "hook_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insight-driven revelations about hidden truths or systems",
-    "Personal anecdotes establishing authority or unique experience"
+    "insight",
+    "contrarian"
   ],
-  "angles": [],
+  "angles": [
+    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school"
+  ],
   "emotional_drivers": [
-    "Validation",
-    "Status aspiration",
-    "Empowerment through self-reliance"
+    "validation"
   ],
-  "emerging_narrative": "A shift towards radical self-reliance and the validation of individual agency, where success is framed as a result of personal discipline, unique insights, and breaking away from societal expectations rather than waiting for external salvation.",
+  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -54,6 +55,17 @@
       "source": "creator"
     },
     {
+      "tweet_id": "1976043060393070887",
+      "author": "ShaanVP",
+      "text": "Turns out the greatest startup idea of the last 10 years was a chatbot where you ask a question and it answers with something a guy wrote on Reddit 8 years ago unusual_whales @unusual_whales Oct 7, 2025 ChatGPT has hit 800 million weekly active users.",
+      "likes": 78000,
+      "replies": 412,
+      "retweets": 4100,
+      "rank_score": 21859.0,
+      "timestamp": "2025-10-08T00:00:00Z",
+      "source": "creator"
+    },
+    {
       "tweet_id": "1574638443237294080",
       "author": "naval",
       "text": "Panic led to lockdowns. Lockdowns led to fiscal stimulus. Stimulus led to inflation. Inflation led to monetary tightening. Tightening leads to recession. The panic wasn’t free - and the bill is coming due.",
@@ -63,39 +75,27 @@
       "rank_score": 21150.0,
       "timestamp": "2022-09-27T00:00:00Z",
       "source": "creator"
-    },
-    {
-      "tweet_id": "1609189890398232582",
-      "author": "thedankoe",
-      "text": "Normalize not having an opinion on things you don’t understand.",
-      "likes": 55000,
-      "replies": 464,
-      "retweets": 14000,
-      "rank_score": 21098.0,
-      "timestamp": "2022-12-31T00:00:00Z",
-      "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insight-driven revelations about hidden truths or systems",
-    "Personal anecdotes establishing authority or unique experience"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
+    "The most expensive thing you own is your attention.",
     "The creator economy isn't about building an audience. It's about building a machine that prints leve",
     "Most people will never be free. Not because they can't. Because they never learned what freedom actu",
     "You're not \"stuck\" in a job. You're addicted to the security of being replaceable.",
-    "Labor + Time = Linear Income",
-    "Most people optimize their labor to get paid more. Smart people optimize their assets to get paid wh"
+    "Labor + Time = Linear Income"
   ],
   "avoid_recent_ideas": [
+    "The most expensive thing you own is your attention.\n\nYet 99% of creators trade it for free. They give away their best ideas in threads, tips",
     "The creator economy isn't about building an audience.\n\nIt's about building a machine that prints leverage while you sleep.\n\nMost creators ar",
     "Most people will never be free. Not because they can't. Because they never learned what freedom actually requires.\n\nHere is the hidden cost ",
     "You're not \"stuck\" in a job. You're addicted to the security of being replaceable. The moment you become irreplaceable, you lose the safety ",
-    "Labor + Time = Linear Income Assets + Leverage = Exponential Wealth The first is a job. The second is an escape. You cannot grind your way o",
-    "Most people optimize their labor to get paid more. Smart people optimize their assets to get paid while they sleep. Time is a trap if you on"
+    "Labor + Time = Linear Income Assets + Leverage = Exponential Wealth The first is a job. The second is an escape. You cannot grind your way o"
   ],
   "source_summary": {
     "creator": 20
