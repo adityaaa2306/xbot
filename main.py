@@ -36,6 +36,7 @@ from experimenter import experimenter
 from strategist import strategist
 from generator import generate_tweet
 from poster import post_tweet, append_experiment
+from signal_engine import SignalEngine
 
 
 class PipelineCircuitBreaker:
@@ -208,6 +209,31 @@ async def phase_3_update_strategy() -> bool:
     except Exception as e:
         logger.warn(f"Phase 3 NON-FATAL: {str(e)}", phase="STRATEGIST", error=str(e))
         return True  # Non-fatal: continue
+
+
+async def phase_signal_research() -> bool:
+    """Refresh the external signal brief (NON-FATAL)."""
+    try:
+        logger.info("Signal Phase START", phase="SIGNALS", data={})
+        engine = SignalEngine()
+        result = await engine.run()
+        logger.info(
+            "Signal Phase COMPLETE",
+            phase="SIGNALS",
+            data={
+                "raw_count": result.get("raw_count", 0),
+                "ranked_count": result.get("ranked_count", 0),
+                "used_fallback_brief": result.get("used_fallback_brief", False),
+            },
+        )
+        return True
+    except Exception as e:
+        logger.warn(
+            "Signal Phase FAILED (non-fatal, continuing)",
+            phase="SIGNALS",
+            data={"error": str(e)},
+        )
+        return False
 
 
 async def phase_4_plan_post() -> dict:
@@ -400,6 +426,7 @@ async def run_daily_pipeline():
         await phase_1_fetch_metrics()
         await phase_2_score_mature()
         await phase_3_update_strategy()
+        await phase_signal_research()
         
         # ===== FATAL PHASES (4-7) =====
         # Phase 4: Plan

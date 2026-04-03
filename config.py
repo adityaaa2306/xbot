@@ -40,6 +40,39 @@ MAX_TWEET_LENGTH = 280
 OPTIMAL_TWEET_LENGTH = 220  # Leave buffer
 
 # ============================================================================
+# SIGNAL ENGINE
+# ============================================================================
+
+SIGNAL_SOURCES_FILE = os.getenv("SIGNAL_SOURCES_FILE", "config/signal_sources.json")
+SIGNAL_STORAGE_STATE_PATH = os.getenv("X_STORAGE_STATE_PATH", "config/x_storage_state.json")
+SIGNAL_STORAGE_STATE_JSON = os.getenv("X_STORAGE_STATE_JSON", "")
+SIGNAL_HEADLESS = os.getenv("SIGNAL_HEADLESS", "true").lower() not in {"0", "false", "no"}
+SIGNAL_ENABLE_SEARCH = os.getenv("SIGNAL_ENABLE_SEARCH", "true").lower() not in {"0", "false", "no"}
+SIGNAL_CORE_CREATORS_PER_RUN = int(os.getenv("SIGNAL_CORE_CREATORS_PER_RUN", "8"))
+SIGNAL_ROTATING_CREATORS_PER_RUN = int(os.getenv("SIGNAL_ROTATING_CREATORS_PER_RUN", "6"))
+SIGNAL_SEARCH_QUERIES_PER_RUN = int(os.getenv("SIGNAL_SEARCH_QUERIES_PER_RUN", "2"))
+SIGNAL_SEARCH_RUN_INTERVAL = int(os.getenv("SIGNAL_SEARCH_RUN_INTERVAL", "3"))
+SIGNAL_TWEETS_PER_CREATOR = int(os.getenv("SIGNAL_TWEETS_PER_CREATOR", "6"))
+SIGNAL_TWEETS_PER_SEARCH = int(os.getenv("SIGNAL_TWEETS_PER_SEARCH", "20"))
+SIGNAL_SCROLLS_PER_PAGE = int(os.getenv("SIGNAL_SCROLLS_PER_PAGE", "2"))
+SIGNAL_PAGE_DELAY_MIN_SECS = float(os.getenv("SIGNAL_PAGE_DELAY_MIN_SECS", "5"))
+SIGNAL_PAGE_DELAY_MAX_SECS = float(os.getenv("SIGNAL_PAGE_DELAY_MAX_SECS", "10"))
+SIGNAL_SCROLL_DELAY_MIN_SECS = float(os.getenv("SIGNAL_SCROLL_DELAY_MIN_SECS", "2"))
+SIGNAL_SCROLL_DELAY_MAX_SECS = float(os.getenv("SIGNAL_SCROLL_DELAY_MAX_SECS", "4"))
+SIGNAL_MAX_TWEETS_PER_DAY = int(os.getenv("SIGNAL_MAX_TWEETS_PER_DAY", "1000"))
+SIGNAL_MIN_TEXT_LENGTH = int(os.getenv("SIGNAL_MIN_TEXT_LENGTH", "50"))
+SIGNAL_MIN_LIKES = int(os.getenv("SIGNAL_MIN_LIKES", "100"))
+SIGNAL_MIN_REPLIES = int(os.getenv("SIGNAL_MIN_REPLIES", "10"))
+SIGNAL_TOP_TWEETS_PER_RUN = int(os.getenv("SIGNAL_TOP_TWEETS_PER_RUN", "20"))
+SIGNAL_DEDUPLICATION_THRESHOLD = float(os.getenv("SIGNAL_DEDUPLICATION_THRESHOLD", "0.78"))
+SIGNAL_PROXY_SCORE_TIER_WEIGHT = int(os.getenv("SIGNAL_PROXY_SCORE_TIER_WEIGHT", "150"))
+SIGNAL_RAW_LOG_FILE = os.getenv("SIGNAL_RAW_LOG_FILE", "memory/signal_raw.jsonl")
+SIGNAL_FILTERED_LOG_FILE = os.getenv("SIGNAL_FILTERED_LOG_FILE", "memory/signal_filtered.jsonl")
+SIGNAL_ANALYSIS_LOG_FILE = os.getenv("SIGNAL_ANALYSIS_LOG_FILE", "memory/signal_analyses.jsonl")
+RESEARCH_BRIEF_LOG_FILE = os.getenv("RESEARCH_BRIEF_LOG_FILE", "memory/research_briefs.jsonl")
+LATEST_RESEARCH_BRIEF_FILE = os.getenv("LATEST_RESEARCH_BRIEF_FILE", "data/research_brief.json")
+
+# ============================================================================
 # LEARNING & STRATEGY
 # ============================================================================
 

@@ -1,0 +1,14 @@
+{
+  "core_creators": [
+    {"display_name": "Naval Ravikant", "username": "naval", "enabled": true},
+    {"display_name": "Dan Koe", "username": "thedankoe", "enabled": true},
+    {"display_name": "Paul Graham", "username": "paulg", "enabled": true},
+    {"display_name": "Greg Isenberg", "username": "gregisenberg", "enabled": true},
+    {"display_name": "Codie Sanchez", "username": "codie_sanchez", "enabled": true},
+    {"display_name": "Justin Welsh", "username": "thejustinwelsh", "enabled": true},
+    {"display_name": "Dickie Bush", "username": "dickiebush", "enabled": true},
+    {"display_name": "Shaan Puri", "username": "ShaanVP", "enabled": true}
+  ],
+  "rotating_creators": [],
+  "search_queries": []
+}

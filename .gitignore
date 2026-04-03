@@ -7,3 +7,4 @@ __pycache__
 logs/*.jsonl
 memory/_backups/
 data/pycache/
+config/x_storage_state.json

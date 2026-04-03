@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X Timeline Embed</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #fff;
+        }
+        #timeline-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div id="timeline-container">
+        <div class="loading">Loading timeline...</div>
+    </div>
+    
+    <script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+    <script>
+        async function waitForWidgets(timeoutMs = 15000) {
+            const start = Date.now();
+            while (Date.now() - start < timeoutMs) {
+                if (window.twttr && window.twttr.widgets && window.twttr.widgets.createTimeline) {
+                    return;
+                }
+                await new Promise((resolve) => setTimeout(resolve, 100));
+            }
+            throw new Error('X widgets failed to initialize');
+        }
+
+        async function waitForTwitterReady() {
+            await waitForWidgets();
+            if (window.twttr && typeof window.twttr.ready === 'function') {
+                await new Promise((resolve) => window.twttr.ready(resolve));
+            }
+        }
+
+        async function loadTimeline(screenName, tweetLimit = 8) {
+            const container = document.getElementById('timeline-container');
+            container.innerHTML = '<div class="loading">Loading timeline...</div>';
+
+            await waitForTwitterReady();
+
+            const timeline = await window.twttr.widgets.createTimeline(
+                {
+                    sourceType: 'profile',
+                    screenName: screenName
+                },
+                container,
+                {
+                    theme: 'light',
+                    chrome: 'noheader nofooter noborders',
+                    tweetLimit: tweetLimit,
+                    width: '100%'
+                }
+            );
+
+            container.dataset.loadedFor = screenName;
+            return Boolean(timeline);
+        }
+
+        window.loadTimeline = loadTimeline;
+    </script>
+</body>
+</html>

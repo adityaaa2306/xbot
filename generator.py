@@ -12,88 +12,19 @@ import os
 import re
 from typing import Any, Dict, Optional, Tuple
 
-import httpx
-
 import config
+from ingestion.storage import load_json
 from logger import logger
 from memory import memory
+from nim_client import NimAsyncClient, is_valid_model_response
 from validator import validator
 
 
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY", "")
-MISTRAL_API_URL = config.NVIDIA_ENDPOINT
-MISTRAL_MODEL = config.NVIDIA_MODEL
-
-
-class MistralAsyncClient:
-    """Async wrapper for NVIDIA chat-completions."""
-
-    def __init__(self, api_key: str):
-        self.api_key = api_key
-        self.headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        }
-
-    async def chat(
-        self,
-        system_message: str,
-        user_message: str,
-        temperature: float = 0.7,
-        max_tokens: int = config.GENERATION_MAX_TOKENS_SINGLE,
-    ) -> Optional[str]:
-        """Call the model and return the first text response when present."""
-        async with httpx.AsyncClient(timeout=float(config.LLM_TIMEOUT_SECS)) as client:
-            try:
-                response = await client.post(
-                    MISTRAL_API_URL,
-                    headers=self.headers,
-                    json={
-                        "model": MISTRAL_MODEL,
-                        "messages": [
-                            {"role": "system", "content": system_message},
-                            {"role": "user", "content": user_message},
-                        ],
-                        "temperature": temperature,
-                        "top_p": config.GENERATION_TOP_P,
-                        "max_tokens": max_tokens,
-                    },
-                )
-            except Exception as exc:
-                logger.error("MISTRAL_ERROR", phase="GENERATOR", data={"error": str(exc)})
-                return None
-
-            if response.status_code != 200:
-                logger.error(
-                    "MISTRAL_ERROR",
-                    phase="GENERATOR",
-                    data={
-                        "status_code": response.status_code,
-                        "response": response.text[:400],
-                    },
-                )
-                return None
-
-            try:
-                payload = response.json()
-            except json.JSONDecodeError as exc:
-                logger.error(
-                    "MISTRAL_INVALID_JSON",
-                    phase="GENERATOR",
-                    data={"response": response.text[:400]},
-                    error=exc,
-                )
-                return None
-
-            content, metadata = extract_message_content(payload)
-            if not is_valid_model_response(content):
-                logger.warn("MISTRAL_EMPTY_RESPONSE", phase="GENERATOR", data=metadata)
-                return None
-            return content
 
 
 async def load_context() -> Dict[str, Any]:
-    """Load lightweight prompt context from niche, strategy, and recent posts."""
+    """Load lightweight prompt context from niche, strategy, research, and recent posts."""
     context: Dict[str, Any] = {}
 
     try:
@@ -106,8 +37,14 @@ async def load_context() -> Dict[str, Any]:
         if strategy_logs:
             context["strategy"] = strategy_logs[0]
 
+        research_brief = load_json(config.LATEST_RESEARCH_BRIEF_FILE)
+        if research_brief:
+            context["research_brief"] = research_brief
+
         recent = memory.get_recent_tweets(days=7, limit=20)
         avoid_patterns = []
+        recent_hooks = []
+        recent_ideas = []
         for tweet in recent:
             avoid_patterns.append(
                 {
@@ -116,51 +53,17 @@ async def load_context() -> Dict[str, Any]:
                     "length": 1,
                 }
             )
+            if tweet.hook:
+                recent_hooks.append(tweet.hook)
+            if tweet.content:
+                recent_ideas.append(tweet.content[:140])
         context["avoid_patterns"] = avoid_patterns
+        context["recent_hooks"] = recent_hooks[:5]
+        context["recent_ideas"] = recent_ideas[:5]
         return context
     except Exception as exc:
         logger.warn("LOAD_CONTEXT_ERROR", phase="GENERATOR", data={"error": str(exc)})
         return {}
-
-
-def is_valid_model_response(response: Optional[str]) -> bool:
-    """Return True for non-empty text content."""
-    return bool(response and response.strip())
-
-
-def extract_message_content(payload: Dict[str, Any]) -> Tuple[Optional[str], Dict[str, Any]]:
-    """Extract text content from NVIDIA/OpenAI-style chat-completions payloads."""
-    choices = payload.get("choices")
-    if not isinstance(choices, list) or not choices:
-        return None, {"reason": "no_choices", "top_level_keys": sorted(payload.keys())[:10]}
-
-    choice = choices[0] or {}
-    message = choice.get("message") or {}
-    content = message.get("content")
-    metadata = {
-        "reason": "empty_content",
-        "finish_reason": choice.get("finish_reason"),
-        "content_type": type(content).__name__,
-        "has_message": bool(message),
-    }
-
-    if isinstance(content, str):
-        cleaned = content.strip()
-        return (cleaned or None), metadata
-
-    if isinstance(content, list):
-        blocks = []
-        for block in content:
-            if isinstance(block, dict):
-                text = block.get("text") or block.get("content")
-                if text:
-                    blocks.append(str(text).strip())
-            elif isinstance(block, str) and block.strip():
-                blocks.append(block.strip())
-        cleaned = "\n".join(part for part in blocks if part)
-        return (cleaned or None), metadata
-
-    return None, metadata
 
 
 def build_generation_prompt(
@@ -175,6 +78,19 @@ def build_generation_prompt(
     niche = context.get("niche", "")
     strategy = context.get("strategy", {})
     avoid_patterns = context.get("avoid_patterns", [])
+    research_brief = context.get("research_brief", {})
+    recent_hooks = context.get("recent_hooks", [])
+    recent_ideas = context.get("recent_ideas", [])
+
+    research_summary = {
+        "top_insights": research_brief.get("top_insights", [])[:5],
+        "hook_patterns": research_brief.get("hook_patterns", [])[:3],
+        "angles": research_brief.get("angles", [])[:5],
+        "emotional_drivers": research_brief.get("emotional_drivers", [])[:4],
+        "emerging_narrative": research_brief.get("emerging_narrative", ""),
+        "winning_patterns": research_brief.get("winning_patterns", [])[:3],
+        "failed_patterns": research_brief.get("failed_patterns", [])[:5],
+    }
 
     system_msg = f"""You are an autonomous X (Twitter) bot that generates engaging, authentic tweets.
 
@@ -184,6 +100,9 @@ BOT IDENTITY:
 CURRENT STRATEGY:
 {json.dumps(strategy, indent=2)[:500]}
 
+LIVE SIGNAL RESEARCH BRIEF:
+{json.dumps(research_summary, indent=2)[:1200]}
+
 IMPORTANT: Generate tweets that follow the bot's personality and topic expertise.
 - Be authentic and avoid overly promotional language
 - Follow X best practices for engagement
@@ -191,6 +110,9 @@ IMPORTANT: Generate tweets that follow the bot's personality and topic expertise
 - HARD LIMIT: every single tweet must be 280 characters or fewer
 - TARGET: aim for 180-240 characters for single tweets
 - If you cannot fit the idea cleanly, simplify it instead of exceeding the limit
+- Use the research brief as inspiration, not as copy
+- Never copy or closely paraphrase viral examples
+- Prefer patterns, structures, and emotional angles over borrowed wording
 
 Return ONLY a JSON object (no other text) with structure:
 {{
@@ -207,6 +129,8 @@ Return ONLY a JSON object (no other text) with structure:
     avoid_str = "\n".join(
         [f"- {pattern['archetype']} + {pattern['topic']} (recent post)" for pattern in avoid_patterns[-5:]]
     )
+    recent_hook_str = "\n".join(f"- {hook}" for hook in recent_hooks[:5]) or "- none"
+    recent_idea_str = "\n".join(f"- {idea}" for idea in recent_ideas[:5]) or "- none"
     experiment_note = (
         "This is an EXPERIMENT - try something novel that we haven't tested yet."
         if is_experiment
@@ -223,6 +147,15 @@ MODE: {experiment_note}
 
 RECENTLY USED (AVOID IMMEDIATE REPETITION):
 {avoid_str}
+
+RECENT BOT HOOKS TO AVOID REPEATING:
+{recent_hook_str}
+
+RECENT BOT IDEAS TO AVOID REPEATING:
+{recent_idea_str}
+
+LIVE MARKET SIGNALS TO LEARN FROM:
+{json.dumps(research_summary, indent=2)[:1200]}
 
 Generate a new, engaging tweet now:"""
 
@@ -307,7 +240,7 @@ async def generate_tweet_async(
     """Generate a tweet with retries and template fallback."""
     context = await load_context()
     system_msg, user_msg = build_generation_prompt(archetype, topic, tone, thread_length, is_experiment, context)
-    client = MistralAsyncClient(NVIDIA_API_KEY)
+    client = NimAsyncClient(NVIDIA_API_KEY)
     last_error = "unknown_generation_error"
 
     for attempt in range(1, config.MAX_GENERATION_ATTEMPTS + 1):
@@ -317,6 +250,7 @@ async def generate_tweet_async(
                 user_message=user_msg,
                 temperature=config.GENERATION_TEMPERATURE,
                 max_tokens=get_generation_max_tokens(thread_length),
+                phase="GENERATOR",
             )
 
             if not is_valid_model_response(response):
