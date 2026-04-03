@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-04-03T08:03:34.104064Z",
+  "generated_at": "2026-04-03T09:59:16.075269Z",
   "top_insights": [
-    "The economy rewards those who sell certainty to the insecure.",
-    "Formal education teaches you to follow rules; self-teaching teaches you to break them.",
-    "Nobody is coming to save you, and that is your greatest advantage.",
-    "True leverage comes from ignoring the noise everyone else is consuming.",
-    "The smartest people in the room are usually the ones who stayed quiet."
+    "The wealthy don't save; they own assets that save them.",
+    "School teaches compliance; self-education teaches leverage.",
+    "Your network is your net worth only if you lead.",
+    "Institutions protect the system, not your future.",
+    "True power is the ability to walk away."
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge popular consensus or norms",
-    "Insight-driven reveals using 'I used to...' or 'Turns out...' to signal exclusive knowledge",
-    "Short, punchy declarative sentences that offer a definitive rule or hard truth"
+    "Contrarian statements challenging common beliefs",
+    "Insightful revelations about hidden realities or history",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "angles": [
-    "Expose the 'unspoken rules' of high-status environments or industries",
-    "Deconstruct common societal myths with a 'hard truth' perspective",
-    "Frame personal habits or life resets as strategic advantages for success"
+    "Deconstructing the 'hidden rules' of wealth and power",
+    "Challenging popular narratives with contrarian personal truths",
+    "Providing structured, actionable advice for self-improvement and financial independence"
   ],
   "emotional_drivers": [
-    "Validation of the audience's skepticism or hidden frustrations",
-    "Desire for status and leverage through access to 'insider' information",
-    "Relief from the pressure of needing to have an opinion on everything"
+    "Validation of the audience's worldview",
+    "Desire for status and leverage signals",
+    "Need for clarity and actionable takeaways"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and skepticism of established institutions, where success is framed as a result of individual agency, self-education, and seeing through the 'illusion' of the economy and media narratives.",
+  "emerging_narrative": "A shift towards radical self-reliance and skepticism of established institutions, where success is framed as a result of individual grit, insider knowledge, and rejecting conventional advice.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -58,17 +58,6 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1976043060393070887",
-      "author": "ShaanVP",
-      "text": "Turns out the greatest startup idea of the last 10 years was a chatbot where you ask a question and it answers with something a guy wrote on Reddit 8 years ago unusual_whales @unusual_whales Oct 7, 2025 ChatGPT has hit 800 million weekly active users.",
-      "likes": 78000,
-      "replies": 412,
-      "retweets": 4100,
-      "rank_score": 21859.0,
-      "timestamp": "2025-10-08T00:00:00Z",
-      "source": "creator"
-    },
-    {
       "tweet_id": "1574638443237294080",
       "author": "naval",
       "text": "Panic led to lockdowns. Lockdowns led to fiscal stimulus. Stimulus led to inflation. Inflation led to monetary tightening. Tightening leads to recession. The panic wasn’t free - and the bill is coming due.",
@@ -78,28 +67,39 @@
       "rank_score": 21150.0,
       "timestamp": "2022-09-27T00:00:00Z",
       "source": "creator"
+    },
+    {
+      "tweet_id": "1609189890398232582",
+      "author": "thedankoe",
+      "text": "Normalize not having an opinion on things you don’t understand.",
+      "likes": 55000,
+      "replies": 464,
+      "retweets": 14000,
+      "rank_score": 21098.0,
+      "timestamp": "2022-12-31T00:00:00Z",
+      "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge popular consensus or norms",
-    "Insight-driven reveals using 'I used to...' or 'Turns out...' to signal exclusive knowledge",
-    "Short, punchy declarative sentences that offer a definitive rule or hard truth"
+    "Contrarian statements challenging common beliefs",
+    "Insightful revelations about hidden realities or history",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
+    "Most people optimize their labor to get paid more. Smart people optimize their assets to get paid wh",
     "The real problem isn't that you're unmotivated.",
     "The real problem isn't that you're poor.",
     "If you understand this, you win:",
-    "Stop believing that motivation is the prerequisite for action.",
-    "The real problem isn't that you lack a unique idea."
+    "Stop believing that motivation is the prerequisite for action."
   ],
   "avoid_recent_ideas": [
+    "Most people optimize their labor to get paid more. Smart people optimize their assets to get paid while they sleep. Time is a trap if you on",
     "The real problem isn't that you're unmotivated. It's that you're waiting for a savior who doesn't exist. Institutions optimize you out, degr",
     "The real problem isn't that you're poor. It's that you're renting your time to strangers who will never care about your freedom. Salary is t",
     "If you understand this, you win: Working harder is a trap. Working smarter is a temporary fix. Building systems that work without you is the",
-    "Stop believing that motivation is the prerequisite for action. Motivation is the feeling you get after you've already moved. You don't wait ",
-    "The real problem isn't that you lack a unique idea. It's that you're trying to solve a problem nobody is paying to solve yet. Most people bu"
+    "Stop believing that motivation is the prerequisite for action. Motivation is the feeling you get after you've already moved. You don't wait "
   ],
   "source_summary": {
     "creator": 20
