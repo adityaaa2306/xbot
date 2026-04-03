@@ -1,0 +1,103 @@
+{
+  "generated_at": "2026-04-03T06:35:55.012430Z",
+  "top_insights": [
+    "Nobody is coming to save you, and that is the best news.",
+    "Formal education teaches compliance; self-teaching builds empires.",
+    "True wealth isn't a number, it's the freedom to ignore noise.",
+    "The economy runs on smart people selling dreams to the insecure.",
+    "Never air your partner's dirty laundry; private respect beats public clout."
+  ],
+  "hook_patterns": [
+    "Contrarian assertions challenging popular consensus or norms",
+    "Insightful revelations framed as 'hard truths' or counter-intuitive facts",
+    "Personal anecdotes used to validate broader societal observations"
+  ],
+  "angles": [],
+  "emotional_drivers": [
+    "Validation of the audience's skepticism or hidden beliefs",
+    "Relief from the pressure of needing to have an opinion on everything",
+    "Empowerment through the realization of self-sufficiency"
+  ],
+  "emerging_narrative": "A cultural shift toward radical self-reliance and skepticism of established institutions, where audiences resonate most with content that exposes the 'real' mechanics of success, wealth, and society while validating their own intuition over mainstream narratives.",
+  "viral_examples": [
+    {
+      "tweet_id": "1939089188441219258",
+      "author": "Codie_Sanchez",
+      "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
+      "likes": 194000,
+      "replies": 1300,
+      "retweets": 11000,
+      "rank_score": 54975.0,
+      "timestamp": "2025-06-28T00:00:00Z",
+      "source": "creator"
+    },
+    {
+      "tweet_id": "1930721134368129164",
+      "author": "naval",
+      "text": "Elon’s stance is principled. Trump’s stance is practical. Tech needs Republicans for the present. Republicans need Tech for the future. Drop the tax cuts, cut some pork, get the bill through.",
+      "likes": 97000,
+      "replies": 5700,
+      "retweets": 9300,
+      "rank_score": 33175.0,
+      "timestamp": "2025-06-05T00:00:00Z",
+      "source": "creator"
+    },
+    {
+      "tweet_id": "1880853934883197275",
+      "author": "naval",
+      "text": "The smartest people are all self-taught, even if they went to school.",
+      "likes": 78000,
+      "replies": 1200,
+      "retweets": 12000,
+      "rank_score": 26400.0,
+      "timestamp": "2025-01-19T00:00:00Z",
+      "source": "creator"
+    },
+    {
+      "tweet_id": "1976043060393070887",
+      "author": "ShaanVP",
+      "text": "Turns out the greatest startup idea of the last 10 years was a chatbot where you ask a question and it answers with something a guy wrote on Reddit 8 years ago unusual_whales @unusual_whales Oct 7, 2025 ChatGPT has hit 800 million weekly active users.",
+      "likes": 78000,
+      "replies": 412,
+      "retweets": 4100,
+      "rank_score": 21859.0,
+      "timestamp": "2025-10-08T00:00:00Z",
+      "source": "creator"
+    },
+    {
+      "tweet_id": "1574638443237294080",
+      "author": "naval",
+      "text": "Panic led to lockdowns. Lockdowns led to fiscal stimulus. Stimulus led to inflation. Inflation led to monetary tightening. Tightening leads to recession. The panic wasn’t free - and the bill is coming due.",
+      "likes": 59000,
+      "replies": 1200,
+      "retweets": 11000,
+      "rank_score": 21150.0,
+      "timestamp": "2022-09-27T00:00:00Z",
+      "source": "creator"
+    }
+  ],
+  "analyses_count": 20,
+  "winning_patterns": [
+    "Contrarian assertions challenging popular consensus or norms",
+    "Insightful revelations framed as 'hard truths' or counter-intuitive facts",
+    "Personal anecdotes used to validate broader societal observations"
+  ],
+  "failed_patterns": [],
+  "avoid_recent_hooks": [
+    "If you understand this, you win:",
+    "Stop believing that motivation is the prerequisite for action.",
+    "The real problem isn't that you lack a unique idea.",
+    "The real problem isn't effort in wealth and leverage",
+    "The real problem isn't that you're too busy. It's that you haven't learned how to do nothing."
+  ],
+  "avoid_recent_ideas": [
+    "If you understand this, you win: Working harder is a trap. Working smarter is a temporary fix. Building systems that work without you is the",
+    "Stop believing that motivation is the prerequisite for action. Motivation is the feeling you get after you've already moved. You don't wait ",
+    "The real problem isn't that you lack a unique idea. It's that you're trying to solve a problem nobody is paying to solve yet. Most people bu",
+    "The real problem isn't effort in wealth and leverage. It's building a life that still depends on effort after you learn better. You can watc",
+    "The real problem isn't that you're too busy. It's that you haven't learned how to do nothing. Busyness is a shield against the silence where"
+  ],
+  "source_summary": {
+    "creator": 20
+  }
+}
