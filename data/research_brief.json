@@ -1,25 +1,24 @@
 {
-  "generated_at": "2026-04-03T15:39:31.346100Z",
+  "generated_at": "2026-04-03T18:32:11.575622Z",
   "top_insights": [
-    "True wealth isn't having more; it's needing less than $300 million.",
-    "Degrees prove you can follow rules; self-teaching proves you can break them.",
-    "The best AI doesn't invent; it just remembers what humans already wrote.",
-    "Panic creates policy; calm creates progress. Remember which one drove lockdowns.",
-    "Status isn't about being right; it's about knowing when to stay silent."
+    "The moment you need saving is the moment you've already lost.",
+    "Formal education teaches compliance; self-teaching builds the leverage that actually matters.",
+    "True wealth isn't buying more; it's realizing $299M is the ceiling for sanity.",
+    "The smartest people stay silent on topics they haven't deeply studied.",
+    "The economy is just smart people monetizing the insecurities of the beautiful."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging popular consensus (e.g., 'Everyone is wrong about...')",
+    "Insightful observations revealing hidden truths or systemic mechanics",
+    "Personal anecdotes establishing unique authority or exclusive access"
   ],
-  "angles": [
-    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "validation"
+    "Validation of the reader's skepticism or hidden beliefs",
+    "Status signaling through exclusive knowledge or high-stakes scenarios",
+    "Relief from the pressure of needing to have an opinion on everything"
   ],
-  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+  "emerging_narrative": "A shift toward radical self-reliance and skepticism of established systems, where success is framed as a result of individual agency, self-education, and understanding the 'real' mechanics of wealth and society rather than following conventional advice.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -79,23 +78,24 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging popular consensus (e.g., 'Everyone is wrong about...')",
+    "Insightful observations revealing hidden truths or systemic mechanics",
+    "Personal anecdotes establishing unique authority or exclusive access"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
+    "Most people will never be free. Not because they can't. Because they never learned what freedom actu",
     "You're not \"stuck\" in a job. You're addicted to the security of being replaceable.",
     "Labor + Time = Linear Income",
     "Most people optimize their labor to get paid more. Smart people optimize their assets to get paid wh",
-    "The real problem isn't that you're unmotivated.",
-    "The real problem isn't that you're poor."
+    "The real problem isn't that you're unmotivated."
   ],
   "avoid_recent_ideas": [
+    "Most people will never be free. Not because they can't. Because they never learned what freedom actually requires.\n\nHere is the hidden cost ",
     "You're not \"stuck\" in a job. You're addicted to the security of being replaceable. The moment you become irreplaceable, you lose the safety ",
     "Labor + Time = Linear Income Assets + Leverage = Exponential Wealth The first is a job. The second is an escape. You cannot grind your way o",
     "Most people optimize their labor to get paid more. Smart people optimize their assets to get paid while they sleep. Time is a trap if you on",
-    "The real problem isn't that you're unmotivated. It's that you're waiting for a savior who doesn't exist. Institutions optimize you out, degr",
-    "The real problem isn't that you're poor. It's that you're renting your time to strangers who will never care about your freedom. Salary is t"
+    "The real problem isn't that you're unmotivated. It's that you're waiting for a savior who doesn't exist. Institutions optimize you out, degr"
   ],
   "source_summary": {
     "creator": 20
