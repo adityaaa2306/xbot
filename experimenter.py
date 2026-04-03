@@ -7,13 +7,65 @@ Enforces novelty and diversity quotas.
 """
 
 import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, Any, Optional
 from zoneinfo import ZoneInfo
 
 import config
 from logger import logger
 from memory import memory
+
+
+def get_archetype_with_cooldown(
+    candidate_archetype: str,
+    recent_tweets: list,
+    cooldown_days: int = 3
+) -> str:
+    """
+    If the candidate archetype was used in the last cooldown_days days,
+    pick the next archetype in rotation instead.
+    """
+    ARCHETYPE_ROTATION = [
+        "brutal_truth",
+        "most_people_vs_smart_people",
+        "if_you_understand_this",
+        "kill_a_belief",
+        "equation",
+        "stacked_insight",
+        "identity_shift",
+        "contrarian_insight",
+        "reframe",
+        "thread_opener",
+    ]
+
+    cutoff = datetime.now(timezone.utc) - timedelta(days=cooldown_days)
+
+    # Find archetypes used recently
+    recently_used = set()
+    for tweet in recent_tweets:
+        posted_at = getattr(tweet, "posted_at", None) or (tweet.get("posted_at", "") if isinstance(tweet, dict) else "")
+        if posted_at:
+            try:
+                tweet_time = datetime.fromisoformat(posted_at.replace("Z", "+00:00"))
+                if tweet_time.tzinfo is None:
+                    tweet_time = tweet_time.replace(tzinfo=timezone.utc)
+                else:
+                    tweet_time = tweet_time.astimezone(timezone.utc)
+                if tweet_time > cutoff:
+                    recently_used.add(
+                        tweet.format_type if hasattr(tweet, "format_type")
+                        else tweet.get("format_type", "")
+                    )
+            except Exception:
+                pass
+
+    # If candidate is on cooldown, find next available archetype
+    if candidate_archetype in recently_used:
+        for archetype in ARCHETYPE_ROTATION:
+            if archetype not in recently_used:
+                return archetype
+
+    return candidate_archetype
 
 
 class ExperimentManager:
@@ -275,12 +327,21 @@ class ExperimentManager:
         experiment_type: Optional[str],
         prefer_thread: bool,
     ) -> Dict[str, Any]:
+        recent_tweets = self._load_supported_recent_tweets(days=3)
+        cooled_format = get_archetype_with_cooldown(format_type, recent_tweets)
+        if cooled_format != format_type:
+            logger.info(
+                "Archetype cooldown applied",
+                phase="EXPERIMENTER",
+                data={"requested": format_type, "selected": cooled_format},
+            )
+
         thread_length = 1
-        if prefer_thread or format_type in config.THREAD_ONLY_FORMATS:
+        if cooled_format in config.THREAD_ONLY_FORMATS:
             thread_length = random.randint(config.THREAD_LENGTH_MIN, config.THREAD_LENGTH_MAX)
 
         return {
-            "format_type": format_type,
+            "format_type": cooled_format,
             "topic_bucket": topic_bucket,
             "tone": tone,
             "thread_length": thread_length,

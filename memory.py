@@ -61,6 +61,7 @@ class TweetRecord:
     # Experiment tracking
     is_experiment: bool = False
     experiment_type: str = ""
+    is_fallback: bool = False
 
     @property
     def text(self) -> str:
@@ -429,6 +430,7 @@ class MemoryManager:
             hook_score=float(tweet_obj.get("hook_score", 0.0)),
             is_experiment=bool(plan.get("is_experiment", False)),
             experiment_type=plan.get("experiment_type") or "",
+            is_fallback=bool(tweet_obj.get("is_fallback", False)),
         )
         self.save_tweet(tweet_record)
         return tweet_record

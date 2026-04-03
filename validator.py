@@ -19,6 +19,66 @@ from collections import Counter
 
 import config
 from logger import logger
+from memory import memory
+
+
+BANNED_OPENING_PHRASES = [
+    "the real problem isn't",
+    "the real problem is not",
+    "nobody tells you this",
+    "the default path",
+    "most people",
+]
+
+
+def check_opening_phrase_freshness(tweet_text: str, recent_tweets: list) -> dict:
+    """
+    Fails if the tweet opens with a phrase used in the last 5 tweets.
+    """
+    text_lower = tweet_text.strip().lower()
+
+    # Get opening phrases from last 5 tweets
+    recent_openers = []
+    for t in recent_tweets[-5:]:
+        if hasattr(t, "content"):
+            content = t.content
+        elif isinstance(t, dict):
+            content = t.get("content") or t.get("tweet", "")
+        else:
+            content = getattr(t, "tweet", "")
+        if content:
+            words = content.strip().lower().split()
+            recent_openers.append(" ".join(words[:4]))
+
+    # Check current tweet's opener
+    current_opener = " ".join(text_lower.split()[:4])
+
+    if current_opener and current_opener in recent_openers:
+        return {
+            "valid": False,
+            "rule": "opening_phrase_freshness",
+            "reason": f"Opening phrase '{current_opener}' was used in the last 5 tweets. Regenerate with a different opener.",
+        }
+
+    # Also hard-ban specific phrases regardless of recency
+    for banned in BANNED_OPENING_PHRASES:
+        count = sum(
+            1
+            for t in recent_tweets[-10:]
+            if (
+                (t.content if hasattr(t, "content") else t.get("tweet", ""))
+                if isinstance(t, dict)
+                else (t.content if hasattr(t, "content") else getattr(t, "tweet", ""))
+            ).lower().startswith(banned)
+        )
+        if count >= 2 and text_lower.startswith(banned):
+            return {
+                "valid": False,
+                "rule": "banned_opener_overuse",
+                "reason": f"'{banned}' has been used {count} times recently. Banned for next 10 posts.",
+            }
+
+    return {"valid": True}
 
 
 class TweetValidator:
@@ -48,7 +108,7 @@ class TweetValidator:
         }
         return toxic_patterns
 
-    def validate_all(self, tweet_obj: Dict[str, Any]) -> Tuple[bool, List[str]]:
+    def validate_all(self, tweet_obj: Dict[str, Any], recent_tweets: list = None) -> Tuple[bool, List[str]]:
         """
         Run all validation checks on a tweet.
         
@@ -69,8 +129,15 @@ class TweetValidator:
             return False, errors
         
         tweet = tweet_obj["tweet"]
-        
+
+        if recent_tweets is None:
+            recent_tweets = memory.get_recent_tweets(days=30, limit=10)
+
         # ===== CRITICAL CHECKS (FATAL) =====
+
+        opening_phrase_result = check_opening_phrase_freshness(tweet, recent_tweets)
+        if not opening_phrase_result["valid"]:
+            errors.append(opening_phrase_result["reason"])
         
         # 1. Length check
         if len(tweet) > config.MAX_TWEET_LENGTH:
@@ -133,9 +200,9 @@ class TweetValidator:
         else:
             return True, warnings
 
-    def validate_tweet(self, tweet_obj: Dict[str, Any]) -> Dict[str, Any]:
+    def validate_tweet(self, tweet_obj: Dict[str, Any], recent_tweets: list = None) -> Dict[str, Any]:
         """Structured validation result used by the pipeline."""
-        valid, messages = self.validate_all(tweet_obj)
+        valid, messages = self.validate_all(tweet_obj, recent_tweets=recent_tweets)
         if valid:
             return {"valid": True, "warnings": messages}
         return {"valid": False, "failures": messages}

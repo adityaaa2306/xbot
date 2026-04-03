@@ -10,6 +10,7 @@ import asyncio
 import json
 import os
 import re
+from datetime import datetime
 from typing import Any, Dict, Optional, Tuple
 
 import config
@@ -46,11 +47,23 @@ async def load_context() -> Dict[str, Any]:
         recent_hooks = []
         recent_ideas = []
         for tweet in recent:
+            # Skip fallback tweets - they poison the hook/idea history
+            is_fallback = getattr(tweet, "is_fallback", False) or getattr(tweet, "__dict__", {}).get("is_fallback", False)
+            if is_fallback:
+                continue
+
+            # Extract opening phrase (first 4 words) to track surface-level repetition
+            first_words = ""
+            if tweet.content:
+                words = tweet.content.strip().split()
+                first_words = " ".join(words[:4]).lower()
+
             avoid_patterns.append(
                 {
                     "archetype": tweet.format_type,
                     "topic": tweet.topic_bucket,
                     "length": 1,
+                    "opening_phrase": first_words,
                 }
             )
             if tweet.hook:
@@ -127,7 +140,11 @@ Return ONLY a JSON object (no other text) with structure:
 """
 
     avoid_str = "\n".join(
-        [f"- {pattern['archetype']} + {pattern['topic']} (recent post)" for pattern in avoid_patterns[-5:]]
+        [
+            f"- {pattern['archetype']} + {pattern['topic']} "
+            f"(opened with: '{pattern.get('opening_phrase', 'unknown')}')"
+            for pattern in avoid_patterns[-5:]
+        ]
     )
     recent_hook_str = "\n".join(f"- {hook}" for hook in recent_hooks[:5]) or "- none"
     recent_idea_str = "\n".join(f"- {idea}" for idea in recent_ideas[:5]) or "- none"
@@ -227,6 +244,7 @@ def build_template_fallback(
         "thread_length": 1,
         "reasoning": f"Template fallback used after generation retries failed ({failure_reason}).",
         "confidence": 0.35 if is_experiment else 0.5,
+        "is_fallback": True,
     }
 
 
@@ -310,6 +328,20 @@ async def generate_tweet_async(
             await asyncio.sleep(delay)
 
     if config.GENERATION_TEMPLATE_FALLBACK_ENABLED:
+        logger.error(
+            "ALL_GENERATION_ATTEMPTS_FAILED",
+            phase="GENERATOR",
+            data={
+                "archetype": archetype,
+                "topic": topic,
+                "tone": tone,
+                "total_attempts": config.MAX_GENERATION_ATTEMPTS,
+                "last_error": last_error,
+                "nvidia_key_present": bool(NVIDIA_API_KEY),
+                "nvidia_key_length": len(NVIDIA_API_KEY) if NVIDIA_API_KEY else 0,
+                "timestamp": datetime.utcnow().isoformat(),
+            },
+        )
         fallback_raw = build_template_fallback(archetype, topic, tone, is_experiment, last_error)
         fallback_tweet = normalize_tweet_object(fallback_raw, archetype, topic, 1, tone=tone)
         fallback_validation = validator.validate_tweet(fallback_tweet)
@@ -390,6 +422,7 @@ def normalize_tweet_object(
         "thread_length": int(raw.get("thread_length") or thread_length or 1),
         "reasoning": raw.get("reasoning") or "Generated from current strategy context.",
         "confidence": raw.get("confidence", 0.8),
+        "is_fallback": bool(raw.get("is_fallback", False)),
     }
 
 
