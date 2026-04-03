@@ -31,6 +31,10 @@ BANNED_OPENING_PHRASES = [
 ]
 
 
+def _is_numbering_only(text: str) -> bool:
+    return bool(re.fullmatch(r"\s*\d+\s*/\s*\d+\s*", str(text)))
+
+
 def check_opening_phrase_freshness(tweet_text: str, recent_tweets: list) -> dict:
     """
     Fails if the tweet opens with a phrase used in the last 5 tweets.
@@ -129,6 +133,8 @@ class TweetValidator:
             return False, errors
         
         tweet = tweet_obj["tweet"]
+        thread_length = int(tweet_obj.get("thread_length", 1) or 1)
+        text_parts = tweet_obj.get("text_parts")
 
         if recent_tweets is None:
             recent_tweets = memory.get_recent_tweets(days=30, limit=10)
@@ -161,7 +167,21 @@ class TweetValidator:
         # 5. Tone validation
         if tweet_obj["tone"] not in config.VALID_TONES:
             errors.append(f"Invalid tone: {tweet_obj['tone']}")
-        
+
+        # 6. Thread structure validation
+        if thread_length > 1:
+            if not isinstance(text_parts, list) or not text_parts:
+                errors.append("Thread is missing text_parts list")
+            else:
+                if len(text_parts) != thread_length:
+                    errors.append(f"Thread has {len(text_parts)} parts but expected {thread_length}")
+                for idx, part in enumerate(text_parts, start=1):
+                    part_text = str(part).strip()
+                    if not part_text:
+                        errors.append(f"Thread part {idx} is empty")
+                    elif _is_numbering_only(part_text):
+                        errors.append(f"Thread part {idx} is only a numbering marker")
+
         # ===== PRIORITY 2: TOXICITY CHECK (FATAL) =====
         toxicity_score = self._check_toxicity(tweet)
         if toxicity_score > config.TOXICITY_THRESHOLD:

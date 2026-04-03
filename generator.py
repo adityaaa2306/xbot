@@ -105,6 +105,30 @@ def build_generation_prompt(
         "failed_patterns": research_brief.get("failed_patterns", [])[:5],
     }
 
+    if thread_length > 1:
+        return_schema = f"""{{
+  "text_parts": [
+    "tweet 1 of {thread_length}",
+    "tweet 2 of {thread_length}"
+  ],
+  "format_type": "{archetype}",
+  "topic_bucket": "{topic}",
+  "tone": "{tone}",
+  "hook": "opening hook from tweet 1",
+  "thread_length": {thread_length},
+  "reasoning": "why this thread was generated"
+}}"""
+    else:
+        return_schema = f"""{{
+  "tweet": "the tweet content here",
+  "format_type": "{archetype}",
+  "topic_bucket": "{topic}",
+  "tone": "{tone}",
+  "hook": "opening hook",
+  "thread_length": {thread_length},
+  "reasoning": "why this tweet was generated"
+}}"""
+
     system_msg = f"""You are an autonomous X (Twitter) bot that generates engaging, authentic tweets.
 
 BOT IDENTITY:
@@ -128,15 +152,7 @@ IMPORTANT: Generate tweets that follow the bot's personality and topic expertise
 - Prefer patterns, structures, and emotional angles over borrowed wording
 
 Return ONLY a JSON object (no other text) with structure:
-{{
-  "tweet": "the tweet content here",
-  "format_type": "{archetype}",
-  "topic_bucket": "{topic}",
-  "tone": "{tone}",
-  "hook": "opening hook",
-  "thread_length": {thread_length},
-  "reasoning": "why this tweet was generated"
-}}
+{return_schema}
 """
 
     avoid_str = "\n".join(
@@ -175,6 +191,21 @@ LIVE MARKET SIGNALS TO LEARN FROM:
 {json.dumps(research_summary, indent=2)[:1200]}
 
 Generate a new, engaging tweet now:"""
+
+    if thread_length > 1:
+        user_msg += f"""
+
+THREAD STRUCTURE RULES:
+- Return `text_parts` with exactly {thread_length} items
+- Each item must be a complete tweet, not a fragment
+- Never make numbering like `1/{thread_length}` its own tweet
+- Include numbering in every part using the format `n/{thread_length}`
+- Tweet 1 must include both the strongest hook and `1/{thread_length}`
+- Put the numbering naturally inside the tweet text, never on a line by itself
+- Tweet 1 must be the hook and promise
+- Middle tweets must advance one clear idea each
+- Final tweet must conclude the argument cleanly
+"""
 
     return system_msg, user_msg
 
@@ -403,7 +434,7 @@ def normalize_tweet_object(
         text_parts = parts if parts else [str(text)]
 
     if isinstance(text_parts, list):
-        text_parts = [shorten_tweet_text(str(part)) for part in text_parts]
+        text_parts = normalize_thread_parts(text_parts, expected_total=thread_length)
         text = "\n\n".join(text_parts)
     else:
         text = shorten_tweet_text(str(text))
@@ -426,9 +457,73 @@ def normalize_tweet_object(
     }
 
 
+def is_numbering_only(text: str) -> bool:
+    """Detect thread counters that should not be posted as standalone tweets."""
+    return bool(re.fullmatch(r"\s*\d+\s*/\s*\d+\s*", str(text)))
+
+
+def normalize_thread_parts(parts: Any, expected_total: int | None = None) -> list[str]:
+    """Clean thread parts and merge malformed numbering-only fragments."""
+    cleaned = [shorten_tweet_text(str(part)) for part in parts if str(part).strip()]
+    normalized: list[str] = []
+    pending_prefix = ""
+
+    for part in cleaned:
+        if is_numbering_only(part):
+            pending_prefix = str(part).strip()
+            continue
+
+        candidate = str(part).strip()
+        if pending_prefix:
+            candidate = f"{pending_prefix}\n{candidate}"
+            pending_prefix = ""
+        normalized.append(candidate)
+
+    if pending_prefix:
+        if normalized:
+            normalized[0] = f"{pending_prefix}\n{normalized[0]}"
+        else:
+            normalized.append(pending_prefix)
+
+    return ensure_thread_numbering(normalized, expected_total=expected_total)
+
+
+def ensure_thread_numbering(parts: list[str], expected_total: int | None = None) -> list[str]:
+    """Ensure each thread part includes inline numbering without standalone counters."""
+    total = expected_total or len(parts)
+    numbered: list[str] = []
+
+    for idx, part in enumerate(parts, start=1):
+        marker = f"{idx}/{total}"
+        text = str(part).strip()
+        text = re.sub(r"^\s*\d+\s*/\s*\d+\s*", "", text, count=1).strip()
+        if text:
+            if idx == 1:
+                text = f"{text}\n\n{marker}"
+            else:
+                text = f"{marker} {text}"
+        else:
+            text = marker
+        numbered.append(shorten_tweet_text(text))
+
+    return numbered
+
+
 def shorten_tweet_text(text: str, max_length: int = config.MAX_TWEET_LENGTH) -> str:
     """Trim overlong model output to a tweet-safe length while preserving readability."""
-    compact = " ".join(text.split())
+    normalized = re.sub(r"\n{3,}", "\n\n", str(text).replace("\r\n", "\n").replace("\r", "\n"))
+    paragraphs = normalized.split("\n\n")
+    cleaned_paragraphs = []
+    for paragraph in paragraphs:
+        lines = [" ".join(line.split()) for line in paragraph.splitlines() if line.strip()]
+        if lines:
+            cleaned_paragraphs.append("\n".join(lines))
+
+    preserved = "\n\n".join(cleaned_paragraphs)
+    compact = " ".join(preserved.split())
+
+    if len(preserved) <= max_length:
+        return preserved
     if len(compact) <= max_length:
         return compact
 
