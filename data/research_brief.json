@@ -1,42 +1,25 @@
 {
-  "generated_at": "2026-04-04T02:54:16.734426Z",
+  "generated_at": "2026-04-04T09:46:14.788613Z",
   "top_insights": [
-    "Institutions hide the truth; creators expose the math.",
-    "Self-taught beats degrees when the system is broken.",
-    "True wealth isn't a salary; it's owning the leverage.",
-    "Relationships die when you trade respect for public clout.",
-    "Disruption isn't a trend; it's the only path left."
+    "Nobody is coming to save you; the rescue mission is you.",
+    "Degrees prove you can follow rules; self-teaching proves you can break them.",
+    "Stop waiting for permission. Build the solution the system refuses to fix.",
+    "Your opinion on complex topics is a liability, not an asset.",
+    "True leverage isn't status; it's the calm to ignore the noise."
   ],
   "hook_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insight-driven reveals of hidden facts or logic",
-    "Personal anecdotes establishing authority or vulnerability"
+    "Contrarian assertions challenging popular consensus (e.g., 'Hot take', 'Everyone is wrong')",
+    "Direct, actionable advice framed as a simple 'how-to' or 'normalize' statement",
+    "Narrative-driven insights based on specific, high-status interactions (e.g., 'interviewed 5 billionaires', 'lunch with a Stanford grad')"
   ],
-  "angles": [
-    "Expose the 'real' numbers or truths behind popular myths",
-    "Share specific, actionable habits that lead to high-level success",
-    "Narrate personal journeys of overcoming systemic barriers",
-    "Contrast traditional corporate failures with agile individual solutions",
-    "Validate the audience's skepticism of mainstream narratives"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "Validation of personal beliefs or status",
-    "Curiosity about exclusive information",
-    "Aspiration for success and autonomy"
+    "Validation (feeling confirmed in one's own skepticism or self-taught path)",
+    "Empowerment (belief in one's ability to solve problems without external help)",
+    "Relief (from the pressure of needing to have an opinion or follow complex systems)"
   ],
-  "emerging_narrative": "Individual agency and creator-led disruption are replacing traditional institutional power, with audiences resonating deeply with authentic stories of self-made success, financial transparency, and the exposure of hidden realities behind established systems.",
+  "emerging_narrative": "A shift toward radical self-reliance and skepticism of established institutions, where success is defined by individual agency, practical problem-solving, and the ability to cut through noise with simple, principled actions.",
   "viral_examples": [
-    {
-      "tweet_id": "1939089188441219258",
-      "author": "Codie_Sanchez",
-      "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
-      "likes": 194000,
-      "replies": 1300,
-      "retweets": 11000,
-      "rank_score": 54975.0,
-      "timestamp": "2025-06-28T00:00:00Z",
-      "source": "creator"
-    },
     {
       "tweet_id": "1930721134368129164",
       "author": "naval",
@@ -60,6 +43,17 @@
       "source": "creator"
     },
     {
+      "tweet_id": "1976043060393070887",
+      "author": "ShaanVP",
+      "text": "Turns out the greatest startup idea of the last 10 years was a chatbot where you ask a question and it answers with something a guy wrote on Reddit 8 years ago unusual_whales @unusual_whales Oct 7, 2025 ChatGPT has hit 800 million weekly active users.",
+      "likes": 78000,
+      "replies": 412,
+      "retweets": 4100,
+      "rank_score": 21859.0,
+      "timestamp": "2025-10-08T00:00:00Z",
+      "source": "creator"
+    },
+    {
       "tweet_id": "1574638443237294080",
       "author": "naval",
       "text": "Panic led to lockdowns. Lockdowns led to fiscal stimulus. Stimulus led to inflation. Inflation led to monetary tightening. Tightening leads to recession. The panic wasn’t free - and the bill is coming due.",
@@ -71,37 +65,37 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1855971337476477418",
-      "author": "Codie_Sanchez",
-      "text": "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border. I’ve crossed the border illegally covering migrants and cartels countless times. I saw young women in the morgue after they were raped and brutalized in Show more",
-      "likes": 53000,
-      "replies": 941,
-      "retweets": 12000,
-      "rank_score": 19955.75,
-      "timestamp": "2024-11-11T00:00:00Z",
+      "tweet_id": "1609189890398232582",
+      "author": "thedankoe",
+      "text": "Normalize not having an opinion on things you don’t understand.",
+      "likes": 55000,
+      "replies": 464,
+      "retweets": 14000,
+      "rank_score": 21098.0,
+      "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insight-driven reveals of hidden facts or logic",
-    "Personal anecdotes establishing authority or vulnerability"
+    "Contrarian assertions challenging popular consensus (e.g., 'Hot take', 'Everyone is wrong')",
+    "Direct, actionable advice framed as a simple 'how-to' or 'normalize' statement",
+    "Narrative-driven insights based on specific, high-status interactions (e.g., 'interviewed 5 billionaires', 'lunch with a Stanford grad')"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
+    "Institutions monetize access. Creators monetize math.",
     "I have a friend who worked for 2 billionaires. After seeing the private jets and the stress, he told",
     "The most expensive thing you own is your attention.",
     "The creator economy isn't about building an audience. It's about building a machine that prints leve",
-    "Most people will never be free. Not because they can't. Because they never learned what freedom actu",
-    "You're not \"stuck\" in a job. You're addicted to the security of being replaceable."
+    "Most people will never be free. Not because they can't. Because they never learned what freedom actu"
   ],
   "avoid_recent_ideas": [
+    "Institutions monetize access. Creators monetize math.\n\nOne requires permission. The other requires proof.\n\nHere is the 4-step shift from emp",
     "I have a friend who worked for 2 billionaires. After seeing the private jets and the stress, he told me:\n\n\"I wish you never make a penny ove",
     "The most expensive thing you own is your attention.\n\nYet 99% of creators trade it for free. They give away their best ideas in threads, tips",
     "The creator economy isn't about building an audience.\n\nIt's about building a machine that prints leverage while you sleep.\n\nMost creators ar",
-    "Most people will never be free. Not because they can't. Because they never learned what freedom actually requires.\n\nHere is the hidden cost ",
-    "You're not \"stuck\" in a job. You're addicted to the security of being replaceable. The moment you become irreplaceable, you lose the safety "
+    "Most people will never be free. Not because they can't. Because they never learned what freedom actually requires.\n\nHere is the hidden cost "
   ],
   "source_summary": {
     "creator": 20
