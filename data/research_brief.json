@@ -1,25 +1,37 @@
 {
-  "generated_at": "2026-04-04T09:46:14.788613Z",
+  "generated_at": "2026-04-04T11:57:52.103536Z",
   "top_insights": [
-    "Nobody is coming to save you; the rescue mission is you.",
-    "Degrees prove you can follow rules; self-teaching proves you can break them.",
-    "Stop waiting for permission. Build the solution the system refuses to fix.",
-    "Your opinion on complex topics is a liability, not an asset.",
-    "True leverage isn't status; it's the calm to ignore the noise."
+    "True wealth is knowing exactly when to stop counting.",
+    "Principles are the only assets that survive market crashes.",
+    "School teaches compliance; self-teaching builds empires.",
+    "Silence is a strategic advantage in a noisy world.",
+    "Panic is the most expensive tax you will ever pay."
   ],
   "hook_patterns": [
-    "Contrarian assertions challenging popular consensus (e.g., 'Hot take', 'Everyone is wrong')",
-    "Direct, actionable advice framed as a simple 'how-to' or 'normalize' statement",
-    "Narrative-driven insights based on specific, high-status interactions (e.g., 'interviewed 5 billionaires', 'lunch with a Stanford grad')"
+    "insight",
+    "contrarian"
   ],
-  "angles": [],
+  "angles": [
+    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school"
+  ],
   "emotional_drivers": [
-    "Validation (feeling confirmed in one's own skepticism or self-taught path)",
-    "Empowerment (belief in one's ability to solve problems without external help)",
-    "Relief (from the pressure of needing to have an opinion or follow complex systems)"
+    "validation"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and skepticism of established institutions, where success is defined by individual agency, practical problem-solving, and the ability to cut through noise with simple, principled actions.",
+  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
   "viral_examples": [
+    {
+      "tweet_id": "1939089188441219258",
+      "author": "Codie_Sanchez",
+      "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
+      "likes": 194000,
+      "replies": 1300,
+      "retweets": 11000,
+      "rank_score": 54975.0,
+      "timestamp": "2025-06-28T00:00:00Z",
+      "source": "creator"
+    },
     {
       "tweet_id": "1930721134368129164",
       "author": "naval",
@@ -40,17 +52,6 @@
       "retweets": 12000,
       "rank_score": 26400.0,
       "timestamp": "2025-01-19T00:00:00Z",
-      "source": "creator"
-    },
-    {
-      "tweet_id": "1976043060393070887",
-      "author": "ShaanVP",
-      "text": "Turns out the greatest startup idea of the last 10 years was a chatbot where you ask a question and it answers with something a guy wrote on Reddit 8 years ago unusual_whales @unusual_whales Oct 7, 2025 ChatGPT has hit 800 million weekly active users.",
-      "likes": 78000,
-      "replies": 412,
-      "retweets": 4100,
-      "rank_score": 21859.0,
-      "timestamp": "2025-10-08T00:00:00Z",
       "source": "creator"
     },
     {
@@ -78,24 +79,23 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian assertions challenging popular consensus (e.g., 'Hot take', 'Everyone is wrong')",
-    "Direct, actionable advice framed as a simple 'how-to' or 'normalize' statement",
-    "Narrative-driven insights based on specific, high-status interactions (e.g., 'interviewed 5 billionaires', 'lunch with a Stanford grad')"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
+    "The biggest lie in the creator economy is that you need a strategy.",
     "Institutions monetize access. Creators monetize math.",
     "I have a friend who worked for 2 billionaires. After seeing the private jets and the stress, he told",
     "The most expensive thing you own is your attention.",
-    "The creator economy isn't about building an audience. It's about building a machine that prints leve",
-    "Most people will never be free. Not because they can't. Because they never learned what freedom actu"
+    "The creator economy isn't about building an audience. It's about building a machine that prints leve"
   ],
   "avoid_recent_ideas": [
+    "The biggest lie in the creator economy is that you need a strategy.\n\nStrategies are for people waiting for permission.\n\nSelf-reliance is for",
     "Institutions monetize access. Creators monetize math.\n\nOne requires permission. The other requires proof.\n\nHere is the 4-step shift from emp",
     "I have a friend who worked for 2 billionaires. After seeing the private jets and the stress, he told me:\n\n\"I wish you never make a penny ove",
     "The most expensive thing you own is your attention.\n\nYet 99% of creators trade it for free. They give away their best ideas in threads, tips",
-    "The creator economy isn't about building an audience.\n\nIt's about building a machine that prints leverage while you sleep.\n\nMost creators ar",
-    "Most people will never be free. Not because they can't. Because they never learned what freedom actually requires.\n\nHere is the hidden cost "
+    "The creator economy isn't about building an audience.\n\nIt's about building a machine that prints leverage while you sleep.\n\nMost creators ar"
   ],
   "source_summary": {
     "creator": 20
