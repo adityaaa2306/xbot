@@ -62,7 +62,11 @@ Tweets:
         if isinstance(parsed, list) and parsed:
             return parsed
 
-        logger.warn("RESEARCH_EXTRACT_FALLBACK", phase="RESEARCH", data={"reason": "invalid_llm_json"})
+        logger.warn(
+            "RESEARCH_EXTRACT_FALLBACK",
+            phase="RESEARCH",
+            data={"reason": self._fallback_reason(response, parsed, expected_type="list")},
+        )
         return [self._heuristic_analysis(signal) for signal in signals]
 
     async def _aggregate_patterns(self, analyses: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
@@ -95,7 +99,11 @@ Analyses:
         if isinstance(parsed, dict) and parsed:
             return parsed
 
-        logger.warn("RESEARCH_AGGREGATE_FALLBACK", phase="RESEARCH", data={"reason": "invalid_llm_json"})
+        logger.warn(
+            "RESEARCH_AGGREGATE_FALLBACK",
+            phase="RESEARCH",
+            data={"reason": self._fallback_reason(response, parsed, expected_type="dict")},
+        )
         return self._heuristic_aggregate(analyses)
 
     async def _compress_insights(
@@ -137,7 +145,11 @@ Analyses:
         if isinstance(parsed, list) and parsed:
             return [str(item).strip() for item in parsed if str(item).strip()][:5]
 
-        logger.warn("RESEARCH_COMPRESS_FALLBACK", phase="RESEARCH", data={"reason": "invalid_llm_json"})
+        logger.warn(
+            "RESEARCH_COMPRESS_FALLBACK",
+            phase="RESEARCH",
+            data={"reason": self._fallback_reason(response, parsed, expected_type="list")},
+        )
         return self._heuristic_insights(aggregate)
 
     def _build_research_brief(
@@ -193,6 +205,18 @@ Analyses:
                 return json.loads(match.group(1))
             except json.JSONDecodeError:
                 return default
+
+    def _fallback_reason(self, response: Optional[str], parsed: Any, *, expected_type: str) -> str:
+        """Explain why the engine fell back from an LLM response."""
+        if not response:
+            return "no_llm_response"
+        if parsed is None:
+            return "invalid_llm_json"
+        if expected_type == "list" and not isinstance(parsed, list):
+            return f"unexpected_json_type:{type(parsed).__name__}"
+        if expected_type == "dict" and not isinstance(parsed, dict):
+            return f"unexpected_json_type:{type(parsed).__name__}"
+        return "unknown_fallback_reason"
 
     def _signal_payload(self, signal: SignalTweet) -> Dict[str, Any]:
         return {
@@ -259,4 +283,3 @@ Analyses:
 def load_latest_research_brief() -> Optional[Dict[str, Any]]:
     """Read the most recent persisted research brief when available."""
     return load_latest_jsonl(config.RESEARCH_BRIEF_LOG_FILE)
-

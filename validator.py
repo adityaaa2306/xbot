@@ -30,6 +30,10 @@ BANNED_OPENING_PHRASES = [
     "most people",
 ]
 
+OPENING_PHRASE_OVERUSE_THRESHOLDS = {
+    "most people": 3,
+}
+
 
 def _is_numbering_only(text: str) -> bool:
     return bool(re.fullmatch(r"\s*\d+\s*/\s*\d+\s*", str(text)))
@@ -77,6 +81,7 @@ def check_opening_phrase_freshness(tweet_text: str, recent_tweets: list) -> dict
 
     # Also hard-ban specific phrases regardless of recency
     for banned in BANNED_OPENING_PHRASES:
+        threshold = OPENING_PHRASE_OVERUSE_THRESHOLDS.get(banned, 2)
         count = sum(
             1
             for t in recent_tweets[-10:]
@@ -86,7 +91,7 @@ def check_opening_phrase_freshness(tweet_text: str, recent_tweets: list) -> dict
                 else (t.content if hasattr(t, "content") else getattr(t, "tweet", ""))
             ).lower().startswith(banned)
         )
-        if count >= 2 and text_lower.startswith(banned):
+        if count >= threshold and text_lower.startswith(banned):
             return {
                 "valid": False,
                 "rule": "banned_opener_overuse",

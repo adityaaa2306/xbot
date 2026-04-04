@@ -13,7 +13,7 @@ Priority 3 Enhancements:
 
 import time
 from typing import Optional, Dict, List
-from datetime import datetime
+from datetime import datetime, timezone
 
 import httpx
 
@@ -67,6 +67,15 @@ class MetricsFetcher:
                     config.BACKOFF_MAX
                 )
                 return self.fetch_metrics(tweet_id)
+
+            if response.status_code == 404:
+                log_level = logger.info if str(tweet_id).startswith("test_") else logger.warn
+                log_level(
+                    "Tweet not found, skipping metric fetch",
+                    phase="FETCHER",
+                    data={"tweet_id": tweet_id, "status_code": response.status_code},
+                )
+                return None
 
             if response.status_code >= 400:
                 logger.error(
@@ -172,13 +181,15 @@ class MetricsFetcher:
         fetch_queue = []
         archived_count = 0
         
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         metric_archive_days = config.METRIC_ARCHIVE_DAYS
         
         for tweet in tweets:
             try:
                 posted_at = datetime.fromisoformat(tweet.posted_at.replace("Z", "+00:00"))
-                hours_old = (now - posted_at.replace(tzinfo=None)).total_seconds() / 3600
+                if posted_at.tzinfo is None:
+                    posted_at = posted_at.replace(tzinfo=timezone.utc)
+                hours_old = (now - posted_at.astimezone(timezone.utc)).total_seconds() / 3600
                 days_old = hours_old / 24
                 
                 # PRIORITY 3: Skip archived tweets (365+ days)

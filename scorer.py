@@ -6,7 +6,7 @@ Uses percentile ranking within cohorts to prevent local maxima.
 Applies time decay to give more weight to recent patterns.
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List, Dict, Optional, Tuple
 
 import config
@@ -114,7 +114,9 @@ class EngagementScorer:
         """
         try:
             posted_at = datetime.fromisoformat(posted_at_str.replace("Z", "+00:00"))
-            now = datetime.utcnow()
+            if posted_at.tzinfo is None:
+                posted_at = posted_at.replace(tzinfo=timezone.utc)
+            now = datetime.now(timezone.utc)
             days_old = (now - posted_at).days
 
             # Linear decay over 60 days
@@ -298,19 +300,19 @@ class EngagementScorer:
         Returns:
             list: List of declining cohorts as (format, topic, tone) tuples
         """
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         week_ago = now - timedelta(days=7)
         month_ago = now - timedelta(days=30)
 
         recent_tweets = [
             t for t in memory.load_mature_tweets()
-            if datetime.fromisoformat(t.posted_at.replace("Z", "+00:00")) > week_ago
+            if self._parse_posted_at(t.posted_at) > week_ago
         ]
 
         older_tweets = [
             t for t in memory.load_mature_tweets()
             if month_ago
-            < datetime.fromisoformat(t.posted_at.replace("Z", "+00:00"))
+            < self._parse_posted_at(t.posted_at)
             < now
         ]
 
@@ -360,6 +362,13 @@ class EngagementScorer:
                 )
 
         return declining
+
+    def _parse_posted_at(self, posted_at_str: str) -> datetime:
+        """Parse timestamps into timezone-aware UTC datetimes."""
+        posted_at = datetime.fromisoformat(posted_at_str.replace("Z", "+00:00"))
+        if posted_at.tzinfo is None:
+            posted_at = posted_at.replace(tzinfo=timezone.utc)
+        return posted_at.astimezone(timezone.utc)
 
 
 # Global scorer instance
