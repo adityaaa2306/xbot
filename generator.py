@@ -202,7 +202,16 @@ THREAD STRUCTURE RULES:
 - You may use blank lines inside a tweet when they improve readability
 - Blank lines inside one item must stay inside that same tweet
 - Tweet 1 must be the hook and promise
-- Middle tweets must advance one clear idea each
+- Tweet 1 should usually be 2 compact paragraphs:
+  first paragraph = the core claim and tension
+  second paragraph = the setup line that opens the framework
+- Tweets 2 through {thread_length - 1 if thread_length > 2 else thread_length} should each feel like one clear step or section
+- For tweets after Tweet 1:
+  line 1 = a short section title or command
+  then one blank line
+  then a compact 2-3 sentence explanation block
+- Do not put every sentence on its own line
+- Group related supporting sentences into one tight block
 - Final tweet must conclude the argument cleanly
 """
 
@@ -492,9 +501,51 @@ def normalize_thread_parts(parts: Any) -> list[str]:
 
         candidate = strip_thread_marker(str(part))
         if candidate:
-            normalized.append(shorten_tweet_text(candidate))
+            normalized.append(shorten_tweet_text(format_thread_part(candidate, is_first=not normalized)))
 
     return normalized
+
+
+def format_thread_part(text: str, is_first: bool = False) -> str:
+    """Collapse overly fragmented thread parts into compact, readable blocks."""
+    blocks: list[list[str]] = []
+    for paragraph in re.split(r"\n\s*\n", str(text).replace("\r\n", "\n").replace("\r", "\n")):
+        lines = [" ".join(line.split()) for line in paragraph.splitlines() if line.strip()]
+        if lines:
+            blocks.append(lines)
+
+    if not blocks:
+        return ""
+
+    if is_first:
+        merged_blocks = [" ".join(block) for block in blocks]
+        if len(merged_blocks) == 1:
+            return merged_blocks[0]
+        opener = " ".join(merged_blocks[:-1]).strip()
+        setup = merged_blocks[-1].strip()
+        return opener if not setup else f"{opener}\n\n{setup}"
+
+    header = ""
+    body_lines: list[str] = []
+
+    if len(blocks[0]) == 1 and len(blocks[0][0].split()) <= 10:
+        header = blocks[0][0]
+        for block in blocks[1:]:
+            body_lines.extend(block)
+    else:
+        flat_lines = [line for block in blocks for line in block]
+        if flat_lines and len(flat_lines[0].split()) <= 10:
+            header = flat_lines[0]
+            body_lines = flat_lines[1:]
+        else:
+            body_lines = flat_lines
+
+    body = " ".join(body_lines).strip()
+    if header and body:
+        return f"{header}\n\n{body}"
+    if header:
+        return header
+    return body
 
 
 def shorten_tweet_text(text: str, max_length: int = config.MAX_TWEET_LENGTH) -> str:
