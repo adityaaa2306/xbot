@@ -2,16 +2,17 @@ name: Daily Autobot Posts
 
 on:
   schedule:
-    # Run every 3 hours throughout the day (8 times per 24 hours)
-    # Each run posts 1-3 pieces dynamically. Bot learns which hours get best engagement.
-    - cron: '0 0 * * *'   # 00:00 UTC (Midnight)
-    - cron: '0 3 * * *'   # 03:00 UTC
-    - cron: '0 6 * * *'   # 06:00 UTC
-    - cron: '0 9 * * *'   # 09:00 UTC (Morning)
-    - cron: '0 12 * * *'  # 12:00 UTC (Noon)
-    - cron: '0 15 * * *'  # 15:00 UTC (3 PM)
-    - cron: '0 18 * * *'  # 18:00 UTC (Evening)
-    - cron: '0 21 * * *'  # 21:00 UTC (9 PM)
+    # Editorial cadence in IST:
+    # Mon 09:15, Tue 09:15 + 19:45, Wed 09:15, Thu 19:15,
+    # Fri 09:15 + 20:00, Sat 10:00. Sunday intentionally off.
+    - cron: '45 3 * * 1'   # Monday 09:15 IST
+    - cron: '45 3 * * 2'   # Tuesday 09:15 IST
+    - cron: '15 14 * * 2'  # Tuesday 19:45 IST
+    - cron: '45 3 * * 3'   # Wednesday 09:15 IST
+    - cron: '45 13 * * 4'  # Thursday 19:15 IST
+    - cron: '45 3 * * 5'   # Friday 09:15 IST
+    - cron: '30 14 * * 5'  # Friday 20:00 IST
+    - cron: '30 4 * * 6'   # Saturday 10:00 IST
   workflow_dispatch:  # Allow manual trigger
 
 permissions:

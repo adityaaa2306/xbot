@@ -245,12 +245,21 @@ async def phase_4_plan_post() -> dict:
         
         with open("data/todays_plan.json", "w") as f:
             json.dump(plan, f)
-        
+
+        if plan.get("skip_post"):
+            logger.info(
+                "Phase 4 SKIP",
+                phase="EXPERIMENTER",
+                data={"reason": plan.get("skip_reason"), "scheduled_post_type": plan.get("scheduled_post_type")},
+            )
+            return plan
+
         logger.info("Phase 4 COMPLETE", phase="EXPERIMENTER", 
                    data={
                        "format": plan.get("format_type"),
                        "topic": plan.get("topic_bucket"), 
-                       "is_experiment": plan.get("is_experiment")
+                       "is_experiment": plan.get("is_experiment"),
+                       "scheduled_post_type": plan.get("scheduled_post_type"),
                    })
         return plan
         
@@ -444,6 +453,19 @@ async def run_daily_pipeline():
         if not plan:
             logger.error("PIPELINE_SKIP", data={"phase": 4})
             return False
+        if plan.get("skip_post"):
+            end = datetime.utcnow()
+            duration = (end - start).total_seconds()
+            logger.info(
+                "PIPELINE_SKIPPED_BY_POLICY",
+                data={
+                    "reason": plan.get("skip_reason"),
+                    "scheduled_post_type": plan.get("scheduled_post_type"),
+                    "completed_at": end.isoformat(),
+                    "duration_seconds": duration,
+                },
+            )
+            return True
         
         # Phase 5: Generate
         tweet_obj = await phase_5_generate()

@@ -14,6 +14,7 @@ from datetime import datetime
 from typing import Any, Dict, Optional, Tuple
 
 import config
+from content_policy import load_content_policy
 from ingestion.storage import load_json
 from logger import logger
 from memory import memory
@@ -239,8 +240,11 @@ def build_template_fallback(
     tone: str,
     is_experiment: bool,
     failure_reason: str,
+    thread_length: int = 1,
+    context: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     """Build a deterministic fallback tweet when the provider gives no content."""
+    content_policy = load_content_policy()
     topic_map = {
         "wealth_leverage": "wealth and leverage",
         "creator_economy": "one-person businesses",
@@ -248,29 +252,50 @@ def build_template_fallback(
         "freedom": "freedom-first living",
     }
     subject = topic_map.get(topic, topic.replace("_", " "))
+    template_pool = (
+        content_policy.get("fallback_templates", {}).get(archetype)
+        or content_policy.get("fallback_templates", {}).get("brutal_truth")
+        or [
+            "Nobody tells you this: {subject} rewards ownership more than effort. The people who look lucky usually built leverage before they needed it."
+        ]
+    )
+    suffix_pool = (
+        content_policy.get("tone_suffixes", {}).get(tone)
+        or content_policy.get("tone_suffixes", {}).get("analytical")
+        or ["That pattern shows up long before the metrics make it undeniable."]
+    )
 
-    archetype_templates = {
-        "brutal_truth": f"Nobody tells you this: {subject} rewards ownership more than effort. The people who look lucky usually built leverage before they needed it.",
-        "most_people_vs_smart_people": f"Most people use {subject} to feel productive. Smart people use it to buy back their time.",
-        "if_you_understand_this": f"If you understand this, you win: {subject} compounds when you build assets, not when you keep renting out your hours.",
-        "kill_a_belief": f"Stop believing that harder work fixes {subject}. The real shift comes when you redesign the system producing the result.",
-        "equation": f"Clarity + leverage = better {subject}. Better {subject} + time = freedom.",
-        "stacked_insight": f"Learn to think clearly about {subject}. Learn to build assets around {subject}. Learn to wait while {subject} compounds.",
-        "identity_shift": f"You're not behind in {subject}. You're just still measuring progress with the wrong scoreboard.",
-        "contrarian_insight": f"The real problem isn't effort in {subject}. It's building a life that still depends on effort after you learn better.",
-        "reframe": f"{subject.title()} is not about doing more. {subject.title()} is about needing less force to create the same result.",
-        "thread_opener": f"Most people never get free through {subject}. They just find a more impressive version of dependence. Here's what they miss:",
-    }
-    tone_suffixes = {
-        "contrarian": "Most people only notice this after the cost is obvious.",
-        "analytical": "That pattern shows up long before the metrics make it undeniable.",
-        "educational": "Once you see it, a lot of second-order decisions get easier.",
-        "observational": "You can watch this happen in real time if you stop listening to the loudest narrative.",
-        "provocative": "The uncomfortable part is that almost everyone pretends not to see it until it is expensive.",
+    recent_openings = {
+        (pattern.get("opening_phrase") or "").strip().lower()
+        for pattern in (context or {}).get("avoid_patterns", [])
+        if pattern.get("opening_phrase")
     }
 
-    base_text = archetype_templates.get(archetype, archetype_templates["brutal_truth"])
-    suffix = tone_suffixes.get(tone, tone_suffixes["analytical"])
+    base_text = _choose_fallback_variant(template_pool, subject, recent_openings)
+    suffix = _choose_fallback_suffix(suffix_pool, recent_openings)
+
+    if archetype == "thread_opener" and thread_length > 1:
+        parts = [
+            shorten_tweet_text(base_text),
+            shorten_tweet_text(f"{subject.title()} changes when you stop optimizing for output and start optimizing for assets."),
+            shorten_tweet_text(f"Attention, proof, and ownership compound differently in {subject}. The winners build the flywheel, not just the content."),
+            shorten_tweet_text(f"{suffix} Freedom is what remains when the system can keep paying without your constant presence."),
+        ]
+        text = "\n\n".join(parts)
+        hook = parts[0][: config.MAX_HOOK_LENGTH]
+        return {
+            "tweet": text,
+            "text_parts": parts,
+            "format_type": archetype,
+            "topic_bucket": topic,
+            "tone": tone if tone in config.VALID_TONES else "analytical",
+            "hook": hook[: config.MAX_HOOK_LENGTH],
+            "thread_length": len(parts),
+            "reasoning": f"Template fallback used after generation retries failed ({failure_reason}).",
+            "confidence": 0.35 if is_experiment else 0.5,
+            "is_fallback": True,
+        }
+
     text = shorten_tweet_text(f"{base_text} {suffix}")
     hook = text.split(".")[0].strip() or text[: config.MAX_HOOK_LENGTH]
 
@@ -285,6 +310,32 @@ def build_template_fallback(
         "confidence": 0.35 if is_experiment else 0.5,
         "is_fallback": True,
     }
+
+
+def _choose_fallback_variant(template_pool: Any, subject: str, recent_openings: set[str]) -> str:
+    """Prefer fallback templates whose opening phrase is not in recent history."""
+    candidates = [str(template).format(subject=subject) for template in template_pool if str(template).strip()]
+    if not candidates:
+        return f"Nobody tells you this: {subject} rewards ownership more than effort."
+
+    for candidate in candidates:
+        opener = " ".join(candidate.strip().lower().split()[:4])
+        if opener and opener not in recent_openings:
+            return candidate
+    return candidates[0]
+
+
+def _choose_fallback_suffix(suffix_pool: Any, recent_openings: set[str]) -> str:
+    """Pick a suffix whose opening is not already overused when possible."""
+    candidates = [str(suffix).strip() for suffix in suffix_pool if str(suffix).strip()]
+    if not candidates:
+        return ""
+
+    for candidate in candidates:
+        opener = " ".join(candidate.strip().lower().split()[:4])
+        if opener and opener not in recent_openings:
+            return candidate
+    return candidates[0]
 
 
 async def generate_tweet_async(
@@ -381,8 +432,16 @@ async def generate_tweet_async(
                 "timestamp": datetime.utcnow().isoformat(),
             },
         )
-        fallback_raw = build_template_fallback(archetype, topic, tone, is_experiment, last_error)
-        fallback_tweet = normalize_tweet_object(fallback_raw, archetype, topic, 1, tone=tone)
+        fallback_raw = build_template_fallback(
+            archetype,
+            topic,
+            tone,
+            is_experiment,
+            last_error,
+            thread_length=thread_length,
+            context=context,
+        )
+        fallback_tweet = normalize_tweet_object(fallback_raw, archetype, topic, thread_length, tone=tone)
         fallback_validation = validator.validate_tweet(fallback_tweet)
         if fallback_validation["valid"]:
             logger.warn(

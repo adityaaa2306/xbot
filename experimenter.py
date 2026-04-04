@@ -7,11 +7,14 @@ Enforces novelty and diversity quotas.
 """
 
 import random
+import json
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from typing import Dict, Any, Optional
 from zoneinfo import ZoneInfo
 
 import config
+from content_policy import load_content_policy
 from logger import logger
 from memory import memory
 
@@ -72,7 +75,7 @@ class ExperimentManager:
     """Manages exploration/exploitation and experiment scheduling."""
 
     def __init__(self):
-        pass
+        self.content_policy = load_content_policy()
 
     def get_todays_plan(self) -> Dict[str, Any]:
         """
@@ -87,10 +90,27 @@ class ExperimentManager:
                 "experiment_type": str  # "new_format" | "new_topic" | "new_tone" | "structure_variant"
             }
         """
+        self.content_policy = load_content_policy()
+        cadence_policy = self.content_policy.get("cadence", {})
+        local_now = self._get_local_now()
+        slot = self._get_current_slot(local_now, cadence_policy)
+
+        if not slot and not config.POSTING_SCHEDULE_BYPASS:
+            return {
+                "skip_post": True,
+                "skip_reason": "outside_schedule_window",
+                "scheduled_post_type": None,
+            }
+
+        cadence_decision = self._evaluate_cadence(local_now, cadence_policy, slot)
+        if cadence_decision.get("skip_post"):
+            return cadence_decision
+
+        desired_post_type = cadence_decision.get("post_type", "standalone")
+
         # Check current day of week in the bot's configured timezone.
-        today_weekday = self._get_local_weekday()  # 0=Monday, 6=Sunday
+        today_weekday = local_now.weekday()  # 0=Monday, 6=Sunday
         preferred_topic = config.TOPIC_WEEKDAY_ROTATION.get(today_weekday)
-        prefer_thread = today_weekday == config.THREAD_PREFERRED_WEEKDAY
         
         # Get scheduled experiment type for today
         scheduled_experiment = config.WEEKLY_EXPERIMENT_SCHEDULE.get(today_weekday, "exploitation")
@@ -116,15 +136,15 @@ class ExperimentManager:
         
         # Decide based on schedule
         if scheduled_experiment == "exploitation":
-            return self._plan_exploitation(preferred_topic=preferred_topic, prefer_thread=prefer_thread)
+            return self._plan_exploitation(preferred_topic=preferred_topic, desired_post_type=desired_post_type)
         else:
             return self._plan_exploration(
                 scheduled_experiment,
                 preferred_topic=preferred_topic,
-                prefer_thread=prefer_thread,
+                desired_post_type=desired_post_type,
             )
 
-    def _plan_exploitation(self, preferred_topic: Optional[str] = None, prefer_thread: bool = False) -> Dict[str, Any]:
+    def _plan_exploitation(self, preferred_topic: Optional[str] = None, desired_post_type: str = "standalone") -> Dict[str, Any]:
         """
         Pick the best-known strategy.
         
@@ -137,7 +157,7 @@ class ExperimentManager:
         
         if not tweets:
             # Fallback: random
-            return self._plan_exploration("random", preferred_topic=preferred_topic, prefer_thread=prefer_thread)
+            return self._plan_exploration("random", preferred_topic=preferred_topic, desired_post_type=desired_post_type)
 
         candidate_tweets = tweets
         if preferred_topic:
@@ -179,11 +199,11 @@ class ExperimentManager:
             planned_topic = best_combo[1]
             planned_tone = best_combo[2]
 
-            if prefer_thread and planned_format not in config.THREAD_ONLY_FORMATS:
+            if desired_post_type == "thread" and planned_format not in config.THREAD_ONLY_FORMATS:
                 return self._plan_exploration(
                     "thread_preferred",
                     preferred_topic=preferred_topic or planned_topic,
-                    prefer_thread=True,
+                    desired_post_type="thread",
                 )
 
             return self._build_plan(
@@ -192,17 +212,17 @@ class ExperimentManager:
                 tone=planned_tone,
                 is_experiment=False,
                 experiment_type=None,
-                prefer_thread=prefer_thread,
+                desired_post_type=desired_post_type,
             )
         else:
             # Fallback
-            return self._plan_exploration("random", preferred_topic=preferred_topic, prefer_thread=prefer_thread)
+            return self._plan_exploration("random", preferred_topic=preferred_topic, desired_post_type=desired_post_type)
 
     def _plan_exploration(
         self,
         experiment_type: str,
         preferred_topic: Optional[str] = None,
-        prefer_thread: bool = False,
+        desired_post_type: str = "standalone",
     ) -> Dict[str, Any]:
         """
         Pick an exploratory format/topic/tone.
@@ -266,10 +286,10 @@ class ExperimentManager:
             tone = random.choice(config.VALID_TONES)
             experiment_type = "random"
 
-        if prefer_thread:
+        if desired_post_type == "thread":
             format_type = "thread_opener"
 
-        if format_type in config.THREAD_ONLY_FORMATS and not prefer_thread:
+        if format_type in config.THREAD_ONLY_FORMATS and desired_post_type != "thread":
             non_thread_formats = [
                 value for value in config.VALID_FORMATS
                 if value not in config.THREAD_ONLY_FORMATS
@@ -292,7 +312,7 @@ class ExperimentManager:
             tone=tone,
             is_experiment=True,
             experiment_type=experiment_type,
-            prefer_thread=prefer_thread,
+            desired_post_type=desired_post_type,
         )
 
     def _compute_diversity_score(self, recent_tweets) -> float:
@@ -325,16 +345,27 @@ class ExperimentManager:
         tone: str,
         is_experiment: bool,
         experiment_type: Optional[str],
-        prefer_thread: bool,
+        desired_post_type: str,
     ) -> Dict[str, Any]:
         recent_tweets = self._load_supported_recent_tweets(days=3)
-        cooled_format = get_archetype_with_cooldown(format_type, recent_tweets)
-        if cooled_format != format_type:
+        cooled_format = format_type
+        if desired_post_type != "thread":
+            cooled_format = get_archetype_with_cooldown(format_type, recent_tweets)
+        if cooled_format != format_type and desired_post_type != "thread":
             logger.info(
                 "Archetype cooldown applied",
                 phase="EXPERIMENTER",
                 data={"requested": format_type, "selected": cooled_format},
             )
+
+        if desired_post_type == "thread":
+            cooled_format = "thread_opener"
+        elif cooled_format in config.THREAD_ONLY_FORMATS:
+            non_thread_formats = [
+                value for value in config.VALID_FORMATS
+                if value not in config.THREAD_ONLY_FORMATS
+            ]
+            cooled_format = random.choice(non_thread_formats)
 
         thread_length = 1
         if cooled_format in config.THREAD_ONLY_FORMATS:
@@ -347,7 +378,101 @@ class ExperimentManager:
             "thread_length": thread_length,
             "is_experiment": is_experiment,
             "experiment_type": experiment_type,
+            "scheduled_post_type": desired_post_type,
         }
+
+    def _get_local_now(self) -> datetime:
+        try:
+            return datetime.now(ZoneInfo(config.BOT_TIMEZONE))
+        except Exception:
+            return datetime.utcnow().replace(tzinfo=timezone.utc)
+
+    def _get_current_slot(self, local_now: datetime, cadence_policy: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        slots = cadence_policy.get("slots", [])
+        window_minutes = int(cadence_policy.get("schedule_window_minutes", 120))
+        best_slot = None
+        best_delta = None
+
+        for slot in slots:
+            if int(slot.get("weekday", -1)) != local_now.weekday():
+                continue
+            try:
+                slot_hour, slot_minute = [int(part) for part in str(slot.get("time", "00:00")).split(":", 1)]
+            except Exception:
+                continue
+
+            slot_dt = local_now.replace(hour=slot_hour, minute=slot_minute, second=0, microsecond=0)
+            delta_minutes = abs((local_now - slot_dt).total_seconds()) / 60
+            if delta_minutes <= window_minutes and (best_delta is None or delta_minutes < best_delta):
+                best_slot = slot
+                best_delta = delta_minutes
+
+        return best_slot
+
+    def _evaluate_cadence(
+        self,
+        local_now: datetime,
+        cadence_policy: Dict[str, Any],
+        slot: Optional[Dict[str, Any]],
+    ) -> Dict[str, Any]:
+        weekly_recent = self._load_supported_recent_tweets(days=7)
+        local_today = [tweet for tweet in weekly_recent if self._tweet_local_date(tweet.posted_at) == local_now.date()]
+
+        daily_cap = min(config.MAX_POSTS_PER_DAY, int(cadence_policy.get("max_posts_per_day", config.MAX_POSTS_PER_DAY)))
+        weekly_cap = int(cadence_policy.get("max_posts_per_week", 8))
+        min_hours_between_posts = float(cadence_policy.get("min_hours_between_posts", 6))
+
+        if len(local_today) >= daily_cap:
+            return {"skip_post": True, "skip_reason": "daily_post_cap", "scheduled_post_type": slot.get("post_type") if slot else None}
+
+        if len(weekly_recent) >= weekly_cap:
+            return {"skip_post": True, "skip_reason": "weekly_post_cap", "scheduled_post_type": slot.get("post_type") if slot else None}
+
+        latest_post_time = self._latest_post_time(weekly_recent)
+        if latest_post_time and (local_now - latest_post_time).total_seconds() < (min_hours_between_posts * 3600):
+            return {"skip_post": True, "skip_reason": "post_spacing_guard", "scheduled_post_type": slot.get("post_type") if slot else None}
+
+        desired_post_type = slot.get("post_type", "standalone") if slot else "standalone"
+        if desired_post_type == "thread":
+            thread_ok, thread_reason = self._thread_slot_allowed(local_now, weekly_recent, cadence_policy)
+            if not thread_ok:
+                logger.info(
+                    "Thread slot downgraded to standalone",
+                    phase="EXPERIMENTER",
+                    data={"reason": thread_reason, "slot": slot.get("label") if slot else "manual"},
+                )
+                desired_post_type = "standalone"
+
+        return {
+            "skip_post": False,
+            "post_type": desired_post_type,
+            "scheduled_post_type": desired_post_type,
+            "slot_label": slot.get("label") if slot else "manual",
+        }
+
+    def _thread_slot_allowed(
+        self,
+        local_now: datetime,
+        weekly_recent: list,
+        cadence_policy: Dict[str, Any],
+    ) -> tuple[bool, str]:
+        recent_threads = [tweet for tweet in weekly_recent if tweet.format_type in config.THREAD_ONLY_FORMATS]
+        today_threads = [tweet for tweet in recent_threads if self._tweet_local_date(tweet.posted_at) == local_now.date()]
+
+        if len(recent_threads) >= int(cadence_policy.get("max_threads_per_week", 2)):
+            return False, "thread_weekly_cap"
+        if len(today_threads) >= int(cadence_policy.get("max_threads_per_day", 1)):
+            return False, "thread_daily_cap"
+
+        latest_thread_time = self._latest_post_time(recent_threads)
+        min_hours_between_threads = float(cadence_policy.get("min_hours_between_threads", 36))
+        if latest_thread_time and (local_now - latest_thread_time).total_seconds() < (min_hours_between_threads * 3600):
+            return False, "thread_spacing_guard"
+
+        if not self._research_supports_thread():
+            return False, "insufficient_thread_depth"
+
+        return True, "thread_allowed"
 
     def _get_local_weekday(self) -> int:
         try:
@@ -384,6 +509,44 @@ class ExperimentManager:
                 return random.choice(alternatives)
 
         return preferred_topic
+
+    def _tweet_local_date(self, posted_at: str):
+        try:
+            parsed = datetime.fromisoformat(posted_at.replace("Z", "+00:00"))
+            if parsed.tzinfo is None:
+                parsed = parsed.replace(tzinfo=timezone.utc)
+            return parsed.astimezone(ZoneInfo(config.BOT_TIMEZONE)).date()
+        except Exception:
+            return self._get_local_now().date()
+
+    def _latest_post_time(self, tweets: list) -> Optional[datetime]:
+        latest = None
+        for tweet in tweets:
+            try:
+                parsed = datetime.fromisoformat(tweet.posted_at.replace("Z", "+00:00"))
+                if parsed.tzinfo is None:
+                    parsed = parsed.replace(tzinfo=timezone.utc)
+                parsed = parsed.astimezone(ZoneInfo(config.BOT_TIMEZONE))
+                if latest is None or parsed > latest:
+                    latest = parsed
+            except Exception:
+                continue
+        return latest
+
+    def _research_supports_thread(self) -> bool:
+        try:
+            path = Path(config.LATEST_RESEARCH_BRIEF_FILE)
+            if not path.exists():
+                return False
+            brief = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            return False
+
+        return (
+            len(brief.get("top_insights", [])) >= 3
+            and len(brief.get("angles", [])) >= 3
+            and bool(str(brief.get("emerging_narrative", "")).strip())
+        )
 
 
 # Global experiment manager instance

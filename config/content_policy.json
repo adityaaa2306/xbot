@@ -1,0 +1,100 @@
+{
+  "cadence": {
+    "max_posts_per_day": 2,
+    "max_posts_per_week": 8,
+    "max_threads_per_week": 2,
+    "max_threads_per_day": 1,
+    "min_hours_between_posts": 6,
+    "min_hours_between_threads": 36,
+    "schedule_window_minutes": 120,
+    "slots": [
+      { "weekday": 0, "time": "09:15", "post_type": "standalone", "label": "Monday AM Standalone" },
+      { "weekday": 1, "time": "09:15", "post_type": "standalone", "label": "Tuesday AM Standalone" },
+      { "weekday": 1, "time": "19:45", "post_type": "thread", "label": "Tuesday PM Thread" },
+      { "weekday": 2, "time": "09:15", "post_type": "standalone", "label": "Wednesday AM Standalone" },
+      { "weekday": 3, "time": "19:15", "post_type": "standalone", "label": "Thursday PM Standalone" },
+      { "weekday": 4, "time": "09:15", "post_type": "standalone", "label": "Friday AM Standalone" },
+      { "weekday": 4, "time": "20:00", "post_type": "thread", "label": "Friday PM Thread" },
+      { "weekday": 5, "time": "10:00", "post_type": "standalone", "label": "Saturday AM Standalone" }
+    ]
+  },
+  "fallback_templates": {
+    "brutal_truth": [
+      "Nobody tells you this: {subject} rewards ownership more than effort. The people who look lucky usually built leverage before they needed it.",
+      "A brutal truth about {subject}: effort keeps you moving, but ownership changes the slope of your life.",
+      "The uncomfortable truth in {subject}: hard work matters less once leverage enters the room."
+    ],
+    "most_people_vs_smart_people": [
+      "Most people use {subject} to feel productive. Smart people use it to buy back their time.",
+      "Most people chase status through {subject}. Smart people build systems that make status irrelevant.",
+      "Most people work harder inside {subject}. Smart people design {subject} so effort matters less."
+    ],
+    "if_you_understand_this": [
+      "If you understand this, you win: {subject} compounds when you build assets, not when you keep renting out your hours.",
+      "If you understand this, you win: {subject} is less about talent and more about owning the thing that scales.",
+      "If you understand this, you win: {subject} only changes your life once it stops depending on your constant attention."
+    ],
+    "kill_a_belief": [
+      "Stop believing that harder work fixes {subject}. The real shift comes when you redesign the system producing the result.",
+      "Stop believing that discipline alone solves {subject}. Structure beats willpower once the stakes get real.",
+      "Stop believing that more effort is the answer in {subject}. Better architecture outperforms intensity."
+    ],
+    "equation": [
+      "Clarity + leverage = better {subject}. Better {subject} + time = freedom.",
+      "Skill + distribution = stronger {subject}. Stronger {subject} + patience = compounding.",
+      "Ownership + consistency = durable {subject}. Durable {subject} + time = optionality."
+    ],
+    "stacked_insight": [
+      "Learn to think clearly about {subject}. Learn to build assets around {subject}. Learn to wait while {subject} compounds.",
+      "Build the skill. Build the audience. Build the asset. That is how {subject} stops depending on luck.",
+      "Clarity before effort. Systems before scale. Ownership before expansion. That is the real game in {subject}."
+    ],
+    "identity_shift": [
+      "You are not behind in {subject}. You are just still measuring progress with the wrong scoreboard.",
+      "You are not bad at {subject}. You are just playing a game designed to keep you dependent.",
+      "You are not confused about {subject}. You are overloaded with incentives that do not serve you."
+    ],
+    "contrarian_insight": [
+      "The real problem is not effort in {subject}. It is building a life that still depends on effort after you learn better.",
+      "What keeps people stuck in {subject} is not lack of ambition. It is loyalty to a system that cannot free them.",
+      "The hidden trap in {subject} is not ignorance. It is succeeding at a model that still rents out your time."
+    ],
+    "reframe": [
+      "{subject} is not about doing more. {subject} is about needing less force to create the same result.",
+      "People think {subject} is a volume game. It is really a design game.",
+      "Most definitions of {subject} reward busyness. The useful definition rewards leverage."
+    ],
+    "thread_opener": [
+      "Most people never get free through {subject}. They just find a more impressive version of dependence. Here is what they miss:",
+      "The popular advice around {subject} sounds useful until you realize it keeps you trapped. Here is the deeper pattern:",
+      "Everyone talks about {subject} like a tactic. The people who win treat it like architecture. Here is the difference:"
+    ]
+  },
+  "tone_suffixes": {
+    "contrarian": [
+      "Most people only notice this after the cost is obvious.",
+      "That truth usually offends people before it helps them.",
+      "The market punishes this misunderstanding faster than most people expect."
+    ],
+    "analytical": [
+      "That pattern shows up long before the metrics make it undeniable.",
+      "The evidence gets obvious once you stop rewarding noise.",
+      "You can usually see the structure before the outcome becomes public."
+    ],
+    "educational": [
+      "Once you see it, a lot of second-order decisions get easier.",
+      "That is the part most people never make explicit for themselves.",
+      "The lesson matters because it changes what you optimize next."
+    ],
+    "observational": [
+      "You can watch this happen in real time if you stop listening to the loudest narrative.",
+      "The pattern is easier to see once you stop calling it normal.",
+      "It becomes obvious the second you pay attention to incentives instead of slogans."
+    ],
+    "provocative": [
+      "The uncomfortable part is that almost everyone pretends not to see it until it is expensive.",
+      "The truth lands hardest on people who benefit from ignoring it.",
+      "Most people would rather defend the story than face the bill that comes with it."
+    ]
+  }
+}

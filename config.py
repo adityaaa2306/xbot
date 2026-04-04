@@ -35,7 +35,7 @@ NVIDIA_MODEL = os.getenv("NVIDIA_MODEL", "qwen/qwen3.5-122b-a10b")
 
 DAILY_POST_TIME = os.getenv("POST_TIME_UTC", "09:00")  # HH:MM in UTC
 BOT_TIMEZONE = os.getenv("BOT_TIMEZONE", "Asia/Calcutta")
-MAX_POSTS_PER_DAY = int(os.getenv("MAX_POSTS_PER_DAY", "1"))
+MAX_POSTS_PER_DAY = int(os.getenv("MAX_POSTS_PER_DAY", "2"))
 MAX_TWEET_LENGTH = 280
 OPTIMAL_TWEET_LENGTH = 220  # Leave buffer
 
@@ -353,6 +353,8 @@ PATTERN_LIBRARY_FILE = f"{MEMORY_DIR}/pattern_library.jsonl"
 # ============================================================================
 
 NICHE_CONFIG_PATH = "config/niche.md"
+CONTENT_POLICY_PATH = os.getenv("CONTENT_POLICY_PATH", "config/content_policy.json")
+POSTING_SCHEDULE_BYPASS = os.getenv("POSTING_SCHEDULE_BYPASS", "false").lower() in {"1", "true", "yes"}
 
 # ============================================================================
 # RATE LIMITING
