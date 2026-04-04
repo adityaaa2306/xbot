@@ -198,10 +198,9 @@ Generate a new, engaging tweet now:"""
 THREAD STRUCTURE RULES:
 - Return `text_parts` with exactly {thread_length} items
 - Each item must be a complete tweet, not a fragment
-- Never make numbering like `1/{thread_length}` its own tweet
-- Include numbering in every part using the format `n/{thread_length}`
-- Tweet 1 must include both the strongest hook and `1/{thread_length}`
-- Put the numbering naturally inside the tweet text, never on a line by itself
+- Do not include visible numbering anywhere (`1/5`, `2/5`, `1.`, `Step 1`, etc.)
+- You may use blank lines inside a tweet when they improve readability
+- Blank lines inside one item must stay inside that same tweet
 - Tweet 1 must be the hook and promise
 - Middle tweets must advance one clear idea each
 - Final tweet must conclude the argument cleanly
@@ -429,12 +428,11 @@ def normalize_tweet_object(
         text_parts = text
         text = "\n\n".join(text)
 
-    if thread_length > 1 and not text_parts:
-        parts = [part.strip() for part in str(text).split("\n\n") if part.strip()]
-        text_parts = parts if parts else [str(text)]
+    if thread_length > 1 and not text_parts and isinstance(raw.get("tweet_parts"), list):
+        text_parts = raw.get("tweet_parts")
 
     if isinstance(text_parts, list):
-        text_parts = normalize_thread_parts(text_parts, expected_total=thread_length)
+        text_parts = normalize_thread_parts(text_parts)
         text = "\n\n".join(text_parts)
     else:
         text = shorten_tweet_text(str(text))
@@ -459,54 +457,44 @@ def normalize_tweet_object(
 
 def is_numbering_only(text: str) -> bool:
     """Detect thread counters that should not be posted as standalone tweets."""
-    return bool(re.fullmatch(r"\s*\d+\s*/\s*\d+\s*", str(text)))
+    value = str(text).strip()
+    patterns = [
+        r"\d+\s*/\s*\d+",
+        r"\d+\.",
+        r"step\s+\d+",
+        r"tweet\s+\d+",
+    ]
+    return any(re.fullmatch(pattern, value, flags=re.IGNORECASE) for pattern in patterns)
 
 
-def normalize_thread_parts(parts: Any, expected_total: int | None = None) -> list[str]:
-    """Clean thread parts and merge malformed numbering-only fragments."""
+def strip_thread_marker(text: str) -> str:
+    """Remove leading visible thread numbering from a tweet part."""
+    cleaned = str(text).strip()
+    marker_patterns = [
+        r"^\s*\d+\s*/\s*\d+\s*[:.\-)]?\s*",
+        r"^\s*\d+\.\s*",
+        r"^\s*step\s+\d+\s*[:.\-)]?\s*",
+        r"^\s*tweet\s+\d+\s*[:.\-)]?\s*",
+    ]
+    for pattern in marker_patterns:
+        cleaned = re.sub(pattern, "", cleaned, count=1, flags=re.IGNORECASE)
+    return cleaned.strip()
+
+
+def normalize_thread_parts(parts: Any) -> list[str]:
+    """Clean thread parts, preserve intentional spacing, and drop visible numbering markers."""
     cleaned = [shorten_tweet_text(str(part)) for part in parts if str(part).strip()]
     normalized: list[str] = []
-    pending_prefix = ""
 
     for part in cleaned:
         if is_numbering_only(part):
-            pending_prefix = str(part).strip()
             continue
 
-        candidate = str(part).strip()
-        if pending_prefix:
-            candidate = f"{pending_prefix}\n{candidate}"
-            pending_prefix = ""
-        normalized.append(candidate)
+        candidate = strip_thread_marker(str(part))
+        if candidate:
+            normalized.append(shorten_tweet_text(candidate))
 
-    if pending_prefix:
-        if normalized:
-            normalized[0] = f"{pending_prefix}\n{normalized[0]}"
-        else:
-            normalized.append(pending_prefix)
-
-    return ensure_thread_numbering(normalized, expected_total=expected_total)
-
-
-def ensure_thread_numbering(parts: list[str], expected_total: int | None = None) -> list[str]:
-    """Ensure each thread part includes inline numbering without standalone counters."""
-    total = expected_total or len(parts)
-    numbered: list[str] = []
-
-    for idx, part in enumerate(parts, start=1):
-        marker = f"{idx}/{total}"
-        text = str(part).strip()
-        text = re.sub(r"^\s*\d+\s*/\s*\d+\s*", "", text, count=1).strip()
-        if text:
-            if idx == 1:
-                text = f"{text}\n\n{marker}"
-            else:
-                text = f"{marker} {text}"
-        else:
-            text = marker
-        numbered.append(shorten_tweet_text(text))
-
-    return numbered
+    return normalized
 
 
 def shorten_tweet_text(text: str, max_length: int = config.MAX_TWEET_LENGTH) -> str:

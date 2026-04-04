@@ -35,6 +35,17 @@ def _is_numbering_only(text: str) -> bool:
     return bool(re.fullmatch(r"\s*\d+\s*/\s*\d+\s*", str(text)))
 
 
+def _has_visible_thread_marker(text: str) -> bool:
+    value = str(text).strip()
+    patterns = [
+        r"^\s*\d+\s*/\s*\d+\s*[:.\-)]?\s*",
+        r"^\s*\d+\.\s+",
+        r"^\s*step\s+\d+\s*[:.\-)]?\s*",
+        r"^\s*tweet\s+\d+\s*[:.\-)]?\s*",
+    ]
+    return any(re.search(pattern, value, flags=re.IGNORECASE) for pattern in patterns)
+
+
 def check_opening_phrase_freshness(tweet_text: str, recent_tweets: list) -> dict:
     """
     Fails if the tweet opens with a phrase used in the last 5 tweets.
@@ -135,26 +146,28 @@ class TweetValidator:
         tweet = tweet_obj["tweet"]
         thread_length = int(tweet_obj.get("thread_length", 1) or 1)
         text_parts = tweet_obj.get("text_parts")
+        validation_units = text_parts if thread_length > 1 and isinstance(text_parts, list) and text_parts else [tweet]
+        primary_text = str(validation_units[0]) if validation_units else str(tweet)
 
         if recent_tweets is None:
             recent_tweets = memory.get_recent_tweets(days=30, limit=10)
 
         # ===== CRITICAL CHECKS (FATAL) =====
 
-        opening_phrase_result = check_opening_phrase_freshness(tweet, recent_tweets)
+        opening_phrase_result = check_opening_phrase_freshness(primary_text, recent_tweets)
         if not opening_phrase_result["valid"]:
             errors.append(opening_phrase_result["reason"])
-        
-        # 1. Length check
-        if len(tweet) > config.MAX_TWEET_LENGTH:
-            errors.append(f"Tweet too long ({len(tweet)} > {config.MAX_TWEET_LENGTH} chars)")
-        
-        if len(tweet.strip()) < 10:
-            errors.append("Tweet too short (< 10 chars)")
-        
-        # 2. Empty check
-        if not tweet.strip():
-            errors.append("Tweet is empty")
+
+        # 1. Length / emptiness check
+        for idx, unit in enumerate(validation_units, start=1):
+            unit_text = str(unit)
+            label = f"Thread part {idx}" if thread_length > 1 else "Tweet"
+            if len(unit_text) > config.MAX_TWEET_LENGTH:
+                errors.append(f"{label} too long ({len(unit_text)} > {config.MAX_TWEET_LENGTH} chars)")
+            if len(unit_text.strip()) < 10:
+                errors.append(f"{label} too short (< 10 chars)")
+            if not unit_text.strip():
+                errors.append(f"{label} is empty")
         
         # 3. Format validation
         if tweet_obj["format_type"] not in config.VALID_FORMATS:
@@ -181,11 +194,15 @@ class TweetValidator:
                         errors.append(f"Thread part {idx} is empty")
                     elif _is_numbering_only(part_text):
                         errors.append(f"Thread part {idx} is only a numbering marker")
+                    elif _has_visible_thread_marker(part_text):
+                        errors.append(f"Thread part {idx} contains visible numbering")
 
         # ===== PRIORITY 2: TOXICITY CHECK (FATAL) =====
-        toxicity_score = self._check_toxicity(tweet)
-        if toxicity_score > config.TOXICITY_THRESHOLD:
-            errors.append(f"Tweet contains toxic language (score: {toxicity_score:.2f} > {config.TOXICITY_THRESHOLD})")
+        for idx, unit in enumerate(validation_units, start=1):
+            toxicity_score = self._check_toxicity(str(unit))
+            if toxicity_score > config.TOXICITY_THRESHOLD:
+                label = f"Thread part {idx}" if thread_length > 1 else "Tweet"
+                errors.append(f"{label} contains toxic language (score: {toxicity_score:.2f} > {config.TOXICITY_THRESHOLD})")
         
         # ===== PRIORITY 2: HOOK VALIDATION (WARNING/FATAL) =====
         hook_error = self._validate_hook(tweet_obj.get("hook", ""))
