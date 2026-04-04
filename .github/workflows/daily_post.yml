@@ -37,16 +37,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Install Playwright browser
-        run: python -m playwright install --with-deps chromium
-      
       - name: Run autobot research loop
         run: python main.py
         env:
           GETXAPI_API_KEY: ${{ secrets.GETXAPI_API_KEY }}
           GETXAPI_AUTH_TOKEN: ${{ secrets.GETXAPI_AUTH_TOKEN }}
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
-          X_STORAGE_STATE_JSON: ${{ secrets.X_STORAGE_STATE_JSON }}
       
       - name: Configure git
         run: |
