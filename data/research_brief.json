@@ -1,37 +1,25 @@
 {
-  "generated_at": "2026-04-04T11:57:52.103536Z",
+  "generated_at": "2026-04-05T09:25:13.385476Z",
   "top_insights": [
-    "True wealth is knowing exactly when to stop counting.",
-    "Principles are the only assets that survive market crashes.",
-    "School teaches compliance; self-teaching builds empires.",
-    "Silence is a strategic advantage in a noisy world.",
-    "Panic is the most expensive tax you will ever pay."
+    "Nobody is coming to save you; your leverage starts with that realization.",
+    "Self-taught isn't a backup plan; it's the only path to true agency.",
+    "Stop journaling for feelings. Journal to audit your leverage and strategy.",
+    "Status is a perception game; leverage is the math that actually pays.",
+    "Institutions fear the one-person business because it proves they are obsolete."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian assertions that challenge common beliefs",
+    "Insight-driven statements offering a 'secret' or counter-intuitive truth",
+    "Specific, quantifiable proof points (e.g., '$10M revenue', '$130 for 30 mins')"
   ],
-  "angles": [
-    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "validation"
+    "Validation (feeling understood or confirmed in one's views)",
+    "Empowerment (belief in one's ability to control outcomes)",
+    "Status aspiration (desire for the leverage and success signals presented)"
   ],
-  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+  "emerging_narrative": "A shift toward radical self-reliance and skepticism of institutional narratives, where success is defined by individual agency, tangible financial results, and the rejection of 'waiting for rescue' in favor of proactive, often contrarian, action.",
   "viral_examples": [
-    {
-      "tweet_id": "1939089188441219258",
-      "author": "Codie_Sanchez",
-      "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
-      "likes": 194000,
-      "replies": 1300,
-      "retweets": 11000,
-      "rank_score": 54975.0,
-      "timestamp": "2025-06-28T00:00:00Z",
-      "source": "creator"
-    },
     {
       "tweet_id": "1930721134368129164",
       "author": "naval",
@@ -75,27 +63,39 @@
       "rank_score": 21098.0,
       "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
+    },
+    {
+      "tweet_id": "1860673473749909984",
+      "author": "thedankoe",
+      "text": "Go on more walks. Walk for no reason. Walk to solve a problem. Walk to blow off steam. Walk to get outside. Walk to listen, read, and learn. Walk to escape distractions. Walk to improve your health. Walk to think. A simple walking habit can change absolutely everything.",
+      "likes": 56000,
+      "replies": 496,
+      "retweets": 11000,
+      "rank_score": 19872.0,
+      "timestamp": "2024-11-24T00:00:00Z",
+      "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian assertions that challenge common beliefs",
+    "Insight-driven statements offering a 'secret' or counter-intuitive truth",
+    "Specific, quantifiable proof points (e.g., '$10M revenue', '$130 for 30 mins')"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
+    "Most people chase money. The ultra-wealthy chase silence.",
     "The biggest lie in the creator economy is that you need a strategy.",
     "Institutions monetize access. Creators monetize math.",
     "I have a friend who worked for 2 billionaires. After seeing the private jets and the stress, he told",
-    "The most expensive thing you own is your attention.",
-    "The creator economy isn't about building an audience. It's about building a machine that prints leve"
+    "The most expensive thing you own is your attention."
   ],
   "avoid_recent_ideas": [
+    "Most people chase money. The ultra-wealthy chase silence. We are taught to equate noise with progress. More meetings, more news, more optimi",
     "The biggest lie in the creator economy is that you need a strategy.\n\nStrategies are for people waiting for permission.\n\nSelf-reliance is for",
     "Institutions monetize access. Creators monetize math.\n\nOne requires permission. The other requires proof.\n\nHere is the 4-step shift from emp",
     "I have a friend who worked for 2 billionaires. After seeing the private jets and the stress, he told me:\n\n\"I wish you never make a penny ove",
-    "The most expensive thing you own is your attention.\n\nYet 99% of creators trade it for free. They give away their best ideas in threads, tips",
-    "The creator economy isn't about building an audience.\n\nIt's about building a machine that prints leverage while you sleep.\n\nMost creators ar"
+    "The most expensive thing you own is your attention.\n\nYet 99% of creators trade it for free. They give away their best ideas in threads, tips"
   ],
   "source_summary": {
     "creator": 20
