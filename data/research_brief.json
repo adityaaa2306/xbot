@@ -1,56 +1,36 @@
 {
-  "generated_at": "2026-04-05T09:25:13.385476Z",
+  "generated_at": "2026-04-06T05:55:48.558524Z",
   "top_insights": [
-    "Nobody is coming to save you; your leverage starts with that realization.",
-    "Self-taught isn't a backup plan; it's the only path to true agency.",
-    "Stop journaling for feelings. Journal to audit your leverage and strategy.",
-    "Status is a perception game; leverage is the math that actually pays.",
-    "Institutions fear the one-person business because it proves they are obsolete."
+    "I have a friend who used to work for 2 billionaires after all he's seen",
+    "Normalize not having an opinion on things you don’t understand",
+    "I’ve never told this story before publicly but, I used to be a journalist covering",
+    "Go on more walks",
+    "All of X making sure the map doesn’t flip to blue when our eyes close…"
   ],
   "hook_patterns": [
-    "Contrarian assertions that challenge common beliefs",
-    "Insight-driven statements offering a 'secret' or counter-intuitive truth",
-    "Specific, quantifiable proof points (e.g., '$10M revenue', '$130 for 30 mins')"
+    "insight",
+    "contrarian"
   ],
-  "angles": [],
+  "angles": [
+    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+    "Normalize not having an opinion on things you don’t understand",
+    "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border"
+  ],
   "emotional_drivers": [
-    "Validation (feeling understood or confirmed in one's views)",
-    "Empowerment (belief in one's ability to control outcomes)",
-    "Status aspiration (desire for the leverage and success signals presented)"
+    "validation",
+    "ambition"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and skepticism of institutional narratives, where success is defined by individual agency, tangible financial results, and the rejection of 'waiting for rescue' in favor of proactive, often contrarian, action.",
+  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
   "viral_examples": [
     {
-      "tweet_id": "1930721134368129164",
-      "author": "naval",
-      "text": "Elon’s stance is principled. Trump’s stance is practical. Tech needs Republicans for the present. Republicans need Tech for the future. Drop the tax cuts, cut some pork, get the bill through.",
-      "likes": 97000,
-      "replies": 5700,
-      "retweets": 9300,
-      "rank_score": 33175.0,
-      "timestamp": "2025-06-05T00:00:00Z",
-      "source": "creator"
-    },
-    {
-      "tweet_id": "1880853934883197275",
-      "author": "naval",
-      "text": "The smartest people are all self-taught, even if they went to school.",
-      "likes": 78000,
-      "replies": 1200,
-      "retweets": 12000,
-      "rank_score": 26400.0,
-      "timestamp": "2025-01-19T00:00:00Z",
-      "source": "creator"
-    },
-    {
-      "tweet_id": "1574638443237294080",
-      "author": "naval",
-      "text": "Panic led to lockdowns. Lockdowns led to fiscal stimulus. Stimulus led to inflation. Inflation led to monetary tightening. Tightening leads to recession. The panic wasn’t free - and the bill is coming due.",
-      "likes": 59000,
-      "replies": 1200,
+      "tweet_id": "1939089188441219258",
+      "author": "Codie_Sanchez",
+      "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
+      "likes": 194000,
+      "replies": 1300,
       "retweets": 11000,
-      "rank_score": 21150.0,
-      "timestamp": "2022-09-27T00:00:00Z",
+      "rank_score": 54975.0,
+      "timestamp": "2025-06-28T00:00:00Z",
       "source": "creator"
     },
     {
@@ -65,6 +45,17 @@
       "source": "creator"
     },
     {
+      "tweet_id": "1855971337476477418",
+      "author": "Codie_Sanchez",
+      "text": "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border. I’ve crossed the border illegally covering migrants and cartels countless times. I saw young women in the morgue after they were raped and brutalized in Show more",
+      "likes": 53000,
+      "replies": 940,
+      "retweets": 12000,
+      "rank_score": 19955.0,
+      "timestamp": "2024-11-11T00:00:00Z",
+      "source": "creator"
+    },
+    {
       "tweet_id": "1860673473749909984",
       "author": "thedankoe",
       "text": "Go on more walks. Walk for no reason. Walk to solve a problem. Walk to blow off steam. Walk to get outside. Walk to listen, read, and learn. Walk to escape distractions. Walk to improve your health. Walk to think. A simple walking habit can change absolutely everything.",
@@ -74,13 +65,23 @@
       "rank_score": 19872.0,
       "timestamp": "2024-11-24T00:00:00Z",
       "source": "creator"
+    },
+    {
+      "tweet_id": "1854018384301572571",
+      "author": "Codie_Sanchez",
+      "text": "All of X making sure the map doesn’t flip to blue when our eyes close…",
+      "likes": 59000,
+      "replies": 637,
+      "retweets": 4700,
+      "rank_score": 17577.75,
+      "timestamp": "2024-11-06T00:00:00Z",
+      "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian assertions that challenge common beliefs",
-    "Insight-driven statements offering a 'secret' or counter-intuitive truth",
-    "Specific, quantifiable proof points (e.g., '$10M revenue', '$130 for 30 mins')"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
