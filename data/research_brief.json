@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-04-10T15:38:04.844340Z",
+  "generated_at": "2026-04-10T17:37:53.387026Z",
   "top_insights": [
-    "Formal degrees teach compliance; self-education builds leverage.",
-    "True wealth isn't accumulation, it's the freedom to ignore.",
-    "Creators fix broken markets; corporations just optimize the brokenness.",
-    "Public respect is earned by never speaking poorly of allies.",
-    "Panic creates policy; calm builds empires. Choose your emotion."
+    "The smartest people are self-taught; school just teaches you how to follow instructions.",
+    "Nobody is coming to save you. That terrifying truth is your only path to freedom.",
+    "True wealth isn't infinite money; it's the power to stop caring about the $299M limit.",
+    "Your narrative is your only real asset. Stop letting others write your story for you.",
+    "Normalize admitting ignorance. Pretending to know everything is the fastest way to lose leverage."
   ],
   "hook_patterns": [
-    "Insight-driven statements revealing hidden truths",
-    "Contrarian personal anecdotes or rules",
-    "Short, punchy declarations of status or achievement"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Insightful declarations backed by specific data or personal experience",
+    "Short, punchy assertions that deliver immediate value or shock"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation of personal beliefs or status",
-    "Ambition and desire for success",
-    "Trust in authoritative or insider perspectives"
+    "Validation (seeking confirmation of one's views or status)",
+    "Aspiration (desire for wealth, success, and autonomy)",
+    "Security (reassurance through clear takeaways and structured advice)"
   ],
-  "emerging_narrative": "A shift toward celebrating individual agency, creator-led business models, and the validation of non-traditional paths to success, often framed through high-status personal anecdotes or contrarian insights.",
+  "emerging_narrative": "A shift toward radical self-reliance and the celebration of individual success stories, where personal agency and financial independence are framed as the ultimate forms of validation and status.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -65,22 +65,22 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1855971337476477418",
-      "author": "Codie_Sanchez",
-      "text": "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border. I’ve crossed the border illegally covering migrants and cartels countless times. I saw young women in the morgue after they were raped and brutalized in Show more",
-      "likes": 53000,
-      "replies": 939,
-      "retweets": 12000,
-      "rank_score": 19954.25,
-      "timestamp": "2024-11-11T00:00:00Z",
+      "tweet_id": "1609189890398232582",
+      "author": "thedankoe",
+      "text": "Normalize not having an opinion on things you don’t understand.",
+      "likes": 54000,
+      "replies": 464,
+      "retweets": 14000,
+      "rank_score": 20848.0,
+      "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
     }
   ],
-  "analyses_count": 18,
+  "analyses_count": 20,
   "winning_patterns": [
-    "Insight-driven statements revealing hidden truths",
-    "Contrarian personal anecdotes or rules",
-    "Short, punchy declarations of status or achievement"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Insightful declarations backed by specific data or personal experience",
+    "Short, punchy assertions that deliver immediate value or shock"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
@@ -98,6 +98,6 @@
     "The biggest lie in the creator economy is that you need a strategy.\n\nStrategies are for people waiting for permission.\n\nSelf-reliance is for"
   ],
   "source_summary": {
-    "creator": 18
+    "creator": 20
   }
 }
