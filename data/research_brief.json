@@ -1,24 +1,25 @@
 {
-  "generated_at": "2026-04-10T05:52:18.370656Z",
+  "generated_at": "2026-04-10T08:14:53.258529Z",
   "top_insights": [
-    "Nobody is coming to save you; your rescue is your own responsibility.",
-    "Self-education beats degrees; the smartest people teach themselves the hard stuff.",
-    "Never trash your partner publicly; dignity is the ultimate relationship leverage.",
-    "Control the narrative, or the world will write a story you hate.",
-    "True wealth isn't a number; it's the freedom to ignore external validation."
+    "I have a friend who used to work for 2 billionaires after all he's seen",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school",
+    "Panic led to lockdowns",
+    "I’ve never told this story before publicly but, I used to be a journalist covering"
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common assumptions or norms",
-    "Insight-driven declarations that reframe a situation or behavior",
-    "Personal anecdotes establishing authority or unique access (e.g., 'I used to be a journalist...')"
+    "insight",
+    "contrarian"
   ],
-  "angles": [],
+  "angles": [
+    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school"
+  ],
   "emotional_drivers": [
-    "Validation (seeking confirmation of one's worldview or choices)",
-    "Aspiration (desire for status, wealth, and success)",
-    "Security (need for stability, clear rules, and protection from chaos)"
+    "validation"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation or rescue, where success is defined by personal agency, financial independence, and the ability to control one's own narrative amidst societal uncertainty.",
+  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -65,22 +66,21 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1609189890398232582",
-      "author": "thedankoe",
-      "text": "Normalize not having an opinion on things you don’t understand.",
-      "likes": 54000,
-      "replies": 464,
-      "retweets": 14000,
-      "rank_score": 20848.0,
-      "timestamp": "2022-12-31T00:00:00Z",
+      "tweet_id": "1855971337476477418",
+      "author": "Codie_Sanchez",
+      "text": "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border. I’ve crossed the border illegally covering migrants and cartels countless times. I saw young women in the morgue after they were raped and brutalized in Show more",
+      "likes": 53000,
+      "replies": 939,
+      "retweets": 12000,
+      "rank_score": 19954.25,
+      "timestamp": "2024-11-11T00:00:00Z",
       "source": "creator"
     }
   ],
-  "analyses_count": 20,
+  "analyses_count": 18,
   "winning_patterns": [
-    "Contrarian statements that challenge common assumptions or norms",
-    "Insight-driven declarations that reframe a situation or behavior",
-    "Personal anecdotes establishing authority or unique access (e.g., 'I used to be a journalist...')"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
@@ -98,6 +98,6 @@
     "The most expensive thing you own is your attention.\n\nYet 99% of creators trade it for free. They give away their best ideas in threads, tips"
   ],
   "source_summary": {
-    "creator": 20
+    "creator": 18
   }
 }
