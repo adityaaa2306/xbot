@@ -35,7 +35,7 @@ NVIDIA_MODEL = os.getenv("NVIDIA_MODEL", "qwen/qwen3.5-122b-a10b")
 
 DAILY_POST_TIME = os.getenv("POST_TIME_UTC", "09:00")  # HH:MM in UTC
 BOT_TIMEZONE = os.getenv("BOT_TIMEZONE", "Asia/Calcutta")
-MAX_POSTS_PER_DAY = int(os.getenv("MAX_POSTS_PER_DAY", "2"))
+MAX_POSTS_PER_DAY = int(os.getenv("MAX_POSTS_PER_DAY", "9"))
 MAX_TWEET_LENGTH = 280
 OPTIMAL_TWEET_LENGTH = 220  # Leave buffer
 

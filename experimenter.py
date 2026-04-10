@@ -94,13 +94,8 @@ class ExperimentManager:
         cadence_policy = self.content_policy.get("cadence", {})
         local_now = self._get_local_now()
         slot = self._get_current_slot(local_now, cadence_policy)
-
-        if not slot and not config.POSTING_SCHEDULE_BYPASS:
-            return {
-                "skip_post": True,
-                "skip_reason": "outside_schedule_window",
-                "scheduled_post_type": None,
-            }
+        if not slot:
+            slot = self._build_unscheduled_slot(local_now, cadence_policy)
 
         cadence_decision = self._evaluate_cadence(local_now, cadence_policy, slot)
         if cadence_decision.get("skip_post"):
@@ -393,8 +388,9 @@ class ExperimentManager:
         best_slot = None
         best_delta = None
 
-        for slot in slots:
-            if int(slot.get("weekday", -1)) != local_now.weekday():
+        for index, slot in enumerate(slots):
+            slot_weekday = slot.get("weekday")
+            if slot_weekday is not None and int(slot_weekday) != local_now.weekday():
                 continue
             try:
                 slot_hour, slot_minute = [int(part) for part in str(slot.get("time", "00:00")).split(":", 1)]
@@ -404,10 +400,21 @@ class ExperimentManager:
             slot_dt = local_now.replace(hour=slot_hour, minute=slot_minute, second=0, microsecond=0)
             delta_minutes = abs((local_now - slot_dt).total_seconds()) / 60
             if delta_minutes <= window_minutes and (best_delta is None or delta_minutes < best_delta):
-                best_slot = slot
+                best_slot = {
+                    **slot,
+                    "slot_index": index,
+                }
                 best_delta = delta_minutes
 
         return best_slot
+
+    def _build_unscheduled_slot(self, local_now: datetime, cadence_policy: Dict[str, Any]) -> Dict[str, Any]:
+        slots = cadence_policy.get("slots", [])
+        local_today = self._load_supported_recent_tweets(days=2)
+        today_posts = [tweet for tweet in local_today if self._tweet_local_date(tweet.posted_at) == local_now.date()]
+        fallback_index = min(len(today_posts), max(len(slots) - 1, 0))
+        label = slots[fallback_index].get("label", f"Slot {fallback_index + 1}") if slots else "Manual slot"
+        return {"slot_index": fallback_index, "label": label, "time": local_now.strftime("%H:%M"), "manual": True}
 
     def _evaluate_cadence(
         self,
@@ -415,26 +422,44 @@ class ExperimentManager:
         cadence_policy: Dict[str, Any],
         slot: Optional[Dict[str, Any]],
     ) -> Dict[str, Any]:
-        weekly_recent = self._load_supported_recent_tweets(days=7)
-        local_today = [tweet for tweet in weekly_recent if self._tweet_local_date(tweet.posted_at) == local_now.date()]
+        recent_supported = self._load_supported_recent_tweets(days=2)
+        local_today = [tweet for tweet in recent_supported if self._tweet_local_date(tweet.posted_at) == local_now.date()]
 
         daily_cap = min(config.MAX_POSTS_PER_DAY, int(cadence_policy.get("max_posts_per_day", config.MAX_POSTS_PER_DAY)))
-        weekly_cap = int(cadence_policy.get("max_posts_per_week", 8))
         min_hours_between_posts = float(cadence_policy.get("min_hours_between_posts", 6))
+        daily_mix = self._build_daily_mix_plan(local_now, cadence_policy)
+        slot_index = int(slot.get("slot_index", len(local_today))) if slot else len(local_today)
 
         if len(local_today) >= daily_cap:
             return {"skip_post": True, "skip_reason": "daily_post_cap", "scheduled_post_type": slot.get("post_type") if slot else None}
 
-        if len(weekly_recent) >= weekly_cap:
-            return {"skip_post": True, "skip_reason": "weekly_post_cap", "scheduled_post_type": slot.get("post_type") if slot else None}
+        if len(local_today) >= daily_mix["target_posts"]:
+            return {"skip_post": True, "skip_reason": "daily_target_reached", "scheduled_post_type": None}
 
-        latest_post_time = self._latest_post_time(weekly_recent)
+        latest_post_time = self._latest_post_time(local_today)
         if latest_post_time and (local_now - latest_post_time).total_seconds() < (min_hours_between_posts * 3600):
             return {"skip_post": True, "skip_reason": "post_spacing_guard", "scheduled_post_type": slot.get("post_type") if slot else None}
 
-        desired_post_type = slot.get("post_type", "standalone") if slot else "standalone"
+        if slot.get("manual") and slot_index not in daily_mix["active_slot_indexes"]:
+            upcoming_slots = [
+                index for index in daily_mix["active_slot_indexes"]
+                if index >= len(local_today)
+            ]
+            if upcoming_slots:
+                slot_index = upcoming_slots[0]
+            elif daily_mix["active_slot_indexes"]:
+                slot_index = daily_mix["active_slot_indexes"][-1]
+
+        if slot_index not in daily_mix["active_slot_indexes"]:
+            return {
+                "skip_post": True,
+                "skip_reason": "inactive_daily_slot",
+                "scheduled_post_type": None,
+            }
+
+        desired_post_type = daily_mix["slot_post_types"].get(slot_index, "standalone")
         if desired_post_type == "thread":
-            thread_ok, thread_reason = self._thread_slot_allowed(local_now, weekly_recent, cadence_policy)
+            thread_ok, thread_reason = self._thread_slot_allowed(local_now, local_today, cadence_policy, daily_mix)
             if not thread_ok:
                 logger.info(
                     "Thread slot downgraded to standalone",
@@ -448,24 +473,26 @@ class ExperimentManager:
             "post_type": desired_post_type,
             "scheduled_post_type": desired_post_type,
             "slot_label": slot.get("label") if slot else "manual",
+            "daily_target_posts": daily_mix["target_posts"],
+            "daily_target_threads": daily_mix["target_threads"],
         }
 
     def _thread_slot_allowed(
         self,
         local_now: datetime,
-        weekly_recent: list,
+        local_today: list,
         cadence_policy: Dict[str, Any],
+        daily_mix: Dict[str, Any],
     ) -> tuple[bool, str]:
-        recent_threads = [tweet for tweet in weekly_recent if tweet.format_type in config.THREAD_ONLY_FORMATS]
-        today_threads = [tweet for tweet in recent_threads if self._tweet_local_date(tweet.posted_at) == local_now.date()]
+        today_threads = [tweet for tweet in local_today if tweet.format_type in config.THREAD_ONLY_FORMATS]
 
-        if len(recent_threads) >= int(cadence_policy.get("max_threads_per_week", 2)):
-            return False, "thread_weekly_cap"
-        if len(today_threads) >= int(cadence_policy.get("max_threads_per_day", 1)):
+        if len(today_threads) >= daily_mix["target_threads"]:
+            return False, "thread_daily_target_reached"
+        if len(today_threads) >= int(cadence_policy.get("max_threads_per_day", daily_mix["target_threads"])):
             return False, "thread_daily_cap"
 
-        latest_thread_time = self._latest_post_time(recent_threads)
-        min_hours_between_threads = float(cadence_policy.get("min_hours_between_threads", 36))
+        latest_thread_time = self._latest_post_time(today_threads)
+        min_hours_between_threads = float(cadence_policy.get("min_hours_between_threads", 4))
         if latest_thread_time and (local_now - latest_thread_time).total_seconds() < (min_hours_between_threads * 3600):
             return False, "thread_spacing_guard"
 
@@ -473,6 +500,65 @@ class ExperimentManager:
             return False, "insufficient_thread_depth"
 
         return True, "thread_allowed"
+
+    def _build_daily_mix_plan(self, local_now: datetime, cadence_policy: Dict[str, Any]) -> Dict[str, Any]:
+        slots = cadence_policy.get("slots", [])
+        opportunities = len(slots)
+        if opportunities == 0:
+            return {
+                "target_posts": 0,
+                "target_threads": 0,
+                "active_slot_indexes": [],
+                "slot_post_types": {},
+            }
+
+        seed = int(local_now.strftime("%Y%m%d"))
+        rng = random.Random(seed)
+
+        min_posts = int(cadence_policy.get("min_posts_per_day", 5))
+        max_posts = min(int(cadence_policy.get("max_posts_per_day", opportunities)), opportunities)
+        target_posts = rng.randint(min_posts, max_posts)
+
+        min_threads = int(cadence_policy.get("min_threads_per_day", 1))
+        max_threads = min(int(cadence_policy.get("max_threads_per_day", 3)), max(1, target_posts - 1))
+        target_threads = rng.randint(min_threads, max_threads)
+
+        active_slot_indexes = sorted(rng.sample(range(opportunities), target_posts))
+        thread_slot_indexes = self._choose_thread_slots(active_slot_indexes, target_threads, rng)
+        slot_post_types = {
+            slot_index: ("thread" if slot_index in thread_slot_indexes else "standalone")
+            for slot_index in active_slot_indexes
+        }
+
+        return {
+            "target_posts": target_posts,
+            "target_threads": target_threads,
+            "active_slot_indexes": active_slot_indexes,
+            "slot_post_types": slot_post_types,
+        }
+
+    def _choose_thread_slots(self, active_slot_indexes: list[int], target_threads: int, rng: random.Random) -> set[int]:
+        if target_threads <= 0:
+            return set()
+
+        shuffled = active_slot_indexes[:]
+        rng.shuffle(shuffled)
+        chosen: list[int] = []
+
+        for slot_index in shuffled:
+            if all(abs(slot_index - existing) > 1 for existing in chosen):
+                chosen.append(slot_index)
+            if len(chosen) >= target_threads:
+                break
+
+        if len(chosen) < target_threads:
+            for slot_index in shuffled:
+                if slot_index not in chosen:
+                    chosen.append(slot_index)
+                if len(chosen) >= target_threads:
+                    break
+
+        return set(chosen)
 
     def _get_local_weekday(self) -> int:
         try:

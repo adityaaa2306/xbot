@@ -2,17 +2,17 @@ name: Daily Autobot Posts
 
 on:
   schedule:
-    # Editorial cadence in IST:
-    # Mon 09:15, Tue 09:15 + 19:45, Wed 09:15, Thu 19:15,
-    # Fri 09:15 + 20:00, Sat 10:00. Sunday intentionally off.
-    - cron: '45 3 * * 1'   # Monday 09:15 IST
-    - cron: '45 3 * * 2'   # Tuesday 09:15 IST
-    - cron: '15 14 * * 2'  # Tuesday 19:45 IST
-    - cron: '45 3 * * 3'   # Wednesday 09:15 IST
-    - cron: '45 13 * * 4'  # Thursday 19:15 IST
-    - cron: '45 3 * * 5'   # Friday 09:15 IST
-    - cron: '30 14 * * 5'  # Friday 20:00 IST
-    - cron: '30 4 * * 6'   # Saturday 10:00 IST
+    # 9 daily opportunities in IST:
+    # 06:15, 08:15, 10:15, 12:15, 14:15, 16:15, 18:15, 20:15, 22:15
+    - cron: '45 0 * * *'   # 06:15 IST
+    - cron: '45 2 * * *'   # 08:15 IST
+    - cron: '45 4 * * *'   # 10:15 IST
+    - cron: '45 6 * * *'   # 12:15 IST
+    - cron: '45 8 * * *'   # 14:15 IST
+    - cron: '45 10 * * *'  # 16:15 IST
+    - cron: '45 12 * * *'  # 18:15 IST
+    - cron: '45 14 * * *'  # 20:15 IST
+    - cron: '45 16 * * *'  # 22:15 IST
   workflow_dispatch:  # Allow manual trigger
 
 permissions:
