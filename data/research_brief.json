@@ -1,25 +1,24 @@
 {
-  "generated_at": "2026-04-11T15:20:39.716579Z",
+  "generated_at": "2026-04-11T17:20:30.640789Z",
   "top_insights": [
-    "I have a friend who used to work for 2 billionaires after all he's seen",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school",
-    "Panic led to lockdowns",
-    "Normalize not having an opinion on things you don’t understand"
+    "Stop waiting for a savior; the rescue mission you need is already in your hands.",
+    "True wealth isn't a number; it's the quiet confidence of never needing to explain yourself.",
+    "Formal education teaches compliance; self-education builds the leverage to rewrite the rules.",
+    "Your narrative is your only real asset; protect it from the noise of public opinion.",
+    "The smartest people don't have opinions on everything; they know when to stay silent."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Insight-driven declarations offering a 'secret' or counter-intuitive truth",
+    "Personal anecdotes establishing authority or unique status (e.g., 'I used to be...', 'My husband and I...')"
   ],
-  "angles": [
-    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "validation"
+    "Validation (seeking confirmation of one's worldview or status)",
+    "Aspiration (desire for wealth, success, and autonomy)",
+    "Security (need for stability, clear rules, and protection from chaos)"
   ],
-  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation or systemic dependency, where success is framed as a result of individual discipline, strategic silence, and controlling one's own narrative rather than relying on institutions or collective opinion.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -79,8 +78,9 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Insight-driven declarations offering a 'secret' or counter-intuitive truth",
+    "Personal anecdotes establishing authority or unique status (e.g., 'I used to be...', 'My husband and I...')"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
