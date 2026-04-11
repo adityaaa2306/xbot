@@ -1,24 +1,25 @@
 {
-  "generated_at": "2026-04-11T07:41:16.769201Z",
+  "generated_at": "2026-04-11T09:28:47.307851Z",
   "top_insights": [
-    "Stop waiting for permission; nobody is coming to save you from your own mediocrity.",
-    "True wealth isn't the number, it's the ability to ignore opinions you don't respect.",
-    "Your narrative is your only asset; control the story or let others write it for you.",
-    "The most expensive thing you own is your need for external validation and approval.",
-    "Simplify your life aggressively; complexity is often just fear disguised as strategy."
+    "I have a friend who used to work for 2 billionaires after all he's seen",
+    "Normalize not having an opinion on things you don’t understand",
+    "I’ve never told this story before publicly but, I used to be a journalist covering",
+    "Go on more walks",
+    "All of X making sure the map doesn’t flip to blue when our eyes close…"
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common beliefs or norms",
-    "Personal anecdotes revealing exclusive or hidden experiences",
-    "Direct, punchy declarations of facts or rules"
+    "insight",
+    "contrarian"
   ],
-  "angles": [],
+  "angles": [
+    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+    "Normalize not having an opinion on things you don’t understand",
+    "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border"
+  ],
   "emotional_drivers": [
-    "Validation (seeking confirmation of one's choices or status)",
-    "Aspiration (desire for wealth, success, or independence)",
-    "Relief (finding permission to simplify or ignore external noise)"
+    "validation"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation systems, where success is defined by personal autonomy, financial independence, and the curation of one's own narrative rather than adhering to societal expectations.",
+  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -78,24 +79,23 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge common beliefs or norms",
-    "Personal anecdotes revealing exclusive or hidden experiences",
-    "Direct, punchy declarations of facts or rules"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
+    "Most people build a portfolio to impress strangers.",
     "Nobody tells you this:",
     "Most people never get free through performance psychology. They just find a more impressive version ",
     "If you understand this, you win: wealth and leverage compounds when you build assets, not when you k",
-    "Learn to think clearly about wealth and leverage",
-    "Most people chase money. The ultra-wealthy chase silence."
+    "Learn to think clearly about wealth and leverage"
   ],
   "avoid_recent_ideas": [
+    "Most people build a portfolio to impress strangers.\n\nSmart people build an audience to own their future.\n\nOne is renting your time to the hi",
     "Nobody tells you this: The wealthy don't accumulate assets. They accumulate optionality. Assets can be seized. Optionality is the ability to",
     "Most people never get free through performance psychology. They just find a more impressive version of dependence. Here is what they miss:\n\n",
     "If you understand this, you win: wealth and leverage compounds when you build assets, not when you keep renting out your hours. Once you see",
-    "Learn to think clearly about wealth and leverage. Learn to build assets around wealth and leverage. Learn to wait while wealth and leverage ",
-    "Most people chase money. The ultra-wealthy chase silence. We are taught to equate noise with progress. More meetings, more news, more optimi"
+    "Learn to think clearly about wealth and leverage. Learn to build assets around wealth and leverage. Learn to wait while wealth and leverage "
   ],
   "source_summary": {
     "creator": 20
