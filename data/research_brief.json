@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-04-10T17:37:53.387026Z",
+  "generated_at": "2026-04-11T04:37:12.345789Z",
   "top_insights": [
-    "The smartest people are self-taught; school just teaches you how to follow instructions.",
-    "Nobody is coming to save you. That terrifying truth is your only path to freedom.",
-    "True wealth isn't infinite money; it's the power to stop caring about the $299M limit.",
-    "Your narrative is your only real asset. Stop letting others write your story for you.",
-    "Normalize admitting ignorance. Pretending to know everything is the fastest way to lose leverage."
+    "Stop waiting for a savior; the rescue you seek is the work you refuse to start.",
+    "True wealth isn't a number; it's the quiet ability to say no to anyone.",
+    "Formal degrees teach compliance; self-education builds the leverage to rewrite the rules.",
+    "Your narrative controls your reality; if you don't write it, someone else will.",
+    "The smartest people ignore the curriculum and master the game behind the classroom."
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common beliefs or norms",
-    "Insightful declarations backed by specific data or personal experience",
-    "Short, punchy assertions that deliver immediate value or shock"
+    "Contrarian statements that challenge common beliefs",
+    "Insightful revelations framed as exclusive or hidden knowledge",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation (seeking confirmation of one's views or status)",
-    "Aspiration (desire for wealth, success, and autonomy)",
-    "Security (reassurance through clear takeaways and structured advice)"
+    "Validation of the audience's worldview",
+    "Aspiration towards status and success",
+    "Relief from the pressure of external expectations"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and the celebration of individual success stories, where personal agency and financial independence are framed as the ultimate forms of validation and status.",
+  "emerging_narrative": "A cultural shift towards radical self-reliance, where success is defined by personal agency, financial sovereignty, and the rejection of institutional or societal dependency.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -54,6 +54,17 @@
       "source": "creator"
     },
     {
+      "tweet_id": "1345564424770240513",
+      "author": "naval",
+      "text": "Bitcoin is an exit from the Fed. DeFi is an exit from Wall Street. Social media is an exit from mass media. Homeschooling is an exit from industrial education. Remote work is an exit from 9-5. Creator economy is an exit from employment. Individuals are leaving institutions.",
+      "likes": 57000,
+      "replies": 1000,
+      "retweets": 14000,
+      "rank_score": 22000.0,
+      "timestamp": "2021-01-03T00:00:00Z",
+      "source": "creator"
+    },
+    {
       "tweet_id": "1574638443237294080",
       "author": "naval",
       "text": "Panic led to lockdowns. Lockdowns led to fiscal stimulus. Stimulus led to inflation. Inflation led to monetary tightening. Tightening leads to recession. The panic wasn’t free - and the bill is coming due.",
@@ -63,39 +74,28 @@
       "rank_score": 21150.0,
       "timestamp": "2022-09-27T00:00:00Z",
       "source": "creator"
-    },
-    {
-      "tweet_id": "1609189890398232582",
-      "author": "thedankoe",
-      "text": "Normalize not having an opinion on things you don’t understand.",
-      "likes": 54000,
-      "replies": 464,
-      "retweets": 14000,
-      "rank_score": 20848.0,
-      "timestamp": "2022-12-31T00:00:00Z",
-      "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge common beliefs or norms",
-    "Insightful declarations backed by specific data or personal experience",
-    "Short, punchy assertions that deliver immediate value or shock"
+    "Contrarian statements that challenge common beliefs",
+    "Insightful revelations framed as exclusive or hidden knowledge",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
+    "Nobody tells you this:",
     "Most people never get free through performance psychology. They just find a more impressive version ",
     "If you understand this, you win: wealth and leverage compounds when you build assets, not when you k",
     "Learn to think clearly about wealth and leverage",
-    "Most people chase money. The ultra-wealthy chase silence.",
-    "The biggest lie in the creator economy is that you need a strategy."
+    "Most people chase money. The ultra-wealthy chase silence."
   ],
   "avoid_recent_ideas": [
+    "Nobody tells you this: The wealthy don't accumulate assets. They accumulate optionality. Assets can be seized. Optionality is the ability to",
     "Most people never get free through performance psychology. They just find a more impressive version of dependence. Here is what they miss:\n\n",
     "If you understand this, you win: wealth and leverage compounds when you build assets, not when you keep renting out your hours. Once you see",
     "Learn to think clearly about wealth and leverage. Learn to build assets around wealth and leverage. Learn to wait while wealth and leverage ",
-    "Most people chase money. The ultra-wealthy chase silence. We are taught to equate noise with progress. More meetings, more news, more optimi",
-    "The biggest lie in the creator economy is that you need a strategy.\n\nStrategies are for people waiting for permission.\n\nSelf-reliance is for"
+    "Most people chase money. The ultra-wealthy chase silence. We are taught to equate noise with progress. More meetings, more news, more optimi"
   ],
   "source_summary": {
     "creator": 20
