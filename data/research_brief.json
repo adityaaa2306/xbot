@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-04-11T04:37:12.345789Z",
+  "generated_at": "2026-04-11T07:41:16.769201Z",
   "top_insights": [
-    "Stop waiting for a savior; the rescue you seek is the work you refuse to start.",
-    "True wealth isn't a number; it's the quiet ability to say no to anyone.",
-    "Formal degrees teach compliance; self-education builds the leverage to rewrite the rules.",
-    "Your narrative controls your reality; if you don't write it, someone else will.",
-    "The smartest people ignore the curriculum and master the game behind the classroom."
+    "Stop waiting for permission; nobody is coming to save you from your own mediocrity.",
+    "True wealth isn't the number, it's the ability to ignore opinions you don't respect.",
+    "Your narrative is your only asset; control the story or let others write it for you.",
+    "The most expensive thing you own is your need for external validation and approval.",
+    "Simplify your life aggressively; complexity is often just fear disguised as strategy."
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common beliefs",
-    "Insightful revelations framed as exclusive or hidden knowledge",
-    "Personal anecdotes establishing authority or unique experience"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Personal anecdotes revealing exclusive or hidden experiences",
+    "Direct, punchy declarations of facts or rules"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation of the audience's worldview",
-    "Aspiration towards status and success",
-    "Relief from the pressure of external expectations"
+    "Validation (seeking confirmation of one's choices or status)",
+    "Aspiration (desire for wealth, success, or independence)",
+    "Relief (finding permission to simplify or ignore external noise)"
   ],
-  "emerging_narrative": "A cultural shift towards radical self-reliance, where success is defined by personal agency, financial sovereignty, and the rejection of institutional or societal dependency.",
+  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation systems, where success is defined by personal autonomy, financial independence, and the curation of one's own narrative rather than adhering to societal expectations.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -32,55 +32,55 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1930721134368129164",
-      "author": "naval",
-      "text": "Elon’s stance is principled. Trump’s stance is practical. Tech needs Republicans for the present. Republicans need Tech for the future. Drop the tax cuts, cut some pork, get the bill through.",
-      "likes": 97000,
-      "replies": 5600,
-      "retweets": 9300,
-      "rank_score": 33100.0,
-      "timestamp": "2025-06-05T00:00:00Z",
-      "source": "creator"
-    },
-    {
-      "tweet_id": "1880853934883197275",
-      "author": "naval",
-      "text": "The smartest people are all self-taught, even if they went to school.",
-      "likes": 77000,
-      "replies": 1200,
-      "retweets": 12000,
-      "rank_score": 26150.0,
-      "timestamp": "2025-01-19T00:00:00Z",
-      "source": "creator"
-    },
-    {
-      "tweet_id": "1345564424770240513",
-      "author": "naval",
-      "text": "Bitcoin is an exit from the Fed. DeFi is an exit from Wall Street. Social media is an exit from mass media. Homeschooling is an exit from industrial education. Remote work is an exit from 9-5. Creator economy is an exit from employment. Individuals are leaving institutions.",
-      "likes": 57000,
-      "replies": 1000,
+      "tweet_id": "1609189890398232582",
+      "author": "thedankoe",
+      "text": "Normalize not having an opinion on things you don’t understand.",
+      "likes": 54000,
+      "replies": 464,
       "retweets": 14000,
-      "rank_score": 22000.0,
-      "timestamp": "2021-01-03T00:00:00Z",
+      "rank_score": 20848.0,
+      "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
     },
     {
-      "tweet_id": "1574638443237294080",
-      "author": "naval",
-      "text": "Panic led to lockdowns. Lockdowns led to fiscal stimulus. Stimulus led to inflation. Inflation led to monetary tightening. Tightening leads to recession. The panic wasn’t free - and the bill is coming due.",
-      "likes": 59000,
-      "replies": 1200,
+      "tweet_id": "1855971337476477418",
+      "author": "Codie_Sanchez",
+      "text": "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border. I’ve crossed the border illegally covering migrants and cartels countless times. I saw young women in the morgue after they were raped and brutalized in Show more",
+      "likes": 53000,
+      "replies": 939,
+      "retweets": 12000,
+      "rank_score": 19954.25,
+      "timestamp": "2024-11-11T00:00:00Z",
+      "source": "creator"
+    },
+    {
+      "tweet_id": "1860673473749909984",
+      "author": "thedankoe",
+      "text": "Go on more walks. Walk for no reason. Walk to solve a problem. Walk to blow off steam. Walk to get outside. Walk to listen, read, and learn. Walk to escape distractions. Walk to improve your health. Walk to think. A simple walking habit can change absolutely everything.",
+      "likes": 56000,
+      "replies": 495,
       "retweets": 11000,
-      "rank_score": 21150.0,
-      "timestamp": "2022-09-27T00:00:00Z",
+      "rank_score": 19871.25,
+      "timestamp": "2024-11-24T00:00:00Z",
+      "source": "creator"
+    },
+    {
+      "tweet_id": "1854018384301572571",
+      "author": "Codie_Sanchez",
+      "text": "All of X making sure the map doesn’t flip to blue when our eyes close…",
+      "likes": 59000,
+      "replies": 636,
+      "retweets": 4700,
+      "rank_score": 17577.0,
+      "timestamp": "2024-11-06T00:00:00Z",
       "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge common beliefs",
-    "Insightful revelations framed as exclusive or hidden knowledge",
-    "Personal anecdotes establishing authority or unique experience"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Personal anecdotes revealing exclusive or hidden experiences",
+    "Direct, punchy declarations of facts or rules"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
