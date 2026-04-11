@@ -1,28 +1,25 @@
 {
-  "generated_at": "2026-04-11T13:45:48.481395Z",
+  "generated_at": "2026-04-11T15:20:39.716579Z",
   "top_insights": [
-    "Real wealth hides in plain sight, not on luxury feeds.",
-    "Self-taught minds outperform degrees because they solve, not memorize.",
-    "The system rewards conformity; true leverage demands breaking the script.",
-    "Insiders know the rules are just suggestions for the bold.",
-    "Your biggest asset isn't capital, it's the truth they ignore."
+    "I have a friend who used to work for 2 billionaires after all he's seen",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school",
+    "Panic led to lockdowns",
+    "Normalize not having an opinion on things you don’t understand"
   ],
   "hook_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insightful revelations about hidden realities",
-    "Personal stories with unexpected outcomes"
+    "insight",
+    "contrarian"
   ],
   "angles": [
-    "Expose the gap between public perception and private reality",
-    "Share personal stories that defy conventional wisdom",
-    "Highlight the value of self-education and unconventional paths to success"
+    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school"
   ],
   "emotional_drivers": [
-    "Validation of personal beliefs",
-    "Curiosity about exclusive information",
-    "Aspiration for success and status"
+    "validation"
   ],
-  "emerging_narrative": "Audiences are resonating with content that exposes hidden truths, challenges mainstream narratives, and validates personal experiences of success or insight, particularly when framed through contrarian or insider perspectives.",
+  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -41,8 +38,8 @@
       "text": "Elon’s stance is principled. Trump’s stance is practical. Tech needs Republicans for the present. Republicans need Tech for the future. Drop the tax cuts, cut some pork, get the bill through.",
       "likes": 97000,
       "replies": 5600,
-      "retweets": 9200,
-      "rank_score": 33050.0,
+      "retweets": 9300,
+      "rank_score": 33100.0,
       "timestamp": "2025-06-05T00:00:00Z",
       "source": "creator"
     },
@@ -69,22 +66,21 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1855971337476477418",
-      "author": "Codie_Sanchez",
-      "text": "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border. I’ve crossed the border illegally covering migrants and cartels countless times. I saw young women in the morgue after they were raped and brutalized in Show more",
-      "likes": 53000,
-      "replies": 939,
-      "retweets": 12000,
-      "rank_score": 19954.25,
-      "timestamp": "2024-11-11T00:00:00Z",
+      "tweet_id": "1609189890398232582",
+      "author": "thedankoe",
+      "text": "Normalize not having an opinion on things you don’t understand.",
+      "likes": 54000,
+      "replies": 464,
+      "retweets": 14000,
+      "rank_score": 20848.0,
+      "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insightful revelations about hidden realities",
-    "Personal stories with unexpected outcomes"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
