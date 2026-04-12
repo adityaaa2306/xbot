@@ -1,24 +1,28 @@
 {
-  "generated_at": "2026-04-12T09:32:53.630149Z",
+  "generated_at": "2026-04-12T11:22:58.037949Z",
   "top_insights": [
-    "The rescue fantasy is the only thing keeping you poor and dependent.",
-    "Degrees prove you can follow rules; self-teaching proves you can break them.",
-    "Never trash your partner publicly; it signals weakness to the entire market.",
-    "True wealth isn't the number in your bank, but the silence of your phone.",
-    "Stop waiting for permission. The narrative belongs to whoever writes it first."
+    "Real wealth isn't the first million; it's the freedom to ignore the next $299M.",
+    "The smartest people are self-taught; degrees just teach you how to follow rules.",
+    "Most 'gurus' sell fear because they've never actually built anything of value.",
+    "High-status individuals don't network; they attract value by solving expensive problems.",
+    "True leverage comes from owning the factory, not just posting about the product."
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common beliefs or norms",
-    "Insightful declarations framed as hard truths or realizations",
-    "Specific personal anecdotes involving money, status, or exclusive access"
+    "Contrarian statements challenging common beliefs",
+    "Insightful observations revealing hidden truths",
+    "Personal anecdotes establishing authority or unique experience"
   ],
-  "angles": [],
+  "angles": [
+    "Expose the 'real' story behind a popular success myth",
+    "Share a specific, high-value personal milestone with a contrarian lesson",
+    "Challenge a widely accepted industry norm with insider knowledge"
+  ],
   "emotional_drivers": [
-    "Validation of the audience's worldview or struggles",
-    "Aspiration toward status, wealth, and independence",
-    "Relief from the pressure of needing external approval or rescue"
+    "Validation",
+    "Curiosity",
+    "Status aspiration"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation systems, where success is defined by personal agency, financial independence, and the ability to control one's own narrative rather than relying on institutions or societal expectations.",
+  "emerging_narrative": "Audiences are resonating with content that demystifies success, exposes hidden realities behind public figures or institutions, and validates individual achievements through specific, high-status metrics.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -65,22 +69,22 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1609189890398232582",
-      "author": "thedankoe",
-      "text": "Normalize not having an opinion on things you don’t understand.",
-      "likes": 54000,
-      "replies": 464,
-      "retweets": 14000,
-      "rank_score": 20848.0,
-      "timestamp": "2022-12-31T00:00:00Z",
+      "tweet_id": "1855971337476477418",
+      "author": "Codie_Sanchez",
+      "text": "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border. I’ve crossed the border illegally covering migrants and cartels countless times. I saw young women in the morgue after they were raped and brutalized in Show more",
+      "likes": 53000,
+      "replies": 939,
+      "retweets": 12000,
+      "rank_score": 19954.25,
+      "timestamp": "2024-11-11T00:00:00Z",
       "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge common beliefs or norms",
-    "Insightful declarations framed as hard truths or realizations",
-    "Specific personal anecdotes involving money, status, or exclusive access"
+    "Contrarian statements challenging common beliefs",
+    "Insightful observations revealing hidden truths",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
