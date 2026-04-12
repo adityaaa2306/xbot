@@ -1,28 +1,24 @@
 {
-  "generated_at": "2026-04-12T11:22:58.037949Z",
+  "generated_at": "2026-04-12T15:25:14.756028Z",
   "top_insights": [
-    "Real wealth isn't the first million; it's the freedom to ignore the next $299M.",
-    "The smartest people are self-taught; degrees just teach you how to follow rules.",
-    "Most 'gurus' sell fear because they've never actually built anything of value.",
-    "High-status individuals don't network; they attract value by solving expensive problems.",
-    "True leverage comes from owning the factory, not just posting about the product."
+    "The smartest people ignore degrees; they master the specific skill the market actually pays for.",
+    "Nobody is coming to save you. Your rescue plan is the only one that exists.",
+    "True leverage comes from building when others are complaining about the broken system.",
+    "Never trash your partner publicly; it signals weakness and invites predators into your life.",
+    "Reach out to high-value people when you need nothing, not when you need something."
   ],
   "hook_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insightful observations revealing hidden truths",
-    "Personal anecdotes establishing authority or unique experience"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Insight-driven reveals using specific data points or historical facts",
+    "Personal anecdotes framed as exclusive or 'never told before' stories"
   ],
-  "angles": [
-    "Expose the 'real' story behind a popular success myth",
-    "Share a specific, high-value personal milestone with a contrarian lesson",
-    "Challenge a widely accepted industry norm with insider knowledge"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "Validation",
-    "Curiosity",
-    "Status aspiration"
+    "Validation of the reader's skepticism or alternative worldview",
+    "Desire for status and leverage signals through association with high-value figures",
+    "Relief from anxiety via clear, actionable takeaways or structured advice"
   ],
-  "emerging_narrative": "Audiences are resonating with content that demystifies success, exposes hidden realities behind public figures or institutions, and validates individual achievements through specific, high-status metrics.",
+  "emerging_narrative": "A shift towards radical self-reliance and skepticism of established institutions, where success is framed as the result of individual insight, direct action, and bypassing traditional gatekeepers (education, media, healthcare).",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -69,37 +65,37 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1855971337476477418",
-      "author": "Codie_Sanchez",
-      "text": "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border. I’ve crossed the border illegally covering migrants and cartels countless times. I saw young women in the morgue after they were raped and brutalized in Show more",
-      "likes": 53000,
-      "replies": 939,
-      "retweets": 12000,
-      "rank_score": 19954.25,
-      "timestamp": "2024-11-11T00:00:00Z",
+      "tweet_id": "1609189890398232582",
+      "author": "thedankoe",
+      "text": "Normalize not having an opinion on things you don’t understand.",
+      "likes": 54000,
+      "replies": 464,
+      "retweets": 14000,
+      "rank_score": 20848.0,
+      "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insightful observations revealing hidden truths",
-    "Personal anecdotes establishing authority or unique experience"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Insight-driven reveals using specific data points or historical facts",
+    "Personal anecdotes framed as exclusive or 'never told before' stories"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
+    "Stop believing that confidence comes from preparation.",
     "Most people build a portfolio to impress strangers.",
     "Nobody tells you this:",
     "Most people never get free through performance psychology. They just find a more impressive version ",
-    "If you understand this, you win: wealth and leverage compounds when you build assets, not when you k",
-    "Learn to think clearly about wealth and leverage"
+    "If you understand this, you win: wealth and leverage compounds when you build assets, not when you k"
   ],
   "avoid_recent_ideas": [
+    "Stop believing that confidence comes from preparation.\n\nPreparation is often just procrastination in disguise.\n\nConfidence is the byproduct ",
     "Most people build a portfolio to impress strangers.\n\nSmart people build an audience to own their future.\n\nOne is renting your time to the hi",
     "Nobody tells you this: The wealthy don't accumulate assets. They accumulate optionality. Assets can be seized. Optionality is the ability to",
     "Most people never get free through performance psychology. They just find a more impressive version of dependence. Here is what they miss:\n\n",
-    "If you understand this, you win: wealth and leverage compounds when you build assets, not when you keep renting out your hours. Once you see",
-    "Learn to think clearly about wealth and leverage. Learn to build assets around wealth and leverage. Learn to wait while wealth and leverage "
+    "If you understand this, you win: wealth and leverage compounds when you build assets, not when you keep renting out your hours. Once you see"
   ],
   "source_summary": {
     "creator": 20
