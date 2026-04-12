@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-04-11T17:20:30.640789Z",
+  "generated_at": "2026-04-12T06:17:55.254273Z",
   "top_insights": [
-    "Stop waiting for a savior; the rescue mission you need is already in your hands.",
-    "True wealth isn't a number; it's the quiet confidence of never needing to explain yourself.",
-    "Formal education teaches compliance; self-education builds the leverage to rewrite the rules.",
-    "Your narrative is your only real asset; protect it from the noise of public opinion.",
-    "The smartest people don't have opinions on everything; they know when to stay silent."
+    "Nobody is coming to save you; your rescue is a project you must fund.",
+    "True wealth isn't the number, it's the silence surrounding how you got it.",
+    "Degrees prove you followed rules; self-teaching proves you can break them to win.",
+    "Your partner's reputation is your asset; never trade it for cheap public validation.",
+    "Stop waiting for permission. The market rewards the first mover, not the most prepared."
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common beliefs or norms",
-    "Insight-driven declarations offering a 'secret' or counter-intuitive truth",
-    "Personal anecdotes establishing authority or unique status (e.g., 'I used to be...', 'My husband and I...')"
+    "Contrarian statements that challenge common assumptions",
+    "Insightful observations framed as 'hard truths' or 'principled stances'",
+    "Personal anecdotes revealing exclusive or high-status experiences"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation (seeking confirmation of one's worldview or status)",
-    "Aspiration (desire for wealth, success, and autonomy)",
-    "Security (need for stability, clear rules, and protection from chaos)"
+    "Validation of the reader's worldview or struggles",
+    "Aspiration towards status, wealth, and success",
+    "Relief from the pressure of needing external approval or rescue"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation or systemic dependency, where success is framed as a result of individual discipline, strategic silence, and controlling one's own narrative rather than relying on institutions or collective opinion.",
+  "emerging_narrative": "A shift towards radical self-reliance and the rejection of external salvation, where success is framed as a result of personal discipline, storytelling, and principled independence rather than systemic support or luck.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -37,8 +37,8 @@
       "text": "Elon’s stance is principled. Trump’s stance is practical. Tech needs Republicans for the present. Republicans need Tech for the future. Drop the tax cuts, cut some pork, get the bill through.",
       "likes": 97000,
       "replies": 5600,
-      "retweets": 9300,
-      "rank_score": 33100.0,
+      "retweets": 9200,
+      "rank_score": 33050.0,
       "timestamp": "2025-06-05T00:00:00Z",
       "source": "creator"
     },
@@ -78,9 +78,9 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge common beliefs or norms",
-    "Insight-driven declarations offering a 'secret' or counter-intuitive truth",
-    "Personal anecdotes establishing authority or unique status (e.g., 'I used to be...', 'My husband and I...')"
+    "Contrarian statements that challenge common assumptions",
+    "Insightful observations framed as 'hard truths' or 'principled stances'",
+    "Personal anecdotes revealing exclusive or high-status experiences"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
