@@ -1,28 +1,24 @@
 {
-  "generated_at": "2026-04-13T08:37:55.206765Z",
+  "generated_at": "2026-04-13T10:24:10.622716Z",
   "top_insights": [
-    "Nobody is coming to save you; your autonomy is the only asset that matters.",
-    "True wealth isn't the number, it's the freedom to ignore the noise.",
-    "Stop asking for opinions on things you don't understand; silence is power.",
-    "The smartest people are self-taught; degrees are just expensive validation.",
-    "Your story is your leverage; control the narrative or lose the game."
+    "Stop waiting for permission. The system rewards those who build first.",
+    "Real wealth isn't a number; it's the ability to ignore the noise.",
+    "Most 'experts' are just loud people guessing. Trust your own data.",
+    "Your story is your only true asset. Control the narrative or lose.",
+    "Self-reliance isn't a phase; it's the only survival strategy left."
   ],
   "hook_patterns": [
     "Contrarian statements challenging common beliefs",
     "Insightful observations framed as exclusive knowledge",
-    "Personal anecdotes establishing authority or vulnerability"
+    "Personal anecdotes establishing authority or unique experience"
   ],
-  "angles": [
-    "The 'Uncomfortable Truth' angle: Highlighting harsh realities that contradict popular optimism.",
-    "The 'Behind the Scenes' angle: Revealing specific mechanics of wealth or success usually hidden from the public.",
-    "The 'Actionable Minimalism' angle: Promoting simple, high-impact habits over complex strategies."
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "Validation",
-    "Aspiration",
-    "Curiosity"
+    "Validation (feeling understood or confirmed)",
+    "Aspiration (desire for wealth, status, or growth)",
+    "Security (seeking clarity in uncertain times)"
   ],
-  "emerging_narrative": "A shift towards radical self-reliance and the democratization of success, where individuals are encouraged to reject external validation, embrace contrarian truths, and leverage personal stories to build status and wealth independently.",
+  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation, where success is defined by personal agency, financial independence, and the ability to control one's own narrative amidst societal instability.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -84,22 +80,22 @@
   "winning_patterns": [
     "Contrarian statements challenging common beliefs",
     "Insightful observations framed as exclusive knowledge",
-    "Personal anecdotes establishing authority or vulnerability"
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
+    "The conventional view:",
     "You're not an employee.\nYou're a hostage.",
     "Clarity × Action = Confidence",
     "Stop believing that confidence comes from preparation.",
-    "Most people build a portfolio to impress strangers.",
-    "Nobody tells you this:"
+    "Most people build a portfolio to impress strangers."
   ],
   "avoid_recent_ideas": [
+    "The conventional view:\n\nYou need capital to build wealth.\n\nThe reframe:\n\nYou need leverage to multiply capital.\n\nCapital is a trap for those",
     "You're not an employee.\nYou're a hostage.\n\nYour salary isn't income. It's a ransom payment for your time.\n\nThe moment you stop renting your ",
     "Clarity × Action = Confidence\n\nConfidence is not a prerequisite.\nIt is the residue of doing the thing while afraid.\n\nStop waiting to feel re",
     "Stop believing that confidence comes from preparation.\n\nPreparation is often just procrastination in disguise.\n\nConfidence is the byproduct ",
-    "Most people build a portfolio to impress strangers.\n\nSmart people build an audience to own their future.\n\nOne is renting your time to the hi",
-    "Nobody tells you this: The wealthy don't accumulate assets. They accumulate optionality. Assets can be seized. Optionality is the ability to"
+    "Most people build a portfolio to impress strangers.\n\nSmart people build an audience to own their future.\n\nOne is renting your time to the hi"
   ],
   "source_summary": {
     "creator": 20
