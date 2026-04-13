@@ -1,24 +1,25 @@
 {
-  "generated_at": "2026-04-13T05:33:01.002108Z",
+  "generated_at": "2026-04-13T06:39:33.138475Z",
   "top_insights": [
-    "Formal degrees teach compliance; self-education builds the leverage to escape the system.",
-    "True wealth isn't a number; it's the quiet ability to ignore public opinion.",
-    "Nobody is coming to save you. The moment you accept this, you become dangerous.",
-    "Stop asking for permission. The most powerful status signal is radical self-reliance.",
-    "Journaling isn't therapy; it's the strategic audit required to outmaneuver chaos."
+    "I have a friend who used to work for 2 billionaires after all he's seen",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school",
+    "Panic led to lockdowns",
+    "Normalize not having an opinion on things you don’t understand"
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common assumptions",
-    "Insightful observations framed as 'hidden truths' or 'principled stances'",
-    "Personal anecdotes establishing authority or unique experience"
+    "insight",
+    "contrarian"
   ],
-  "angles": [],
+  "angles": [
+    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school"
+  ],
   "emotional_drivers": [
-    "Validation (feeling understood or confirmed in one's views)",
-    "Aspiration (desire for wealth, status, or self-improvement)",
-    "Security (seeking clarity in chaotic or polarized environments)"
+    "validation"
   ],
-  "emerging_narrative": "A cultural shift toward radical self-reliance and skepticism of external systems, where success is defined by personal agency, financial independence, and the courage to hold unpopular but 'principled' truths.",
+  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -78,24 +79,23 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge common assumptions",
-    "Insightful observations framed as 'hidden truths' or 'principled stances'",
-    "Personal anecdotes establishing authority or unique experience"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
+    "You're not an employee.\nYou're a hostage.",
     "Clarity × Action = Confidence",
     "Stop believing that confidence comes from preparation.",
     "Most people build a portfolio to impress strangers.",
-    "Nobody tells you this:",
-    "Most people never get free through performance psychology. They just find a more impressive version "
+    "Nobody tells you this:"
   ],
   "avoid_recent_ideas": [
+    "You're not an employee.\nYou're a hostage.\n\nYour salary isn't income. It's a ransom payment for your time.\n\nThe moment you stop renting your ",
     "Clarity × Action = Confidence\n\nConfidence is not a prerequisite.\nIt is the residue of doing the thing while afraid.\n\nStop waiting to feel re",
     "Stop believing that confidence comes from preparation.\n\nPreparation is often just procrastination in disguise.\n\nConfidence is the byproduct ",
     "Most people build a portfolio to impress strangers.\n\nSmart people build an audience to own their future.\n\nOne is renting your time to the hi",
-    "Nobody tells you this: The wealthy don't accumulate assets. They accumulate optionality. Assets can be seized. Optionality is the ability to",
-    "Most people never get free through performance psychology. They just find a more impressive version of dependence. Here is what they miss:\n\n"
+    "Nobody tells you this: The wealthy don't accumulate assets. They accumulate optionality. Assets can be seized. Optionality is the ability to"
   ],
   "source_summary": {
     "creator": 20
