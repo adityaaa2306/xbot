@@ -1,25 +1,28 @@
 {
-  "generated_at": "2026-04-13T06:39:33.138475Z",
+  "generated_at": "2026-04-13T08:37:55.206765Z",
   "top_insights": [
-    "I have a friend who used to work for 2 billionaires after all he's seen",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school",
-    "Panic led to lockdowns",
-    "Normalize not having an opinion on things you don’t understand"
+    "Nobody is coming to save you; your autonomy is the only asset that matters.",
+    "True wealth isn't the number, it's the freedom to ignore the noise.",
+    "Stop asking for opinions on things you don't understand; silence is power.",
+    "The smartest people are self-taught; degrees are just expensive validation.",
+    "Your story is your leverage; control the narrative or lose the game."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging common beliefs",
+    "Insightful observations framed as exclusive knowledge",
+    "Personal anecdotes establishing authority or vulnerability"
   ],
   "angles": [
-    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school"
+    "The 'Uncomfortable Truth' angle: Highlighting harsh realities that contradict popular optimism.",
+    "The 'Behind the Scenes' angle: Revealing specific mechanics of wealth or success usually hidden from the public.",
+    "The 'Actionable Minimalism' angle: Promoting simple, high-impact habits over complex strategies."
   ],
   "emotional_drivers": [
-    "validation"
+    "Validation",
+    "Aspiration",
+    "Curiosity"
   ],
-  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+  "emerging_narrative": "A shift towards radical self-reliance and the democratization of success, where individuals are encouraged to reject external validation, embrace contrarian truths, and leverage personal stories to build status and wealth independently.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -79,8 +82,9 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging common beliefs",
+    "Insightful observations framed as exclusive knowledge",
+    "Personal anecdotes establishing authority or vulnerability"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
