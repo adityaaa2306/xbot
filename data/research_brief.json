@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-04-14T06:23:53.889258Z",
+  "generated_at": "2026-04-14T08:17:38.888288Z",
   "top_insights": [
-    "Wealth isn't a number; it's the leverage threshold where your time becomes irrelevant.",
-    "Formal degrees teach compliance; self-education teaches you how to break the rules.",
-    "Public figures are brands; the real power lies in the unseen mechanics they hide.",
-    "Storytelling isn't soft skill; it's the only leverage that scales without capital.",
-    "Creator-led businesses solve real problems; corporate giants just optimize for shareholder panic."
+    "Stop waiting for a savior; the rescue fantasy is the only thing keeping you poor.",
+    "True wealth isn't earned by following rules, but by rewriting the ones you don't like.",
+    "The smartest people ignore degrees and master the hidden mechanics of their industry.",
+    "Narrative control beats raw talent; whoever tells the story wins the market.",
+    "Institutions don't save you; they extract value from those who believe they will."
   ],
   "hook_patterns": [
-    "Insight-driven statements revealing hidden mechanisms or truths",
-    "Contrarian takes challenging conventional wisdom or status quo",
-    "Personal anecdotes establishing authority or unique perspective"
+    "Contrarian statements challenging common beliefs or norms",
+    "Insightful revelations about hidden mechanisms or elite behaviors",
+    "Personal anecdotes establishing unique authority or exclusive access"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation of the audience's existing beliefs or skepticism",
-    "Ambition and desire for success/wealth creation",
-    "Curiosity about behind-the-scenes realities"
+    "Validation of the audience's skepticism or alternative worldview",
+    "Aspiration toward high status, wealth, and autonomy",
+    "Relief from the pressure of needing external approval or rescue"
   ],
-  "emerging_narrative": "A shift toward 'insider truth' where audiences resonate with content that exposes the mechanics of power, wealth, and success, often framed through personal stories or contrarian takes that validate their skepticism of mainstream narratives.",
+  "emerging_narrative": "A shift toward radical self-reliance and skepticism of traditional institutions, where success is defined by personal agency, financial independence, and the ability to uncover or control the narrative rather than waiting for systemic solutions.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
       "author": "Codie_Sanchez",
       "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
-      "likes": 194000,
+      "likes": 193000,
       "replies": 1300,
       "retweets": 11000,
-      "rank_score": 54975.0,
+      "rank_score": 54725.0,
       "timestamp": "2025-06-28T00:00:00Z",
       "source": "creator"
     },
@@ -65,22 +65,22 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1855971337476477418",
-      "author": "Codie_Sanchez",
-      "text": "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border. I’ve crossed the border illegally covering migrants and cartels countless times. I saw young women in the morgue after they were raped and brutalized in Show more",
-      "likes": 53000,
-      "replies": 938,
-      "retweets": 12000,
-      "rank_score": 19953.5,
-      "timestamp": "2024-11-11T00:00:00Z",
+      "tweet_id": "1609189890398232582",
+      "author": "thedankoe",
+      "text": "Normalize not having an opinion on things you don’t understand.",
+      "likes": 54000,
+      "replies": 464,
+      "retweets": 14000,
+      "rank_score": 20848.0,
+      "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Insight-driven statements revealing hidden mechanisms or truths",
-    "Contrarian takes challenging conventional wisdom or status quo",
-    "Personal anecdotes establishing authority or unique perspective"
+    "Contrarian statements challenging common beliefs or norms",
+    "Insightful revelations about hidden mechanisms or elite behaviors",
+    "Personal anecdotes establishing unique authority or exclusive access"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
