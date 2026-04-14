@@ -1,24 +1,25 @@
 {
-  "generated_at": "2026-04-14T11:45:08.600597Z",
+  "generated_at": "2026-04-14T14:28:17.137818Z",
   "top_insights": [
-    "The $299M cap isn't greed; it's the threshold where freedom becomes a liability.",
-    "School teaches compliance; true leverage is only ever self-taught.",
-    "Nobody is coming to save you; that silence is your only advantage.",
-    "Public perception is a curated lie; private reality is where power lives.",
-    "Never speak ill of your partner publicly; that boundary is your armor."
+    "I have a friend who used to work for 2 billionaires after all he's seen",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school",
+    "Panic led to lockdowns",
+    "Normalize not having an opinion on things you don’t understand"
   ],
   "hook_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insight-driven revelations or 'behind-the-scenes' facts",
-    "Personal anecdotes establishing authority or unique experience"
+    "insight",
+    "contrarian"
   ],
-  "angles": [],
+  "angles": [
+    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school"
+  ],
   "emotional_drivers": [
-    "Validation of personal struggles or worldview",
-    "Desire for status and leverage signals",
-    "Relief from clarity and strong contrasts"
+    "validation"
   ],
-  "emerging_narrative": "A shift toward validating individual agency and 'insider' truths, where audiences resonate with content that exposes hidden realities of wealth, power, and self-made success while rejecting external dependency.",
+  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -46,10 +47,10 @@
       "tweet_id": "1880853934883197275",
       "author": "naval",
       "text": "The smartest people are all self-taught, even if they went to school.",
-      "likes": 78000,
+      "likes": 77000,
       "replies": 1200,
       "retweets": 12000,
-      "rank_score": 26400.0,
+      "rank_score": 26150.0,
       "timestamp": "2025-01-19T00:00:00Z",
       "source": "creator"
     },
@@ -78,9 +79,8 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insight-driven revelations or 'behind-the-scenes' facts",
-    "Personal anecdotes establishing authority or unique experience"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
