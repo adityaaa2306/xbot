@@ -1,25 +1,24 @@
 {
-  "generated_at": "2026-04-14T17:50:24.538746Z",
+  "generated_at": "2026-04-16T16:13:29.126711Z",
   "top_insights": [
-    "I have a friend who used to work for 2 billionaires after all he's seen",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school",
-    "Panic led to lockdowns",
-    "Normalize not having an opinion on things you don’t understand"
+    "Wealth isn't greed; it's the only tool that buys true autonomy.",
+    "Stop waiting for a savior. Nobody is coming to save you.",
+    "The smartest people are self-taught, regardless of their degrees.",
+    "Strategic silence beats public conflict every single time.",
+    "Narrative control is the ultimate leverage in any economy."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements that challenge common assumptions",
+    "Insightful observations framed as 'hard truths' or 'secrets'",
+    "Personal anecdotes establishing authority or unique experience"
   ],
-  "angles": [
-    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "validation"
+    "Validation of the audience's worldview",
+    "Aspiration towards status and financial success",
+    "Relief from the pressure of needing external approval"
   ],
-  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+  "emerging_narrative": "A shift towards radical self-reliance and the rejection of institutional dependency, where success is defined by personal agency, financial independence, and the strategic control of one's own narrative.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -79,23 +78,24 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements that challenge common assumptions",
+    "Insightful observations framed as 'hard truths' or 'secrets'",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
+    "If you understand this, you win: one-person businesses compounds when you build assets, not when you",
     "A brutal truth about performance psychology: effort keeps you moving, but ownership changes the slop",
     "Most people use one-person businesses to feel productive",
     "The real problem isn't your content.",
-    "The conventional view:",
-    "You're not an employee.\nYou're a hostage."
+    "The conventional view:"
   ],
   "avoid_recent_ideas": [
+    "If you understand this, you win: one-person businesses compounds when you build assets, not when you keep renting out your hours. You can wa",
     "A brutal truth about performance psychology: effort keeps you moving, but ownership changes the slope of your life. You can watch this happe",
     "Most people use one-person businesses to feel productive. Smart people use it to buy back their time. You can watch this happen in real time",
     "The real problem isn't your content.\n\nIt's that you're writing to please an algorithm instead of building a relationship with a specific hum",
-    "The conventional view:\n\nYou need capital to build wealth.\n\nThe reframe:\n\nYou need leverage to multiply capital.\n\nCapital is a trap for those",
-    "You're not an employee.\nYou're a hostage.\n\nYour salary isn't income. It's a ransom payment for your time.\n\nThe moment you stop renting your "
+    "The conventional view:\n\nYou need capital to build wealth.\n\nThe reframe:\n\nYou need leverage to multiply capital.\n\nCapital is a trap for those"
   ],
   "source_summary": {
     "creator": 20
