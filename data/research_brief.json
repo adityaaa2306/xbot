@@ -1,25 +1,24 @@
 {
-  "generated_at": "2026-04-17T15:47:09.142302Z",
+  "generated_at": "2026-04-17T17:35:47.227737Z",
   "top_insights": [
-    "I have a friend who used to work for 2 billionaires after all he's seen",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school",
-    "Panic led to lockdowns",
-    "Normalize not having an opinion on things you don’t understand"
+    "Nobody is coming to save you; your rescue plan is your own agency.",
+    "True wealth isn't a number; it's the power to ignore the noise.",
+    "The smartest people are self-taught; school just teaches you how to follow.",
+    "Stop asking for opinions on things you don't understand; silence is leverage.",
+    "Walk to think, not to exercise; your best ideas happen offline."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements that challenge common beliefs",
+    "Insightful observations framed as exclusive truths",
+    "Personal anecdotes establishing authority or unique experience"
   ],
-  "angles": [
-    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "validation"
+    "Validation of the audience's worldview",
+    "Aspiration for status and financial success",
+    "Relief from anxiety through clear, actionable takeaways"
   ],
-  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation, where success is defined by personal agency, financial independence, and the ability to control one's own narrative amidst societal uncertainty.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -79,8 +78,9 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements that challenge common beliefs",
+    "Insightful observations framed as exclusive truths",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
