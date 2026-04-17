@@ -1,24 +1,25 @@
 {
-  "generated_at": "2026-04-16T17:59:49.230108Z",
+  "generated_at": "2026-04-17T06:27:58.319339Z",
   "top_insights": [
-    "Nobody is coming to save you; your rescue is your own responsibility.",
-    "Self-education beats degrees; the smartest people learn outside the classroom.",
-    "True wealth isn't a number; it's the freedom to ignore the noise.",
-    "Stop waiting for permission; your agency is the only system that matters.",
-    "Walk more, talk less; clarity comes from movement, not endless debate."
+    "I have a friend who used to work for 2 billionaires after all he's seen",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school",
+    "Panic led to lockdowns",
+    "Normalize not having an opinion on things you don’t understand"
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common assumptions or norms",
-    "Insightful declarations backed by specific data points or personal anecdotes",
-    "Short, punchy directives or 'hard truths' presented as definitive advice"
+    "insight",
+    "contrarian"
   ],
-  "angles": [],
+  "angles": [
+    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school"
+  ],
   "emotional_drivers": [
-    "Validation of the reader's own struggles or unconventional path",
-    "Aspiration toward status, wealth, and independence",
-    "Relief from the pressure of needing external approval or rescue"
+    "validation"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and 'anti-fragility,' where success is defined by personal agency, financial independence, and the rejection of systemic or societal dependencies. Audiences are resonating with narratives that validate their individual journeys and offer clear, actionable paths to autonomy.",
+  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -78,9 +79,8 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge common assumptions or norms",
-    "Insightful declarations backed by specific data points or personal anecdotes",
-    "Short, punchy directives or 'hard truths' presented as definitive advice"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
