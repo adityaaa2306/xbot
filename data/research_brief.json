@@ -1,25 +1,24 @@
 {
-  "generated_at": "2026-04-17T06:27:58.319339Z",
+  "generated_at": "2026-04-17T08:19:00.269603Z",
   "top_insights": [
-    "I have a friend who used to work for 2 billionaires after all he's seen",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school",
-    "Panic led to lockdowns",
-    "Normalize not having an opinion on things you don’t understand"
+    "Nobody is coming to save you; your rescue plan is your own agency.",
+    "True wealth isn't just money; it's the freedom to ignore the noise.",
+    "School teaches compliance; self-education builds the leverage to rewrite the rules.",
+    "Control your narrative, or someone else will write your story for you.",
+    "Protect your peace: never speak ill of your partner in public."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging common beliefs or norms",
+    "Insight-driven declarations offering specific, actionable wisdom",
+    "Personal anecdotes establishing authority or unique experience"
   ],
-  "angles": [
-    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "validation"
+    "Validation (seeking confirmation of one's worldview or status)",
+    "Aspiration (desire for wealth, success, and independence)",
+    "Security (need for stability in relationships and self-reliance)"
   ],
-  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+  "emerging_narrative": "A shift toward radical self-reliance and the validation of individual success stories, where personal agency, financial independence, and the strategic use of narrative are viewed as the primary drivers of status and safety in an uncertain world.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -79,8 +78,9 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging common beliefs or norms",
+    "Insight-driven declarations offering specific, actionable wisdom",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
