@@ -1,33 +1,44 @@
 {
-  "generated_at": "2026-04-18T03:41:54.749272Z",
+  "generated_at": "2026-04-19T13:50:05.218045Z",
   "top_insights": [
-    "The economy isn't broken; it's just smart people selling to insecure ones.",
-    "Nobody is coming to save you. Stop waiting for permission to start.",
-    "True leverage comes from ignoring the noise, not consuming more of it.",
-    "The best strategy is often the simple habit everyone else ignores.",
-    "Your opinion on complex systems is worthless unless you understand them."
+    "Nobody is coming to save you; your rescue is your own responsibility.",
+    "True wealth isn't a number; it's the ability to ignore public opinion.",
+    "The smartest people are self-taught; degrees just teach you how to follow.",
+    "Stop networking for favors; build relationships when you need nothing.",
+    "Storytelling beats strategy; the person who controls the narrative wins."
   ],
   "hook_patterns": [
-    "Insight-driven statements that reveal a hidden truth",
-    "Contrarian declarations challenging popular opinion",
-    "Short, punchy declarations of personal achievement or realization"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Insight-driven declarations offering a 'secret' or specific perspective",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation (feeling understood or confirmed in one's views)",
-    "Empowerment (belief in one's ability to change outcomes)",
-    "Curiosity (desire to know the 'real' story behind trends)"
+    "Validation (seeking confirmation of one's worldview or struggles)",
+    "Aspiration (desire for wealth, status, and success)",
+    "Relief (finding clarity in complex situations or accepting harsh truths)"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and skepticism of institutional narratives, where success is framed as a result of individual insight, simple habits, and ignoring the noise of mainstream consensus.",
+  "emerging_narrative": "A shift towards radical self-reliance and the rejection of external validation or rescue, coupled with a fascination for the 'hidden rules' of wealth and influence. Audiences are resonating with narratives that validate their independence while providing concrete, often contrarian, strategies for achieving high status and financial freedom.",
   "viral_examples": [
+    {
+      "tweet_id": "1939089188441219258",
+      "author": "Codie_Sanchez",
+      "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
+      "likes": 194000,
+      "replies": 1300,
+      "retweets": 11000,
+      "rank_score": 54975.0,
+      "timestamp": "2025-06-28T00:00:00Z",
+      "source": "creator"
+    },
     {
       "tweet_id": "1930721134368129164",
       "author": "naval",
       "text": "Elon’s stance is principled. Trump’s stance is practical. Tech needs Republicans for the present. Republicans need Tech for the future. Drop the tax cuts, cut some pork, get the bill through.",
       "likes": 97000,
       "replies": 5600,
-      "retweets": 9200,
-      "rank_score": 33050.0,
+      "retweets": 9300,
+      "rank_score": 33100.0,
       "timestamp": "2025-06-05T00:00:00Z",
       "source": "creator"
     },
@@ -35,22 +46,11 @@
       "tweet_id": "1880853934883197275",
       "author": "naval",
       "text": "The smartest people are all self-taught, even if they went to school.",
-      "likes": 77000,
+      "likes": 78000,
       "replies": 1200,
       "retweets": 12000,
-      "rank_score": 26150.0,
+      "rank_score": 26400.0,
       "timestamp": "2025-01-19T00:00:00Z",
-      "source": "creator"
-    },
-    {
-      "tweet_id": "1976043060393070887",
-      "author": "ShaanVP",
-      "text": "Turns out the greatest startup idea of the last 10 years was a chatbot where you ask a question and it answers with something a guy wrote on Reddit 8 years ago unusual_whales @unusual_whales Oct 7, 2025 ChatGPT has hit 800 million weekly active users.",
-      "likes": 78000,
-      "replies": 411,
-      "retweets": 4100,
-      "rank_score": 21858.25,
-      "timestamp": "2025-10-08T00:00:00Z",
       "source": "creator"
     },
     {
@@ -78,9 +78,9 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Insight-driven statements that reveal a hidden truth",
-    "Contrarian declarations challenging popular opinion",
-    "Short, punchy declarations of personal achievement or realization"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Insight-driven declarations offering a 'secret' or specific perspective",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
