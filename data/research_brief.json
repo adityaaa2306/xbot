@@ -1,36 +1,29 @@
 {
-  "generated_at": "2026-04-20T07:07:50.498238Z",
+  "generated_at": "2026-04-20T09:03:08.838420Z",
   "top_insights": [
-    "Nobody is coming to save you; your rescue is a habit you build alone.",
-    "True wealth isn't a salary; it's the specific leverage you own when panic hits.",
-    "The smartest people aren't credentialed; they are self-taught experts who ignored the syllabus.",
-    "Civil discourse dies when you demand opinions on things you don't understand.",
-    "Your narrative is your only shield; control the story or lose the war."
+    "Institutions panic; individuals build. Your leverage is your ability to stay calm.",
+    "Stop waiting for permission. The only credential that matters is your output.",
+    "Narrative control beats raw talent. Tell your story before they define you.",
+    "True wealth is built in silence, not on the stages of public validation.",
+    "Self-taught isn't a gap; it's the ultimate proof of relentless agency."
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common assumptions or norms",
-    "Insight-driven declarations that reveal a 'hidden truth' or principle",
-    "Specific, high-stakes personal anecdotes or financial disclosures"
+    "Insight-driven statements that reveal a hidden truth or pattern",
+    "Contrarian assertions that challenge popular opinion or norms",
+    "Specific, high-stakes personal anecdotes or financial milestones"
   ],
-  "angles": [],
+  "angles": [
+    "Deconstructing popular myths with specific, contrasting evidence",
+    "Framing personal struggles as opportunities for autonomous growth",
+    "Highlighting the 'unseen' mechanics of success (habits, networking, storytelling) versus surface-level metrics"
+  ],
   "emotional_drivers": [
-    "Validation (seeking confirmation of one's worldview or status)",
-    "Aspiration (desire for wealth, success, or self-improvement)",
-    "Security (need for stability in a chaotic or polarized environment)"
+    "Validation (feeling understood or confirmed in one's beliefs)",
+    "Empowerment (taking control of one's life or situation)",
+    "Curiosity (interest in counter-intuitive facts or behind-the-scenes truths)"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external salvation, where success is framed as a result of individual agency, specific habits, and the strategic use of storytelling, often set against a backdrop of societal instability.",
+  "emerging_narrative": "A shift toward radical self-reliance and skepticism of institutional narratives, where individuals resonate with content that validates their autonomy, exposes hidden realities, and offers concrete, non-conformist strategies for personal and professional success.",
   "viral_examples": [
-    {
-      "tweet_id": "1939089188441219258",
-      "author": "Codie_Sanchez",
-      "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
-      "likes": 194000,
-      "replies": 1300,
-      "retweets": 11000,
-      "rank_score": 54975.0,
-      "timestamp": "2025-06-28T00:00:00Z",
-      "source": "creator"
-    },
     {
       "tweet_id": "1930721134368129164",
       "author": "naval",
@@ -74,13 +67,24 @@
       "rank_score": 20848.0,
       "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
+    },
+    {
+      "tweet_id": "1860673473749909984",
+      "author": "thedankoe",
+      "text": "Go on more walks. Walk for no reason. Walk to solve a problem. Walk to blow off steam. Walk to get outside. Walk to listen, read, and learn. Walk to escape distractions. Walk to improve your health. Walk to think. A simple walking habit can change absolutely everything.",
+      "likes": 56000,
+      "replies": 495,
+      "retweets": 11000,
+      "rank_score": 19871.25,
+      "timestamp": "2024-11-24T00:00:00Z",
+      "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge common assumptions or norms",
-    "Insight-driven declarations that reveal a 'hidden truth' or principle",
-    "Specific, high-stakes personal anecdotes or financial disclosures"
+    "Insight-driven statements that reveal a hidden truth or pattern",
+    "Contrarian assertions that challenge popular opinion or norms",
+    "Specific, high-stakes personal anecdotes or financial milestones"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
