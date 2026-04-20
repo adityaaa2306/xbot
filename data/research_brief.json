@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-04-19T15:27:00.016202Z",
+  "generated_at": "2026-04-20T07:07:50.498238Z",
   "top_insights": [
-    "The moment you stop waiting for rescue is the moment you actually start winning.",
-    "True wealth isn't a number; it's the ability to say no without fear.",
-    "Your story is your only real asset; everyone else is just copying your script.",
-    "Stop trying to be understood. Start being undeniable.",
-    "The most expensive thing you own is your need for other people's approval."
+    "Nobody is coming to save you; your rescue is a habit you build alone.",
+    "True wealth isn't a salary; it's the specific leverage you own when panic hits.",
+    "The smartest people aren't credentialed; they are self-taught experts who ignored the syllabus.",
+    "Civil discourse dies when you demand opinions on things you don't understand.",
+    "Your narrative is your only shield; control the story or lose the war."
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common beliefs or norms",
-    "Personal anecdotes revealing exclusive or behind-the-scenes knowledge",
-    "Direct, actionable advice framed as a 'rule' or 'habit'"
+    "Contrarian statements that challenge common assumptions or norms",
+    "Insight-driven declarations that reveal a 'hidden truth' or principle",
+    "Specific, high-stakes personal anecdotes or financial disclosures"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation of personal struggles or unconventional choices",
-    "Aspiration toward status, wealth, and independence",
-    "Relief from the pressure of external expectations"
+    "Validation (seeking confirmation of one's worldview or status)",
+    "Aspiration (desire for wealth, success, or self-improvement)",
+    "Security (need for stability in a chaotic or polarized environment)"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation, where success is defined by personal autonomy, financial independence, and the ability to curate one's own narrative rather than following societal scripts.",
+  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external salvation, where success is framed as a result of individual agency, specific habits, and the strategic use of storytelling, often set against a backdrop of societal instability.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -32,6 +32,39 @@
       "source": "creator"
     },
     {
+      "tweet_id": "1930721134368129164",
+      "author": "naval",
+      "text": "Elon’s stance is principled. Trump’s stance is practical. Tech needs Republicans for the present. Republicans need Tech for the future. Drop the tax cuts, cut some pork, get the bill through.",
+      "likes": 97000,
+      "replies": 5600,
+      "retweets": 9300,
+      "rank_score": 33100.0,
+      "timestamp": "2025-06-05T00:00:00Z",
+      "source": "creator"
+    },
+    {
+      "tweet_id": "1880853934883197275",
+      "author": "naval",
+      "text": "The smartest people are all self-taught, even if they went to school.",
+      "likes": 78000,
+      "replies": 1200,
+      "retweets": 12000,
+      "rank_score": 26400.0,
+      "timestamp": "2025-01-19T00:00:00Z",
+      "source": "creator"
+    },
+    {
+      "tweet_id": "1574638443237294080",
+      "author": "naval",
+      "text": "Panic led to lockdowns. Lockdowns led to fiscal stimulus. Stimulus led to inflation. Inflation led to monetary tightening. Tightening leads to recession. The panic wasn’t free - and the bill is coming due.",
+      "likes": 59000,
+      "replies": 1200,
+      "retweets": 11000,
+      "rank_score": 21150.0,
+      "timestamp": "2022-09-27T00:00:00Z",
+      "source": "creator"
+    },
+    {
       "tweet_id": "1609189890398232582",
       "author": "thedankoe",
       "text": "Normalize not having an opinion on things you don’t understand.",
@@ -41,46 +74,13 @@
       "rank_score": 20848.0,
       "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
-    },
-    {
-      "tweet_id": "1855971337476477418",
-      "author": "Codie_Sanchez",
-      "text": "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border. I’ve crossed the border illegally covering migrants and cartels countless times. I saw young women in the morgue after they were raped and brutalized in Show more",
-      "likes": 53000,
-      "replies": 937,
-      "retweets": 12000,
-      "rank_score": 19952.75,
-      "timestamp": "2024-11-11T00:00:00Z",
-      "source": "creator"
-    },
-    {
-      "tweet_id": "1860673473749909984",
-      "author": "thedankoe",
-      "text": "Go on more walks. Walk for no reason. Walk to solve a problem. Walk to blow off steam. Walk to get outside. Walk to listen, read, and learn. Walk to escape distractions. Walk to improve your health. Walk to think. A simple walking habit can change absolutely everything.",
-      "likes": 56000,
-      "replies": 495,
-      "retweets": 11000,
-      "rank_score": 19871.25,
-      "timestamp": "2024-11-24T00:00:00Z",
-      "source": "creator"
-    },
-    {
-      "tweet_id": "1854018384301572571",
-      "author": "Codie_Sanchez",
-      "text": "All of X making sure the map doesn’t flip to blue when our eyes close…",
-      "likes": 59000,
-      "replies": 635,
-      "retweets": 4700,
-      "rank_score": 17576.25,
-      "timestamp": "2024-11-06T00:00:00Z",
-      "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge common beliefs or norms",
-    "Personal anecdotes revealing exclusive or behind-the-scenes knowledge",
-    "Direct, actionable advice framed as a 'rule' or 'habit'"
+    "Contrarian statements that challenge common assumptions or norms",
+    "Insight-driven declarations that reveal a 'hidden truth' or principle",
+    "Specific, high-stakes personal anecdotes or financial disclosures"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
