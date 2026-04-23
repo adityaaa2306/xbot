@@ -1,25 +1,40 @@
 {
-  "generated_at": "2026-04-21T14:24:09.044509Z",
+  "generated_at": "2026-04-23T04:01:02.034444Z",
   "top_insights": [
-    "Institutions panic; individuals execute. The gap between them is your leverage.",
-    "Stop waiting for permission. Your first $10k proves you don't need it.",
-    "Narrative control beats credentials. Tell the story, and the market follows.",
-    "Self-taught isn't a backup plan; it's the only path that scales.",
-    "Mainstream advice is designed to keep you safe, not rich."
+    "Waiting for rescue is the fastest way to stay poor.",
+    "True wealth isn't a number; it's the silence of no debt.",
+    "Your story is your only leverage in a noisy world.",
+    "The smartest people ignore degrees and master the craft.",
+    "Never trash your partner publicly; it destroys your own brand."
   ],
   "hook_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Direct insight declarations with clear, actionable takeaways",
-    "Specific, high-stakes personal anecdotes or financial milestones"
+    "Contrarian statements that challenge common assumptions or norms",
+    "Insight-driven declarations offering a 'secret' or specific perspective",
+    "Personal anecdotes establishing authority or unique experience"
   ],
-  "angles": [],
+  "angles": [
+    "Deconstructing the 'rescue' mentality and emphasizing individual responsibility",
+    "Revealing the hidden habits or rules behind high-level success and wealth",
+    "Using personal stories to illustrate counter-intuitive truths about relationships or career"
+  ],
   "emotional_drivers": [
-    "Validation (feeling understood or confirmed in one's views)",
-    "Empowerment through self-reliance",
-    "Status signaling via demonstrated success or unique knowledge"
+    "Validation (seeking confirmation of one's worldview or status)",
+    "Aspiration (desire for wealth, success, or self-improvement)",
+    "Security (finding comfort in clear rules, boundaries, or self-reliance)"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and skepticism of institutional or mainstream solutions, where individual agency, storytelling, and direct business execution are viewed as the primary paths to success and stability.",
+  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation or rescue, coupled with a fascination for the mechanics of wealth creation and the strategic use of personal narrative to influence outcomes.",
   "viral_examples": [
+    {
+      "tweet_id": "1939089188441219258",
+      "author": "Codie_Sanchez",
+      "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
+      "likes": 194000,
+      "replies": 1300,
+      "retweets": 11000,
+      "rank_score": 54975.0,
+      "timestamp": "2025-06-28T00:00:00Z",
+      "source": "creator"
+    },
     {
       "tweet_id": "1930721134368129164",
       "author": "naval",
@@ -63,24 +78,13 @@
       "rank_score": 20848.0,
       "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
-    },
-    {
-      "tweet_id": "1860673473749909984",
-      "author": "thedankoe",
-      "text": "Go on more walks. Walk for no reason. Walk to solve a problem. Walk to blow off steam. Walk to get outside. Walk to listen, read, and learn. Walk to escape distractions. Walk to improve your health. Walk to think. A simple walking habit can change absolutely everything.",
-      "likes": 56000,
-      "replies": 495,
-      "retweets": 11000,
-      "rank_score": 19871.25,
-      "timestamp": "2024-11-24T00:00:00Z",
-      "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Direct insight declarations with clear, actionable takeaways",
-    "Specific, high-stakes personal anecdotes or financial milestones"
+    "Contrarian statements that challenge common assumptions or norms",
+    "Insight-driven declarations offering a 'secret' or specific perspective",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
