@@ -1,24 +1,25 @@
 {
-  "generated_at": "2026-04-23T05:20:33.374916Z",
+  "generated_at": "2026-04-23T10:12:04.671893Z",
   "top_insights": [
-    "Nobody is coming to save you; that panic is the only thing holding you back.",
-    "True wealth isn't a number; it's the ability to ignore the noise completely.",
-    "The smartest people are self-taught; degrees are just expensive social signaling.",
-    "Stop asking for opinions on things you don't understand; silence is high status.",
-    "Walk daily to clear the mind; clarity beats hustle every single time."
+    "I have a friend who used to work for 2 billionaires after all he's seen",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school",
+    "Panic led to lockdowns",
+    "Normalize not having an opinion on things you don’t understand"
   ],
   "hook_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insightful observations framed as 'hidden truths'",
-    "Personal anecdotes establishing authority or unique experience"
+    "insight",
+    "contrarian"
   ],
-  "angles": [],
+  "angles": [
+    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school"
+  ],
   "emotional_drivers": [
-    "Validation (seeking confirmation of one's views or status)",
-    "Aspiration (desire for wealth, success, and leverage)",
-    "Security (reassurance through clear takeaways and structured advice)"
+    "validation"
   ],
-  "emerging_narrative": "A shift towards celebrating individual autonomy and tangible success metrics, where users resonate with narratives that validate their hard work, financial independence, and principled stands against mainstream panic or conformity.",
+  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -78,9 +79,8 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insightful observations framed as 'hidden truths'",
-    "Personal anecdotes establishing authority or unique experience"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
