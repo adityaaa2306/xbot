@@ -1,24 +1,28 @@
 {
-  "generated_at": "2026-04-24T15:55:19.846649Z",
+  "generated_at": "2026-04-24T17:39:45.299833Z",
   "top_insights": [
-    "Stop waiting for a savior; the rescue you seek is the work you avoid.",
-    "True wealth isn't a number, it's the silence of no one controlling your narrative.",
-    "School teaches compliance; self-education teaches you how to build the system.",
-    "Never trash your partner publicly; your reputation is the only asset that compounds.",
-    "Conformity is a slow death; radical self-reliance is the only path to freedom."
+    "Your first million isn't luck; it's the price of ignoring everyone who told you to wait.",
+    "True leverage comes from needing nothing from anyone, not from who you know.",
+    "Stop networking with agendas. Build relationships when you have nothing to gain.",
+    "The most dangerous person is the one who writes their own story.",
+    "Self-taught isn't a gap in your resume; it's proof you don't need permission."
   ],
   "hook_patterns": [
-    "Contrarian statements challenging common beliefs or norms",
-    "Insightful observations on high-status figures or systemic behaviors",
-    "Personal anecdotes revealing exclusive or behind-the-scenes information"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Insight-driven declarations offering a 'secret' or specific realization",
+    "Personal anecdotes establishing authority or unique experience"
   ],
-  "angles": [],
+  "angles": [
+    "Deconstructing the 'lucky break' myth to highlight hard work and strategy",
+    "Providing actionable, counter-intuitive frameworks for personal growth",
+    "Using specific financial or status milestones to illustrate broader life principles"
+  ],
   "emotional_drivers": [
-    "Validation of personal struggles or unconventional paths",
-    "Aspiration toward status, wealth, and independence",
-    "Relief from the pressure of needing external approval or rescue"
+    "Validation (seeking confirmation of one's worldview or status)",
+    "Aspiration (desire for wealth, success, and self-improvement)",
+    "Security (need for control, stability, and clear boundaries)"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation, where success is defined by personal agency, financial independence, and the ability to control one's own narrative rather than relying on institutions or societal expectations.",
+  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation or rescue, coupled with a fascination for the mechanics of wealth creation and the strategic use of personal narrative to influence outcomes.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -78,9 +82,9 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements challenging common beliefs or norms",
-    "Insightful observations on high-status figures or systemic behaviors",
-    "Personal anecdotes revealing exclusive or behind-the-scenes information"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Insight-driven declarations offering a 'secret' or specific realization",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
