@@ -1,25 +1,24 @@
 {
-  "generated_at": "2026-04-23T10:12:04.671893Z",
+  "generated_at": "2026-04-24T10:13:37.216556Z",
   "top_insights": [
-    "I have a friend who used to work for 2 billionaires after all he's seen",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school",
-    "Panic led to lockdowns",
-    "Normalize not having an opinion on things you don’t understand"
+    "The most dangerous lie is that a savior is coming to fix your life.",
+    "Stop waiting for permission; power belongs to those who seize the narrative.",
+    "True wealth isn't a number; it's the ability to ignore public opinion.",
+    "History is written by victors, but the truth is found in their silence.",
+    "Your biggest competitor isn't others; it's your own reliance on external validation."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements that challenge common beliefs",
+    "Insight-driven reveals of hidden truths or specific data points",
+    "Personal anecdotes establishing authority or unique experience"
   ],
-  "angles": [
-    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "validation"
+    "Validation (feeling understood or confirmed in one's views)",
+    "Aspiration (desire for wealth, status, or self-improvement)",
+    "Curiosity (interest in secrets, history, or insider knowledge)"
   ],
-  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+  "emerging_narrative": "A shift toward radical self-reliance and the deconstruction of established narratives, where audiences resonate with raw, unfiltered truths about wealth, power dynamics, and the necessity of taking personal responsibility for one's life trajectory.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -79,8 +78,9 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements that challenge common beliefs",
+    "Insight-driven reveals of hidden truths or specific data points",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
