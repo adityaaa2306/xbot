@@ -1,37 +1,26 @@
 {
-  "generated_at": "2026-04-26T06:31:08.898335Z",
+  "generated_at": "2026-04-26T13:57:17.847713Z",
   "top_insights": [
-    "I have a friend who used to work for 2 billionaires after all he's seen",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school",
-    "Panic led to lockdowns",
-    "I’ve never told this story before publicly but, I used to be a journalist covering"
+    "Principled stances beat popular ones when the cost is high.",
+    "Formal degrees teach compliance; self-teaching builds leverage.",
+    "Panic creates policy; calm creates strategy.",
+    "Silence on complex topics signals more intelligence than hot takes.",
+    "Walking solves problems that sitting obsessively over complicates."
   ],
   "hook_patterns": [
     "insight",
     "contrarian"
   ],
   "angles": [
-    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
     "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school"
+    "The smartest people are all self-taught, even if they went to school",
+    "Panic led to lockdowns"
   ],
   "emotional_drivers": [
     "validation"
   ],
-  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+  "emerging_narrative": "Elon’s stance is principled",
   "viral_examples": [
-    {
-      "tweet_id": "1939089188441219258",
-      "author": "Codie_Sanchez",
-      "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
-      "likes": 194000,
-      "replies": 1300,
-      "retweets": 11000,
-      "rank_score": 54975.0,
-      "timestamp": "2025-06-28T00:00:00Z",
-      "source": "creator"
-    },
     {
       "tweet_id": "1930721134368129164",
       "author": "naval",
@@ -66,14 +55,25 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1855971337476477418",
-      "author": "Codie_Sanchez",
-      "text": "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border. I’ve crossed the border illegally covering migrants and cartels countless times. I saw young women in the morgue after they were raped and brutalized in Show more",
-      "likes": 53000,
-      "replies": 935,
-      "retweets": 12000,
-      "rank_score": 19951.25,
-      "timestamp": "2024-11-11T00:00:00Z",
+      "tweet_id": "1609189890398232582",
+      "author": "thedankoe",
+      "text": "Normalize not having an opinion on things you don’t understand.",
+      "likes": 54000,
+      "replies": 464,
+      "retweets": 14000,
+      "rank_score": 20848.0,
+      "timestamp": "2022-12-31T00:00:00Z",
+      "source": "creator"
+    },
+    {
+      "tweet_id": "1860673473749909984",
+      "author": "thedankoe",
+      "text": "Go on more walks. Walk for no reason. Walk to solve a problem. Walk to blow off steam. Walk to get outside. Walk to listen, read, and learn. Walk to escape distractions. Walk to improve your health. Walk to think. A simple walking habit can change absolutely everything.",
+      "likes": 56000,
+      "replies": 495,
+      "retweets": 11000,
+      "rank_score": 19871.25,
+      "timestamp": "2024-11-24T00:00:00Z",
       "source": "creator"
     }
   ],
