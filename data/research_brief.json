@@ -1,26 +1,36 @@
 {
-  "generated_at": "2026-04-26T13:57:17.847713Z",
+  "generated_at": "2026-04-26T15:31:16.350928Z",
   "top_insights": [
-    "Principled stances beat popular ones when the cost is high.",
-    "Formal degrees teach compliance; self-teaching builds leverage.",
-    "Panic creates policy; calm creates strategy.",
-    "Silence on complex topics signals more intelligence than hot takes.",
-    "Walking solves problems that sitting obsessively over complicates."
+    "Nobody is coming to save you; your rescue plan is your own revenue.",
+    "True intelligence isn't a degree; it's the ability to self-teach complex skills.",
+    "Stop networking with an agenda. Build genuine leverage by giving value first.",
+    "Your narrative is your most valuable asset; control it or lose your empire.",
+    "Financial independence isn't about the number; it's about the silence of no debt."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements that challenge common assumptions",
+    "Insightful observations framed as 'hard truths' or 'principled stances'",
+    "Specific, high-stakes personal anecdotes or financial disclosures"
   ],
-  "angles": [
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school",
-    "Panic led to lockdowns"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "validation"
+    "Validation of the audience's worldview or struggles",
+    "Aspiration towards status, wealth, and independence",
+    "Relief from the pressure of external expectations"
   ],
-  "emerging_narrative": "Elon’s stance is principled",
+  "emerging_narrative": "A shift towards radical self-reliance and the rejection of external validation or rescue, where success is defined by personal agency, financial independence, and the strategic control of one's own narrative.",
   "viral_examples": [
+    {
+      "tweet_id": "1939089188441219258",
+      "author": "Codie_Sanchez",
+      "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
+      "likes": 194000,
+      "replies": 1300,
+      "retweets": 11000,
+      "rank_score": 54975.0,
+      "timestamp": "2025-06-28T00:00:00Z",
+      "source": "creator"
+    },
     {
       "tweet_id": "1930721134368129164",
       "author": "naval",
@@ -64,23 +74,13 @@
       "rank_score": 20848.0,
       "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
-    },
-    {
-      "tweet_id": "1860673473749909984",
-      "author": "thedankoe",
-      "text": "Go on more walks. Walk for no reason. Walk to solve a problem. Walk to blow off steam. Walk to get outside. Walk to listen, read, and learn. Walk to escape distractions. Walk to improve your health. Walk to think. A simple walking habit can change absolutely everything.",
-      "likes": 56000,
-      "replies": 495,
-      "retweets": 11000,
-      "rank_score": 19871.25,
-      "timestamp": "2024-11-24T00:00:00Z",
-      "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements that challenge common assumptions",
+    "Insightful observations framed as 'hard truths' or 'principled stances'",
+    "Specific, high-stakes personal anecdotes or financial disclosures"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
