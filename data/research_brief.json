@@ -1,25 +1,28 @@
 {
-  "generated_at": "2026-04-27T10:36:40.107335Z",
+  "generated_at": "2026-04-27T16:16:14.123647Z",
   "top_insights": [
-    "The wealthy don't fear poverty; they fear the tax bracket that follows.",
-    "True intelligence isn't a degree; it's the ability to unlearn school.",
-    "AI didn't invent genius; it just scaled the best Reddit threads.",
-    "Panic is the most expensive policy tool governments have ever used.",
-    "Principled stands aren't popular; they're just the only ones that last."
+    "The smartest people are self-taught; school just teaches you how to follow.",
+    "Nobody is coming to save you. That realization is your first real asset.",
+    "True wealth isn't the number in your bank, but the silence in your head.",
+    "Stop asking for opinions on things you don't understand. Silence is power.",
+    "Your network isn't who you call when you need help, but who you call when you don't."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging common beliefs",
+    "Insightful observations framed as exclusive knowledge",
+    "Personal anecdotes with specific numbers or high-stakes scenarios"
   ],
   "angles": [
-    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school"
+    "The 'Insider' Perspective: Share specific, high-status stories or data points that contradict public perception.",
+    "The 'Hard Truth' Approach: Deliver blunt, contrarian advice that forces the reader to re-evaluate their current path.",
+    "The 'Blueprint' Format: Break down complex success into simple, actionable steps or habits."
   ],
   "emotional_drivers": [
-    "validation"
+    "Validation (seeking confirmation of one's worldview or status)",
+    "Curiosity (driven by secrets or insider information)",
+    "Empowerment (motivation through self-reliance and actionable advice)"
   ],
-  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+  "emerging_narrative": "A shift towards radical self-reliance and the validation of individual success stories, where audiences resonate most with content that demystifies wealth, challenges mainstream narratives, and offers concrete, high-leverage habits for personal growth.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -55,17 +58,6 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1976043060393070887",
-      "author": "ShaanVP",
-      "text": "Turns out the greatest startup idea of the last 10 years was a chatbot where you ask a question and it answers with something a guy wrote on Reddit 8 years ago unusual_whales @unusual_whales Oct 7, 2025 ChatGPT has hit 800 million weekly active users.",
-      "likes": 78000,
-      "replies": 411,
-      "retweets": 4100,
-      "rank_score": 21858.25,
-      "timestamp": "2025-10-08T00:00:00Z",
-      "source": "creator"
-    },
-    {
       "tweet_id": "1574638443237294080",
       "author": "naval",
       "text": "Panic led to lockdowns. Lockdowns led to fiscal stimulus. Stimulus led to inflation. Inflation led to monetary tightening. Tightening leads to recession. The panic wasn’t free - and the bill is coming due.",
@@ -75,12 +67,24 @@
       "rank_score": 21150.0,
       "timestamp": "2022-09-27T00:00:00Z",
       "source": "creator"
+    },
+    {
+      "tweet_id": "1609189890398232582",
+      "author": "thedankoe",
+      "text": "Normalize not having an opinion on things you don’t understand.",
+      "likes": 54000,
+      "replies": 464,
+      "retweets": 14000,
+      "rank_score": 20848.0,
+      "timestamp": "2022-12-31T00:00:00Z",
+      "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging common beliefs",
+    "Insightful observations framed as exclusive knowledge",
+    "Personal anecdotes with specific numbers or high-stakes scenarios"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [
