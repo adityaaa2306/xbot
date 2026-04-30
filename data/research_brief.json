@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-04-29T10:32:17.617170Z",
+  "generated_at": "2026-04-30T16:12:43.990032Z",
   "top_insights": [
-    "Wealth stops buying happiness long before it stops buying influence.",
-    "School teaches compliance; self-education builds the intelligence that breaks systems.",
-    "Real entrepreneurship is boring execution, not the lifestyle you see online.",
-    "The economy isn't crashing; it's finally collecting the debt from past panic.",
-    "Your 20s are for avoiding fatal errors, not chasing premature optimization."
+    "Self-reliance and personal responsibility (e.g., 'Nobody is coming to save you')",
+    "Wealth accumulation and financial milestones (e.g., revenue goals, specific dollar amounts)",
+    "The value of self-education and unconventional wisdom over formal schooling",
+    "The power of storytelling and narrative control",
+    "Principled stances and the importance of maintaining integrity in public discourse"
   ],
   "hook_patterns": [
-    "Insight-based hooks revealing 'secret knowledge' or counter-intuitive truths",
-    "Authority-based hooks leveraging personal experience, credentials, or specific data points",
-    "Warning-based hooks utilizing fear of impending doom, civil unrest, or economic collapse"
+    "Contrarian statements that challenge common assumptions or norms",
+    "Insight-driven declarations that reveal hidden truths or specific data points",
+    "Personal anecdotes establishing authority or unique access (e.g., 'I used to work for...', 'I used to be a journalist...')"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation of personal struggles and non-traditional paths",
-    "Ambition driven by actionable career and business strategies",
-    "Fear and urgency regarding societal polarization, economic recession, and political manipulation"
+    "Validation of the audience's worldview or struggles",
+    "Aspiration towards status, wealth, and success",
+    "Relief from the pressure of needing to have an opinion on everything"
   ],
-  "emerging_narrative": "A growing resonance with 'hard truths' that debunk societal myths (wealth, education, entrepreneurship) while simultaneously fueling anxiety about systemic instability (economy, politics, civil war). Audiences are seeking both validation for their struggles and authoritative, actionable roadmaps to navigate a perceived chaotic future.",
+  "emerging_narrative": "A shift towards radical self-reliance and the rejection of external validation or rescue, coupled with a fascination for the mechanics of wealth creation and the power of individual agency in a chaotic world.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -65,27 +65,27 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1855971337476477418",
-      "author": "Codie_Sanchez",
-      "text": "I’ve never told this story before publicly but, I used to be a journalist covering human trafficking on the US Mexico border. I’ve crossed the border illegally covering migrants and cartels countless times. I saw young women in the morgue after they were raped and brutalized in Show more",
-      "likes": 53000,
-      "replies": 935,
-      "retweets": 12000,
-      "rank_score": 19951.25,
-      "timestamp": "2024-11-11T00:00:00Z",
+      "tweet_id": "1609189890398232582",
+      "author": "thedankoe",
+      "text": "Normalize not having an opinion on things you don’t understand.",
+      "likes": 54000,
+      "replies": 464,
+      "retweets": 14000,
+      "rank_score": 20848.0,
+      "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
     }
   ],
-  "analyses_count": 12,
+  "analyses_count": 20,
   "winning_patterns": [
-    "Insight-based hooks revealing 'secret knowledge' or counter-intuitive truths",
-    "Authority-based hooks leveraging personal experience, credentials, or specific data points",
-    "Warning-based hooks utilizing fear of impending doom, civil unrest, or economic collapse"
+    "Contrarian statements that challenge common assumptions or norms",
+    "Insight-driven declarations that reveal hidden truths or specific data points",
+    "Personal anecdotes establishing authority or unique access (e.g., 'I used to work for...', 'I used to be a journalist...')"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 19
+    "creator": 20
   }
 }
