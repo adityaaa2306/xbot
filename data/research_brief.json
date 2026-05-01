@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-05-01T14:09:51.608381Z",
+  "generated_at": "2026-05-01T15:44:12.921539Z",
   "top_insights": [
-    "Nobody is coming to save you; your rescue mission starts today.",
-    "Formal degrees teach theory; self-teaching builds the actual wealth.",
-    "Walking isn't leisure; it's a high-leverage strategy for clarity.",
-    "Never trash your partner publicly; your reputation is their asset too.",
-    "Storytelling isn't fluff; it's the primary engine of modern leverage."
+    "Nobody is coming to save you; your rescue is a solo project.",
+    "True wealth isn't a number; it's the freedom to ignore the noise.",
+    "Stop waiting for permission. The only credential you need is action.",
+    "Your story is your most valuable asset; stop letting others edit it.",
+    "Smart people don't follow trends; they build systems that outlast them."
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common assumptions",
-    "Insight-driven declarations offering specific life hacks or truths",
+    "Contrarian statements challenging common beliefs",
+    "Insightful observations framed as exclusive knowledge",
     "Personal anecdotes establishing authority or unique experience"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation of personal struggles or beliefs",
-    "Desire for status and leverage signals",
-    "Need for clarity and actionable takeaways"
+    "Validation",
+    "Status aspiration",
+    "Cognitive dissonance resolution"
   ],
-  "emerging_narrative": "A shift toward radical self-responsibility where success is framed as a result of individual discipline, storytelling, and financial independence rather than external salvation or traditional institutional paths.",
+  "emerging_narrative": "A cultural shift toward radical self-reliance and the validation of individual success stories, where audiences resonate with content that challenges mainstream narratives while offering clear, status-affirming takeaways.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -37,8 +37,8 @@
       "text": "Elon’s stance is principled. Trump’s stance is practical. Tech needs Republicans for the present. Republicans need Tech for the future. Drop the tax cuts, cut some pork, get the bill through.",
       "likes": 97000,
       "replies": 5600,
-      "retweets": 8300,
-      "rank_score": 32600.0,
+      "retweets": 9300,
+      "rank_score": 33100.0,
       "timestamp": "2025-06-05T00:00:00Z",
       "source": "creator"
     },
@@ -78,8 +78,8 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge common assumptions",
-    "Insight-driven declarations offering specific life hacks or truths",
+    "Contrarian statements challenging common beliefs",
+    "Insightful observations framed as exclusive knowledge",
     "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
