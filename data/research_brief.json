@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-04-30T17:58:47.435289Z",
+  "generated_at": "2026-05-01T08:34:53.112358Z",
   "top_insights": [
-    "The savior myth is a trap; true security starts when you stop waiting.",
-    "Financial independence isn't greed; it's the only real insurance policy.",
-    "Stop asking for permission. The world respects those who build without it.",
-    "Your story is your leverage; silence is the only true poverty.",
-    "Self-reliance isn't isolation; it's the ultimate form of social power."
+    "Nobody is coming to save you; that silence is your only real freedom.",
+    "Degrees prove you can follow rules; self-education proves you can break them.",
+    "True wealth isn't a number; it's the ability to walk away from anything.",
+    "Stop asking for permission to hold an opinion you've actually formed.",
+    "The most expensive thing you own is your need for external validation."
   ],
   "hook_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insight-driven observations with clear takeaways",
-    "Personal anecdotes establishing authority or unique experience"
+    "Contrarian statements that challenge common assumptions or social norms",
+    "Insight-driven hooks that reveal a 'hidden truth' or specific expert perspective",
+    "Personal anecdotes framed as exclusive or previously untold stories"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation",
-    "Status aspiration",
-    "Security through self-reliance"
+    "Validation (feeling understood or confirmed in one's worldview)",
+    "Aspiration (desire for status, wealth, or self-mastery)",
+    "Relief (finding clarity in chaos or permission to ignore noise)"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and the validation of individual success stories, where personal agency and financial independence are framed as the ultimate forms of security and status in an uncertain world.",
+  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation systems, where success is defined by personal agency, financial independence, and the courage to hold unpopular but 'principled' opinions.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -37,8 +37,8 @@
       "text": "Elon’s stance is principled. Trump’s stance is practical. Tech needs Republicans for the present. Republicans need Tech for the future. Drop the tax cuts, cut some pork, get the bill through.",
       "likes": 97000,
       "replies": 5600,
-      "retweets": 9300,
-      "rank_score": 33100.0,
+      "retweets": 8300,
+      "rank_score": 32600.0,
       "timestamp": "2025-06-05T00:00:00Z",
       "source": "creator"
     },
@@ -70,17 +70,17 @@
       "text": "Normalize not having an opinion on things you don’t understand.",
       "likes": 54000,
       "replies": 464,
-      "retweets": 14000,
-      "rank_score": 20848.0,
+      "retweets": 13000,
+      "rank_score": 20348.0,
       "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insight-driven observations with clear takeaways",
-    "Personal anecdotes establishing authority or unique experience"
+    "Contrarian statements that challenge common assumptions or social norms",
+    "Insight-driven hooks that reveal a 'hidden truth' or specific expert perspective",
+    "Personal anecdotes framed as exclusive or previously untold stories"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
