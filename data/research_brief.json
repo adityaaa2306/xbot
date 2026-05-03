@@ -1,25 +1,36 @@
 {
-  "generated_at": "2026-05-02T08:15:35.094516Z",
+  "generated_at": "2026-05-03T04:33:56.294340Z",
   "top_insights": [
-    "Institutions panic; sovereign individuals build. Your independence is the only hedge against systemic failure.",
-    "Stop waiting for permission. The most valuable assets are built by those who ignore the gatekeepers.",
-    "Narrative is the ultimate leverage. Facts inform, but stories that reframe reality actually move markets.",
-    "True self-reliance isn't isolation; it's the discipline to solve problems before asking for help.",
-    "The smartest people ignore credentials. They master skills, build systems, and let results speak louder than degrees."
+    "Institutions teach compliance; true wealth is built by ignoring their rulebook.",
+    "Your network is worthless if you only call when you need something.",
+    "The smartest people are self-taught; degrees just prove you can follow orders.",
+    "Nobody is coming to save you; that panic is the only path to freedom.",
+    "Status isn't what you own, but what you can build when the system fails."
   ],
   "hook_patterns": [
-    "Contrarian assertions that challenge common assumptions (e.g., 'Normalize not having an opinion')",
-    "Specific, high-stakes financial or status milestones (e.g., '$10M revenue', '$5,000 hit PayPal')",
-    "Counter-intuitive insights framed as 'The most powerful...' or 'The single most...'"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Insight-driven reveals of hidden information or counter-intuitive facts",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation (feeling confirmed in one's own struggles or unconventional choices)",
-    "Empowerment (belief in one's ability to solve problems independently)",
-    "Status aspiration (desire to achieve the leverage and success described)"
+    "Validation (seeking confirmation of one's worldview or status)",
+    "Curiosity (desire to know hidden truths or 'insider' knowledge)",
+    "Empowerment (motivation to take control of one's life or business)"
   ],
-  "emerging_narrative": "A shift toward 'sovereign individualism' where success is defined by building independent systems (businesses, habits, mental frameworks) rather than relying on institutions, coupled with a desire for authentic, unretouched truths about power and history.",
+  "emerging_narrative": "A strong cultural shift toward self-reliance, skepticism of mainstream narratives, and a celebration of individual agency and tangible results over institutional trust.",
   "viral_examples": [
+    {
+      "tweet_id": "1939089188441219258",
+      "author": "Codie_Sanchez",
+      "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
+      "likes": 194000,
+      "replies": 1300,
+      "retweets": 11000,
+      "rank_score": 54975.0,
+      "timestamp": "2025-06-28T00:00:00Z",
+      "source": "creator"
+    },
     {
       "tweet_id": "1930721134368129164",
       "author": "naval",
@@ -63,24 +74,13 @@
       "rank_score": 20848.0,
       "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
-    },
-    {
-      "tweet_id": "1860673473749909984",
-      "author": "thedankoe",
-      "text": "Go on more walks. Walk for no reason. Walk to solve a problem. Walk to blow off steam. Walk to get outside. Walk to listen, read, and learn. Walk to escape distractions. Walk to improve your health. Walk to think. A simple walking habit can change absolutely everything.",
-      "likes": 56000,
-      "replies": 494,
-      "retweets": 11000,
-      "rank_score": 19870.5,
-      "timestamp": "2024-11-24T00:00:00Z",
-      "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian assertions that challenge common assumptions (e.g., 'Normalize not having an opinion')",
-    "Specific, high-stakes financial or status milestones (e.g., '$10M revenue', '$5,000 hit PayPal')",
-    "Counter-intuitive insights framed as 'The most powerful...' or 'The single most...'"
+    "Contrarian statements that challenge common beliefs or norms",
+    "Insight-driven reveals of hidden information or counter-intuitive facts",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
