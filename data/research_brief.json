@@ -1,29 +1,40 @@
 {
-  "generated_at": "2026-05-03T05:48:45.574350Z",
+  "generated_at": "2026-05-03T07:11:48.044938Z",
   "top_insights": [
-    "Institutions panic; individuals build. Sovereignty is the only real hedge against chaos.",
-    "Your degree proves you followed rules. Your business proves you can break them.",
-    "Stop waiting for permission. The market rewards those who ship, not those who ask.",
-    "Narrative isn't fluff; it's the leverage that turns a one-person shop into a monopoly.",
-    "Real solutions come from creators solving their own pain, not committees debating theory."
+    "Nobody is coming to save you; your rescue plan is your own execution.",
+    "True wealth isn't a salary; it's the freedom to ignore the market.",
+    "Self-taught experts don't follow syllabi; they reverse-engineer the world's best outcomes.",
+    "Never trash your partner publicly; your reputation is their only shield.",
+    "Stop waiting for permission. The only credential that matters is your result."
   ],
   "hook_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insight-driven declarations with strong contrast",
-    "Specific, tangible success metrics or personal milestones"
+    "Contrarian statements that challenge common assumptions",
+    "Insight-driven declarations offering clear takeaways",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "angles": [
-    "Frame advice as a 'hard truth' that challenges the status quo",
-    "Use specific, quantifiable examples of success to prove a point",
-    "Connect personal habits (like journaling or walking) to high-level strategic outcomes"
+    "Deconstructing the 'rescue' myth to emphasize personal responsibility",
+    "Highlighting specific, tangible financial milestones as proof of concept",
+    "Framing self-education and journaling as superior alternatives to traditional paths"
   ],
   "emotional_drivers": [
-    "Validation (feeling understood or confirmed in one's views)",
-    "Empowerment through self-reliance",
-    "Status signaling via leverage and success examples"
+    "Validation of personal choices and status",
+    "Desire for clarity and actionable advice",
+    "Aspiration for financial independence and success"
   ],
-  "emerging_narrative": "A shift toward individual sovereignty and creator-led solutions, where people resonate with narratives that reject institutional dependency, celebrate self-taught expertise, and highlight tangible, real-world impact over abstract theory.",
+  "emerging_narrative": "A shift toward radical self-reliance and the democratization of success, where individuals are resonating with stories of independent wealth creation, self-taught expertise, and the rejection of external validation or rescue.",
   "viral_examples": [
+    {
+      "tweet_id": "1939089188441219258",
+      "author": "Codie_Sanchez",
+      "text": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million. Reality gets completely lost somewhere after that.\" I think about that sometimes.",
+      "likes": 194000,
+      "replies": 1300,
+      "retweets": 11000,
+      "rank_score": 54975.0,
+      "timestamp": "2025-06-28T00:00:00Z",
+      "source": "creator"
+    },
     {
       "tweet_id": "1930721134368129164",
       "author": "naval",
@@ -67,24 +78,13 @@
       "rank_score": 20848.0,
       "timestamp": "2022-12-31T00:00:00Z",
       "source": "creator"
-    },
-    {
-      "tweet_id": "1860673473749909984",
-      "author": "thedankoe",
-      "text": "Go on more walks. Walk for no reason. Walk to solve a problem. Walk to blow off steam. Walk to get outside. Walk to listen, read, and learn. Walk to escape distractions. Walk to improve your health. Walk to think. A simple walking habit can change absolutely everything.",
-      "likes": 56000,
-      "replies": 494,
-      "retweets": 11000,
-      "rank_score": 19870.5,
-      "timestamp": "2024-11-24T00:00:00Z",
-      "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insight-driven declarations with strong contrast",
-    "Specific, tangible success metrics or personal milestones"
+    "Contrarian statements that challenge common assumptions",
+    "Insight-driven declarations offering clear takeaways",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
