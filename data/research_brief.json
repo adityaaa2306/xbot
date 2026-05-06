@@ -1,25 +1,28 @@
 {
-  "generated_at": "2026-05-06T04:26:37.031288Z",
+  "generated_at": "2026-05-06T12:21:19.938699Z",
   "top_insights": [
-    "I have a friend who used to work for 2 billionaires after all he's seen",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school",
-    "Panic led to lockdowns",
-    "Normalize not having an opinion on things you don’t understand"
+    "Luck is just a story people tell to hide your strategy.",
+    "Your degree is a receipt, not a guarantee of wealth.",
+    "Stop waiting for permission; the system rewards those who break it.",
+    "True leverage comes from owning the narrative, not just the product.",
+    "Nobody is coming to save you, so stop acting like they will."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging common beliefs",
+    "Insightful declarations of hidden truths or principles",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "angles": [
-    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school"
+    "Deconstructing the 'lucky' narrative to reveal hard work and strategy",
+    "Sharing specific, high-stakes financial or career milestones with actionable takeaways",
+    "Challenging mainstream advice with contrarian, experience-backed truths"
   ],
   "emotional_drivers": [
-    "validation"
+    "Validation",
+    "Status aspiration",
+    "Security through certainty"
   ],
-  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+  "emerging_narrative": "A cultural shift toward radical self-reliance and the validation of individual success stories, where audiences resonate most with content that confirms their own potential for wealth, autonomy, and status while dismissing external dependencies.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -79,8 +82,9 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging common beliefs",
+    "Insightful declarations of hidden truths or principles",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
