@@ -1,24 +1,25 @@
 {
-  "generated_at": "2026-05-05T10:26:30.074822Z",
+  "generated_at": "2026-05-06T04:26:37.031288Z",
   "top_insights": [
-    "Nobody is coming to save you; that silence is your first real freedom.",
-    "True wealth isn't the number in your bank, but the silence of your phone.",
-    "The smartest people are self-taught; schools teach compliance, not mastery.",
-    "Never speak down about your partner; your public respect is private leverage.",
-    "Stop waiting for permission. The narrative you control is the only one that matters."
+    "I have a friend who used to work for 2 billionaires after all he's seen",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school",
+    "Panic led to lockdowns",
+    "Normalize not having an opinion on things you don’t understand"
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common assumptions",
-    "Insightful declarations framed as hidden truths or principles",
-    "Personal anecdotes establishing authority or unique experience"
+    "insight",
+    "contrarian"
   ],
-  "angles": [],
+  "angles": [
+    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school"
+  ],
   "emotional_drivers": [
-    "Validation of personal choices and worldview",
-    "Desire for status and leverage signals",
-    "Relief from the pressure of external expectations"
+    "validation"
   ],
-  "emerging_narrative": "A shift toward radical self-responsibility and the rejection of external validation systems, where success is defined by internal principles, financial independence, and the ability to control one's own narrative rather than following societal scripts.",
+  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -78,9 +79,8 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge common assumptions",
-    "Insightful declarations framed as hidden truths or principles",
-    "Personal anecdotes establishing authority or unique experience"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
