@@ -1,24 +1,25 @@
 {
-  "generated_at": "2026-05-07T12:23:55.155364Z",
+  "generated_at": "2026-05-08T06:25:14.255144Z",
   "top_insights": [
-    "Nobody is coming to save you; your rescue is your own responsibility.",
-    "Formal degrees often delay wealth; self-education builds it faster.",
-    "Narrative control beats product quality when scaling a modern business.",
-    "True integrity means staying silent on topics you do not understand.",
-    "Wealth isn't luck; it's the compound interest of radical ownership."
+    "I have a friend who used to work for 2 billionaires after all he's seen",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school",
+    "Panic led to lockdowns",
+    "Normalize not having an opinion on things you don’t understand"
   ],
   "hook_patterns": [
-    "Contrarian statements that challenge common beliefs or norms",
-    "Insight-driven declarations that reveal hidden truths or specific data points",
-    "Personal anecdotes framed as exclusive or 'never-before-told' stories"
+    "insight",
+    "contrarian"
   ],
-  "angles": [],
+  "angles": [
+    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+    "Elon’s stance is principled",
+    "The smartest people are all self-taught, even if they went to school"
+  ],
   "emotional_drivers": [
-    "Validation (seeking confirmation of one's worldview or status)",
-    "Aspiration (desire for wealth, success, and self-improvement)",
-    "Security (finding comfort in clear rules, principles, and self-reliance)"
+    "validation"
   ],
-  "emerging_narrative": "A shift toward radical self-reliance and the rejection of external validation or rescue, coupled with a fascination for the mechanics of wealth creation and the strategic power of personal storytelling in a polarized environment.",
+  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -78,9 +79,8 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements that challenge common beliefs or norms",
-    "Insight-driven declarations that reveal hidden truths or specific data points",
-    "Personal anecdotes framed as exclusive or 'never-before-told' stories"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
