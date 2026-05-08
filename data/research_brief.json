@@ -1,25 +1,24 @@
 {
-  "generated_at": "2026-05-08T06:25:14.255144Z",
+  "generated_at": "2026-05-08T10:09:29.462135Z",
   "top_insights": [
-    "I have a friend who used to work for 2 billionaires after all he's seen",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school",
-    "Panic led to lockdowns",
-    "Normalize not having an opinion on things you don’t understand"
+    "Waiting for rescue is the fastest way to remain poor.",
+    "True wealth isn't earned; it's kept by those who say no.",
+    "Your degree is a receipt; your self-education is the asset.",
+    "Silence builds empires; arguing with fools burns them down.",
+    "Narrative control beats hard work when the market is blind."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging common beliefs",
+    "Insightful observations framed as hard truths",
+    "Personal anecdotes establishing authority or unique experience"
   ],
-  "angles": [
-    "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
-    "Elon’s stance is principled",
-    "The smartest people are all self-taught, even if they went to school"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "validation"
+    "Validation of the reader's worldview",
+    "Aspiration for status and financial success",
+    "Relief from the pressure of external expectations"
   ],
-  "emerging_narrative": "I have a friend who used to work for 2 billionaires after all he's seen he said to me, \"I wish you not one penny over $299 million",
+  "emerging_narrative": "A shift toward radical self-reliance and the rejection of institutional or societal safety nets, where success is defined by personal agency, financial independence, and the strategic control of one's own narrative.",
   "viral_examples": [
     {
       "tweet_id": "1939089188441219258",
@@ -79,8 +78,9 @@
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging common beliefs",
+    "Insightful observations framed as hard truths",
+    "Personal anecdotes establishing authority or unique experience"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
