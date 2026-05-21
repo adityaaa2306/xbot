@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-20T13:25:31.078980Z",
+  "generated_at": "2026-05-21T05:02:41.863765Z",
   "top_insights": [
     "“Cha-ching” $5,000 hit my PayPal account",
     "Steve Jobs once said: \"The most powerful person is the storyteller",
@@ -78,7 +78,7 @@
       "source": "creator"
     }
   ],
-  "analyses_count": 19,
+  "analyses_count": 20,
   "winning_patterns": [
     "insight",
     "contrarian"
@@ -87,6 +87,6 @@
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 19
+    "creator": 20
   }
 }
