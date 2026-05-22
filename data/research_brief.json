@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-21T11:55:10.157654Z",
+  "generated_at": "2026-05-22T04:50:30.511129Z",
   "top_insights": [
     "“Cha-ching” $5,000 hit my PayPal account",
     "Steve Jobs once said: \"The most powerful person is the storyteller",
     "The single most powerful habit for personal growth: Journaling",
     "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published",
-    "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair —"
+    "The most creative company of the last 30 years: Pixar"
   ],
   "hook_patterns": [
     "insight",
@@ -67,18 +67,18 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1853066574309011776",
-      "author": "gregisenberg",
-      "text": "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair — $5k price tags, long waits, made in china so he built his own factory in the USA now, he sells these $1,000 custom wheelchairs, shipped in weeks we need more creator-led businesses like this.",
+      "tweet_id": "1453725972876775424",
+      "author": "dickiebush",
+      "text": "The most creative company of the last 30 years: Pixar. Back in 2011, Pixar storyboard artist Emma Coats shared their \"22 Rules For Storytelling.\" And the rules are a must-read for writers, entrepreneurs, and anyone who wants to tell captivating stories. Here's the breakdown:",
       "likes": 0,
       "replies": 0,
       "retweets": 0,
       "rank_score": 53.75,
-      "timestamp": "2024-11-03T13:27:54.284000Z",
+      "timestamp": "2021-10-28T14:10:55.513000Z",
       "source": "creator"
     }
   ],
-  "analyses_count": 19,
+  "analyses_count": 20,
   "winning_patterns": [
     "insight",
     "contrarian"
@@ -87,6 +87,6 @@
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 19
+    "creator": 20
   }
 }
