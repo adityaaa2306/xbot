@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-22T06:37:13.115026Z",
+  "generated_at": "2026-05-24T14:15:15.740308Z",
   "top_insights": [
     "“Cha-ching” $5,000 hit my PayPal account",
     "Steve Jobs once said: \"The most powerful person is the storyteller",
     "The single most powerful habit for personal growth: Journaling",
     "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published",
-    "65 doctors, nurses, and paramedics told the New York Times what they saw in Gaza"
+    "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair —"
   ],
   "hook_patterns": [
     "insight",
@@ -67,18 +67,18 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1844049262126195021",
-      "author": "paulg",
-      "text": "65 doctors, nurses, and paramedics told the New York Times what they saw in Gaza. What they saw was a pattern of children being shot in the head.",
+      "tweet_id": "1853066574309011776",
+      "author": "gregisenberg",
+      "text": "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair — $5k price tags, long waits, made in china so he built his own factory in the USA now, he sells these $1,000 custom wheelchairs, shipped in weeks we need more creator-led businesses like this.",
       "likes": 0,
       "replies": 0,
       "retweets": 0,
       "rank_score": 53.75,
-      "timestamp": "2024-10-09T16:16:19.526000Z",
+      "timestamp": "2024-11-03T13:27:54.284000Z",
       "source": "creator"
     }
   ],
-  "analyses_count": 17,
+  "analyses_count": 19,
   "winning_patterns": [
     "insight",
     "contrarian"
@@ -87,6 +87,6 @@
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 17
+    "creator": 19
   }
 }
