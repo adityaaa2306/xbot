@@ -1,26 +1,24 @@
 {
-  "generated_at": "2026-05-25T12:09:12.652927Z",
+  "generated_at": "2026-05-26T04:50:53.843477Z",
   "top_insights": [
-    "“Cha-ching” $5,000 hit my PayPal account",
-    "Steve Jobs once said: \"The most powerful person is the storyteller",
-    "The single most powerful habit for personal growth: Journaling",
-    "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published",
-    "65 doctors, nurses, and paramedics told the New York Times what they saw in Gaza"
+    "Distraction isn't a time problem; it's a discipline failure you keep excusing.",
+    "Real leverage comes from building products, not chasing the next AI hype cycle.",
+    "If you don't design your routine, life will assign you a worse one.",
+    "The most powerful asset isn't capital; it's the ability to control the narrative.",
+    "Stop waiting for permission. Creator-led businesses solve problems corporations ignore."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Authoritative insight using specific data points or historical facts",
+    "Contrarian statements that challenge popular beliefs or hype",
+    "Direct, punchy declarations of personal philosophy or hard truths"
   ],
-  "angles": [
-    "“Cha-ching” $5,000 hit my PayPal account",
-    "Steve Jobs once said: \"The most powerful person is the storyteller",
-    "The single most powerful habit for personal growth: Journaling"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "validation",
-    "ambition"
+    "Validation (feeling confirmed in one's beliefs or status)",
+    "Ambition (desire for growth, success, and leverage)",
+    "Curiosity (interest in hidden truths or contrarian perspectives)"
   ],
-  "emerging_narrative": "“Cha-ching” $5,000 hit my PayPal account",
+  "emerging_narrative": "There is a strong resonance with 'real-world' execution over theoretical hype. Audiences are connecting with stories of tangible results (money, products, habits) and narratives that validate their desire for autonomy, status, and the power of individual agency against systemic or popular trends.",
   "viral_examples": [
     {
       "tweet_id": "1706651022423196152",
@@ -67,21 +65,22 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1844049262126195021",
-      "author": "paulg",
-      "text": "65 doctors, nurses, and paramedics told the New York Times what they saw in Gaza. What they saw was a pattern of children being shot in the head.",
+      "tweet_id": "1853066574309011776",
+      "author": "gregisenberg",
+      "text": "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair — $5k price tags, long waits, made in china so he built his own factory in the USA now, he sells these $1,000 custom wheelchairs, shipped in weeks we need more creator-led businesses like this.",
       "likes": 0,
       "replies": 0,
       "retweets": 0,
       "rank_score": 53.75,
-      "timestamp": "2024-10-09T16:16:19.526000Z",
+      "timestamp": "2024-11-03T13:27:54.284000Z",
       "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Authoritative insight using specific data points or historical facts",
+    "Contrarian statements that challenge popular beliefs or hype",
+    "Direct, punchy declarations of personal philosophy or hard truths"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
