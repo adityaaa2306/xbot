@@ -1,24 +1,30 @@
 {
-  "generated_at": "2026-05-26T04:50:53.843477Z",
+  "generated_at": "2026-05-26T13:41:46.622686Z",
   "top_insights": [
-    "Distraction isn't a time problem; it's a discipline failure you keep excusing.",
-    "Real leverage comes from building products, not chasing the next AI hype cycle.",
-    "If you don't design your routine, life will assign you a worse one.",
-    "The most powerful asset isn't capital; it's the ability to control the narrative.",
-    "Stop waiting for permission. Creator-led businesses solve problems corporations ignore."
+    "Execution beats AI hype; shipping tangible products creates real leverage.",
+    "Don't build a routine; avoid being assigned one by others.",
+    "Storytelling isn't soft; it's the primary engine of business valuation.",
+    "Distraction kills discipline; remove the noise, not the will.",
+    "Creator-led factories solve real problems; corporate hype solves nothing."
   ],
   "hook_patterns": [
-    "Authoritative insight using specific data points or historical facts",
-    "Contrarian statements that challenge popular beliefs or hype",
-    "Direct, punchy declarations of personal philosophy or hard truths"
+    "Specific financial or status signals (e.g., '$5,000 hit', '9m subs')",
+    "Contrarian declarations challenging popular beliefs or hype",
+    "Authoritative historical or celebrity references used to validate a point"
   ],
-  "angles": [],
+  "angles": [
+    "Deconstruct a popular 'hype' trend with a specific counter-example or data point",
+    "Share a personal 'win' or failure that illustrates a universal principle of discipline or leverage",
+    "Frame a common struggle (distraction, lack of routine) as a solvable system rather than a character flaw",
+    "Use a historical or celebrity anecdote to validate a modern business strategy",
+    "Present a 'behind-the-scenes' look at how a specific result was achieved to demystify success"
+  ],
   "emotional_drivers": [
-    "Validation (feeling confirmed in one's beliefs or status)",
-    "Ambition (desire for growth, success, and leverage)",
-    "Curiosity (interest in hidden truths or contrarian perspectives)"
+    "Validation (seeking confirmation of status, success, or worldview)",
+    "Ambition (desire for growth, wealth, and achievement)",
+    "Urgency (fear of being assigned a routine or missing out on leverage)"
   ],
-  "emerging_narrative": "There is a strong resonance with 'real-world' execution over theoretical hype. Audiences are connecting with stories of tangible results (money, products, habits) and narratives that validate their desire for autonomy, status, and the power of individual agency against systemic or popular trends.",
+  "emerging_narrative": "Audiences are resonating with 'proof-of-work' narratives that combine specific, tangible success metrics with actionable, contrarian wisdom. There is a strong shift away from abstract theory toward real-world case studies (like the wheelchair factory) and direct challenges to overhyped trends, emphasizing that true leverage comes from execution and storytelling rather than passive consumption.",
   "viral_examples": [
     {
       "tweet_id": "1706651022423196152",
@@ -65,22 +71,22 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1853066574309011776",
-      "author": "gregisenberg",
-      "text": "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair — $5k price tags, long waits, made in china so he built his own factory in the USA now, he sells these $1,000 custom wheelchairs, shipped in weeks we need more creator-led businesses like this.",
+      "tweet_id": "1844049262126195021",
+      "author": "paulg",
+      "text": "65 doctors, nurses, and paramedics told the New York Times what they saw in Gaza. What they saw was a pattern of children being shot in the head.",
       "likes": 0,
       "replies": 0,
       "retweets": 0,
       "rank_score": 53.75,
-      "timestamp": "2024-11-03T13:27:54.284000Z",
+      "timestamp": "2024-10-09T16:16:19.526000Z",
       "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Authoritative insight using specific data points or historical facts",
-    "Contrarian statements that challenge popular beliefs or hype",
-    "Direct, punchy declarations of personal philosophy or hard truths"
+    "Specific financial or status signals (e.g., '$5,000 hit', '9m subs')",
+    "Contrarian declarations challenging popular beliefs or hype",
+    "Authoritative historical or celebrity references used to validate a point"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
