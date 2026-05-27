@@ -1,30 +1,24 @@
 {
-  "generated_at": "2026-05-26T13:41:46.622686Z",
+  "generated_at": "2026-05-27T06:51:35.243215Z",
   "top_insights": [
-    "Execution beats AI hype; shipping tangible products creates real leverage.",
-    "Don't build a routine; avoid being assigned one by others.",
-    "Storytelling isn't soft; it's the primary engine of business valuation.",
-    "Distraction kills discipline; remove the noise, not the will.",
-    "Creator-led factories solve real problems; corporate hype solves nothing."
+    "Your routine isn't a cage; it's the only thing keeping chaos from running your life.",
+    "Stop chasing AI hype. The real leverage is owning the story, not the tool.",
+    "Competition is a myth for the distracted. Focus on building a monopoly of one.",
+    "If you don't design your day, the algorithm will design it for you.",
+    "Real status isn't a title. It's the ability to ship a solution others can't."
   ],
   "hook_patterns": [
-    "Specific financial or status signals (e.g., '$5,000 hit', '9m subs')",
-    "Contrarian declarations challenging popular beliefs or hype",
-    "Authoritative historical or celebrity references used to validate a point"
+    "Contrarian statements that challenge conventional wisdom or popular trends",
+    "Insight-driven reveals using specific data points, historical facts, or celebrity examples",
+    "Short, punchy declarations that frame a problem and immediately offer a definitive solution"
   ],
-  "angles": [
-    "Deconstruct a popular 'hype' trend with a specific counter-example or data point",
-    "Share a personal 'win' or failure that illustrates a universal principle of discipline or leverage",
-    "Frame a common struggle (distraction, lack of routine) as a solvable system rather than a character flaw",
-    "Use a historical or celebrity anecdote to validate a modern business strategy",
-    "Present a 'behind-the-scenes' look at how a specific result was achieved to demystify success"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "Validation (seeking confirmation of status, success, or worldview)",
-    "Ambition (desire for growth, wealth, and achievement)",
-    "Urgency (fear of being assigned a routine or missing out on leverage)"
+    "Validation (feeling confirmed in one's beliefs or status)",
+    "Ambition (desire for growth, success, and leverage)",
+    "Curiosity (interest in hidden truths, historical facts, or counter-intuitive logic)"
   ],
-  "emerging_narrative": "Audiences are resonating with 'proof-of-work' narratives that combine specific, tangible success metrics with actionable, contrarian wisdom. There is a strong shift away from abstract theory toward real-world case studies (like the wheelchair factory) and direct challenges to overhyped trends, emphasizing that true leverage comes from execution and storytelling rather than passive consumption.",
+  "emerging_narrative": "Audiences are currently resonating with content that cuts through noise to reveal 'hidden truths' or 'uncomfortable realities' about success, technology, and society. There is a strong preference for actionable, no-nonsense advice that validates the reader's desire for autonomy, financial leverage, and disciplined execution over passive consumption.",
   "viral_examples": [
     {
       "tweet_id": "1706651022423196152",
@@ -71,22 +65,22 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1844049262126195021",
-      "author": "paulg",
-      "text": "65 doctors, nurses, and paramedics told the New York Times what they saw in Gaza. What they saw was a pattern of children being shot in the head.",
+      "tweet_id": "1453725972876775424",
+      "author": "dickiebush",
+      "text": "The most creative company of the last 30 years: Pixar. Back in 2011, Pixar storyboard artist Emma Coats shared their \"22 Rules For Storytelling.\" And the rules are a must-read for writers, entrepreneurs, and anyone who wants to tell captivating stories. Here's the breakdown:",
       "likes": 0,
       "replies": 0,
       "retweets": 0,
       "rank_score": 53.75,
-      "timestamp": "2024-10-09T16:16:19.526000Z",
+      "timestamp": "2021-10-28T14:10:55.513000Z",
       "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Specific financial or status signals (e.g., '$5,000 hit', '9m subs')",
-    "Contrarian declarations challenging popular beliefs or hype",
-    "Authoritative historical or celebrity references used to validate a point"
+    "Contrarian statements that challenge conventional wisdom or popular trends",
+    "Insight-driven reveals using specific data points, historical facts, or celebrity examples",
+    "Short, punchy declarations that frame a problem and immediately offer a definitive solution"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
