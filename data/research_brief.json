@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-05-28T16:46:03.939896Z",
+  "generated_at": "2026-05-28T17:54:45.720782Z",
   "top_insights": [
-    "The power of storytelling and narrative control in business and life",
-    "Self-discipline, routine creation, and overcoming distraction as keys to growth",
-    "Validation of success through tangible financial results and status signals",
-    "Contrarian takes on popular topics (e.g., AI hype, competition myths, historical figures)",
-    "Creator-led entrepreneurship solving real-world problems with tangible impact"
+    "The power of storytelling and narrative in business and leadership",
+    "Financial leverage and tangible income signals (e.g., PayPal hits, product pricing)",
+    "Personal discipline habits: journaling, routines, and self-discipline",
+    "Creator-led entrepreneurship and solving real-world problems",
+    "Contrarian takes on industry hype (e.g., AI, competition, business advice)"
   ],
   "hook_patterns": [
-    "Insight-driven hooks presenting a specific, often surprising fact or observation",
-    "Contrarian statements challenging common beliefs or popular narratives",
-    "Direct, punchy declarations of personal achievement or philosophical truths"
+    "Direct financial or status claims (e.g., '$5,000 hit', 'best business advice')",
+    "Contrarian statements challenging popular opinion or hype",
+    "Authoritative 'single most powerful' or 'all you need' declarations"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation (seeking confirmation of status, success, or worldview)",
-    "Ambition (desire for growth, leverage, and financial freedom)",
-    "Curiosity (interest in behind-the-scenes truths or historical revelations)"
+    "Validation (feeling confirmed in beliefs or status)",
+    "Ambition (desire for growth, success, and leverage)",
+    "Security (seeking clarity, calm, and control over one's life)"
   ],
-  "emerging_narrative": "There is a strong resonance with 'real-world' impact over abstract theory. Audiences are connecting with stories of tangible results (money, products built, habits formed) and are increasingly skeptical of hype (AI, competition), preferring grounded, contrarian insights that validate their own drive for autonomy and success.",
+  "emerging_narrative": "Audiences are resonating with authentic, high-leverage success stories that blend personal discipline with tangible financial results. There is a strong shift away from abstract theory toward 'builder' narratives—where creators solve specific problems, build real businesses, and validate their success through concrete metrics rather than just hype.",
   "viral_examples": [
     {
       "tweet_id": "1706651022423196152",
@@ -54,17 +54,6 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1879968688356642917",
-      "author": "paulg",
-      "text": "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published since) was heavily retouched. This is what he actually looked like.",
-      "likes": 0,
-      "replies": 0,
-      "retweets": 0,
-      "rank_score": 56.25,
-      "timestamp": "2025-01-16T19:07:18.090000Z",
-      "source": "creator"
-    },
-    {
       "tweet_id": "1453725972876775424",
       "author": "dickiebush",
       "text": "The most creative company of the last 30 years: Pixar. Back in 2011, Pixar storyboard artist Emma Coats shared their \"22 Rules For Storytelling.\" And the rules are a must-read for writers, entrepreneurs, and anyone who wants to tell captivating stories. Here's the breakdown:",
@@ -74,18 +63,29 @@
       "rank_score": 53.75,
       "timestamp": "2021-10-28T14:10:55.513000Z",
       "source": "creator"
+    },
+    {
+      "tweet_id": "1638906021635837952",
+      "author": "dickiebush",
+      "text": "ChatGPT is overhyped. That's what I told myself after 2 weeks of trying (and failing) to use it well. Turns out, I was just a poor prompt writer. But after spending hundreds of hours tinkering, I've finally cracked it. And now, it's my personal writing assistant. Here's how:",
+      "likes": 0,
+      "replies": 0,
+      "retweets": 0,
+      "rank_score": 53.75,
+      "timestamp": "2023-03-23T14:10:19.616000Z",
+      "source": "creator"
     }
   ],
-  "analyses_count": 20,
+  "analyses_count": 17,
   "winning_patterns": [
-    "Insight-driven hooks presenting a specific, often surprising fact or observation",
-    "Contrarian statements challenging common beliefs or popular narratives",
-    "Direct, punchy declarations of personal achievement or philosophical truths"
+    "Direct financial or status claims (e.g., '$5,000 hit', 'best business advice')",
+    "Contrarian statements challenging popular opinion or hype",
+    "Authoritative 'single most powerful' or 'all you need' declarations"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 20
+    "creator": 17
   }
 }
