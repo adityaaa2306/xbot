@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-05-27T14:03:57.586316Z",
+  "generated_at": "2026-05-28T10:43:47.429322Z",
   "top_insights": [
-    "Competition is a myth; the real war is against your own distraction.",
-    "Discipline isn't moral; it's the only strategic leverage you own.",
-    "Corporations solve for scale; creators solve for the specific human.",
-    "Your bank account is the only honest story your business tells.",
-    "Narrative control beats product features every time you scale."
+    "Financial success and tangible monetary gains",
+    "Historical truths and behind-the-scenes realities of power figures",
+    "The power of storytelling and narrative control",
+    "Political polarization and societal instability",
+    "Challenging mainstream narratives about technology and competition"
   ],
   "hook_patterns": [
-    "Insight-driven statements revealing hidden truths or historical facts",
-    "Contrarian declarations challenging common beliefs or popular trends",
-    "Direct, punchy commands or warnings about personal agency"
+    "Insight-driven hooks revealing hidden truths or counter-intuitive facts",
+    "Contrarian statements challenging popular opinion or hype",
+    "Direct questions or challenges to authority figures and groups"
   ],
   "angles": [
-    "Expose the 'hidden truth' behind a popular industry myth or success story",
-    "Frame self-discipline as a strategic advantage rather than a moral obligation",
-    "Highlight specific, tangible examples of creators solving problems better than corporations"
+    "Expose the hidden mechanics behind success or failure",
+    "Challenge the 'official' story with specific, contrasting evidence",
+    "Frame current events as inevitable consequences of ignored warnings"
   ],
   "emotional_drivers": [
-    "Validation (feeling confirmed in one's beliefs or status)",
-    "Ambition (desire for growth, success, and leverage)",
-    "Curiosity (interest in behind-the-scenes truths or contrarian views)"
+    "Validation of the reader's skepticism or worldview",
+    "Desire for status and leverage signals",
+    "Curiosity about exclusive or suppressed information"
   ],
-  "emerging_narrative": "Audiences are resonating with content that demystifies success by exposing the 'real' mechanics behind wealth, influence, and productivity, while rejecting overhyped trends in favor of grounded, actionable self-reliance and creator-led solutions.",
+  "emerging_narrative": "Audiences are resonating with content that exposes the 'real' story behind public figures, institutions, and trends, favoring raw, unfiltered insights over polished corporate or media narratives.",
   "viral_examples": [
     {
       "tweet_id": "1706651022423196152",
@@ -47,17 +47,6 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1572970423935008769",
-      "author": "dickiebush",
-      "text": "The single most powerful habit for personal growth: Journaling. Over the past 5 years, I've journaled every single morning—and along the way, I've: •Answered over 1,000 questions •Tested every app, pen, & notebook But I always return to a pen, paper, and these 5 prompts:",
-      "likes": 0,
-      "replies": 0,
-      "retweets": 0,
-      "rank_score": 60.0,
-      "timestamp": "2022-09-22T15:25:48.100000Z",
-      "source": "creator"
-    },
-    {
       "tweet_id": "1879968688356642917",
       "author": "paulg",
       "text": "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published since) was heavily retouched. This is what he actually looked like.",
@@ -66,6 +55,17 @@
       "retweets": 0,
       "rank_score": 56.25,
       "timestamp": "2025-01-16T19:07:18.090000Z",
+      "source": "creator"
+    },
+    {
+      "tweet_id": "1844049262126195021",
+      "author": "paulg",
+      "text": "65 doctors, nurses, and paramedics told the New York Times what they saw in Gaza. What they saw was a pattern of children being shot in the head.",
+      "likes": 0,
+      "replies": 0,
+      "retweets": 0,
+      "rank_score": 53.75,
+      "timestamp": "2024-10-09T16:16:19.526000Z",
       "source": "creator"
     },
     {
@@ -80,16 +80,16 @@
       "source": "creator"
     }
   ],
-  "analyses_count": 20,
+  "analyses_count": 13,
   "winning_patterns": [
-    "Insight-driven statements revealing hidden truths or historical facts",
-    "Contrarian declarations challenging common beliefs or popular trends",
-    "Direct, punchy commands or warnings about personal agency"
+    "Insight-driven hooks revealing hidden truths or counter-intuitive facts",
+    "Contrarian statements challenging popular opinion or hype",
+    "Direct questions or challenges to authority figures and groups"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 20
+    "creator": 13
   }
 }
