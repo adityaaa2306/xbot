@@ -1,26 +1,28 @@
 {
-  "generated_at": "2026-05-30T10:29:33.364454Z",
+  "generated_at": "2026-05-31T05:11:08.918257Z",
   "top_insights": [
-    "Stop building products. Start solving problems you personally feel.",
-    "Your first $5k proves nothing. Your first $1M proves leverage.",
-    "Journaling isn't reflection. It's debugging your operating system.",
-    "Great companies don't compete. They redefine the category entirely.",
-    "Storytelling isn't marketing. It's the only moat that compounds."
+    "Narrative control beats raw talent; the best story wins, not the best product.",
+    "Financial leverage isn't luck; it's the compound interest of disciplined, boring habits.",
+    "History's icons were often retouched; real power hides behind the curated image.",
+    "Most 'disruptors' are just noise; true leverage comes from ignoring hype cycles.",
+    "If you don't design your routine, life will assign you a crushing one."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging common beliefs",
+    "Insight-driven reveals of hidden facts or truths",
+    "Short, punchy declarations of cause-and-effect"
   ],
   "angles": [
-    "“Cha-ching” $5,000 hit my PayPal account",
-    "Steve Jobs once said: \"The most powerful person is the storyteller",
-    "The single most powerful habit for personal growth: Journaling"
+    "Expose the hidden mechanics behind success or failure",
+    "Challenge the status quo with contrarian data or historical examples",
+    "Provide actionable, disciplined frameworks for personal leverage"
   ],
   "emotional_drivers": [
-    "validation",
-    "ambition"
+    "Validation of the reader's intuition or skepticism",
+    "Desire for status and leverage signals",
+    "Curiosity about behind-the-scenes realities"
   ],
-  "emerging_narrative": "“Cha-ching” $5,000 hit my PayPal account",
+  "emerging_narrative": "Audiences are resonating with content that cuts through noise to reveal 'hard truths' about power, money, and discipline, often validating their skepticism of mainstream narratives or overhyped trends.",
   "viral_examples": [
     {
       "tweet_id": "1706651022423196152",
@@ -56,14 +58,14 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1853066574309011776",
-      "author": "gregisenberg",
-      "text": "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair — $5k price tags, long waits, made in china so he built his own factory in the USA now, he sells these $1,000 custom wheelchairs, shipped in weeks we need more creator-led businesses like this.",
+      "tweet_id": "1879968688356642917",
+      "author": "paulg",
+      "text": "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published since) was heavily retouched. This is what he actually looked like.",
       "likes": 0,
       "replies": 0,
       "retweets": 0,
-      "rank_score": 53.75,
-      "timestamp": "2024-11-03T13:27:54.284000Z",
+      "rank_score": 56.25,
+      "timestamp": "2025-01-16T19:07:18.090000Z",
       "source": "creator"
     },
     {
@@ -78,15 +80,16 @@
       "source": "creator"
     }
   ],
-  "analyses_count": 17,
+  "analyses_count": 16,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Contrarian statements challenging common beliefs",
+    "Insight-driven reveals of hidden facts or truths",
+    "Short, punchy declarations of cause-and-effect"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 17
+    "creator": 16
   }
 }
