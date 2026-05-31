@@ -1,28 +1,26 @@
 {
-  "generated_at": "2026-05-31T05:11:08.918257Z",
+  "generated_at": "2026-05-31T06:46:03.742488Z",
   "top_insights": [
-    "Narrative control beats raw talent; the best story wins, not the best product.",
-    "Financial leverage isn't luck; it's the compound interest of disciplined, boring habits.",
-    "History's icons were often retouched; real power hides behind the curated image.",
-    "Most 'disruptors' are just noise; true leverage comes from ignoring hype cycles.",
-    "If you don't design your routine, life will assign you a crushing one."
+    "“Cha-ching” $5,000 hit my PayPal account",
+    "Steve Jobs once said: \"The most powerful person is the storyteller",
+    "The single most powerful habit for personal growth: Journaling",
+    "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published",
+    "The most creative company of the last 30 years: Pixar"
   ],
   "hook_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insight-driven reveals of hidden facts or truths",
-    "Short, punchy declarations of cause-and-effect"
+    "insight",
+    "contrarian"
   ],
   "angles": [
-    "Expose the hidden mechanics behind success or failure",
-    "Challenge the status quo with contrarian data or historical examples",
-    "Provide actionable, disciplined frameworks for personal leverage"
+    "“Cha-ching” $5,000 hit my PayPal account",
+    "Steve Jobs once said: \"The most powerful person is the storyteller",
+    "The single most powerful habit for personal growth: Journaling"
   ],
   "emotional_drivers": [
-    "Validation of the reader's intuition or skepticism",
-    "Desire for status and leverage signals",
-    "Curiosity about behind-the-scenes realities"
+    "validation",
+    "ambition"
   ],
-  "emerging_narrative": "Audiences are resonating with content that cuts through noise to reveal 'hard truths' about power, money, and discipline, often validating their skepticism of mainstream narratives or overhyped trends.",
+  "emerging_narrative": "“Cha-ching” $5,000 hit my PayPal account",
   "viral_examples": [
     {
       "tweet_id": "1706651022423196152",
@@ -80,16 +78,15 @@
       "source": "creator"
     }
   ],
-  "analyses_count": 16,
+  "analyses_count": 20,
   "winning_patterns": [
-    "Contrarian statements challenging common beliefs",
-    "Insight-driven reveals of hidden facts or truths",
-    "Short, punchy declarations of cause-and-effect"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 16
+    "creator": 20
   }
 }
