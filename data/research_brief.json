@@ -1,26 +1,24 @@
 {
-  "generated_at": "2026-05-31T12:06:57.261379Z",
+  "generated_at": "2026-06-01T05:31:48.950089Z",
   "top_insights": [
-    "“Cha-ching” $5,000 hit my PayPal account",
-    "Steve Jobs once said: \"The most powerful person is the storyteller",
-    "The single most powerful habit for personal growth: Journaling",
-    "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published",
-    "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair —"
+    "Narrative control beats product quality; the story sells the solution.",
+    "Competition is a myth; monopolies are built by ignoring rivals entirely.",
+    "Discipline isn't willpower; it's designing a life where quitting is hard.",
+    "AI won't replace you; a human using AI will replace you.",
+    "Wealth isn't luck; it's the compound interest of specific, boring habits."
   ],
   "hook_patterns": [
-    "insight",
-    "contrarian"
+    "Insight-driven hooks presenting a specific, often surprising fact or observation",
+    "Contrarian statements that challenge conventional wisdom or popular trends",
+    "Short, punchy declarations that imply a clear, actionable takeaway"
   ],
-  "angles": [
-    "“Cha-ching” $5,000 hit my PayPal account",
-    "Steve Jobs once said: \"The most powerful person is the storyteller",
-    "The single most powerful habit for personal growth: Journaling"
-  ],
+  "angles": [],
   "emotional_drivers": [
-    "validation",
-    "ambition"
+    "Validation (feeling confirmed in beliefs or status)",
+    "Ambition (desire for growth, success, and leverage)",
+    "Curiosity (interest in hidden truths or counter-intuitive facts)"
   ],
-  "emerging_narrative": "“Cha-ching” $5,000 hit my PayPal account",
+  "emerging_narrative": "Audiences are resonating with content that demystifies success by revealing the 'real' mechanics behind wealth, influence, and innovation, often through contrarian takes or specific historical/business case studies that validate their own ambitions or correct misconceptions.",
   "viral_examples": [
     {
       "tweet_id": "1706651022423196152",
@@ -67,21 +65,22 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1853066574309011776",
-      "author": "gregisenberg",
-      "text": "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair — $5k price tags, long waits, made in china so he built his own factory in the USA now, he sells these $1,000 custom wheelchairs, shipped in weeks we need more creator-led businesses like this.",
+      "tweet_id": "1453725972876775424",
+      "author": "dickiebush",
+      "text": "The most creative company of the last 30 years: Pixar. Back in 2011, Pixar storyboard artist Emma Coats shared their \"22 Rules For Storytelling.\" And the rules are a must-read for writers, entrepreneurs, and anyone who wants to tell captivating stories. Here's the breakdown:",
       "likes": 0,
       "replies": 0,
       "retweets": 0,
       "rank_score": 53.75,
-      "timestamp": "2024-11-03T13:27:54.284000Z",
+      "timestamp": "2021-10-28T14:10:55.513000Z",
       "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "insight",
-    "contrarian"
+    "Insight-driven hooks presenting a specific, often surprising fact or observation",
+    "Contrarian statements that challenge conventional wisdom or popular trends",
+    "Short, punchy declarations that imply a clear, actionable takeaway"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
