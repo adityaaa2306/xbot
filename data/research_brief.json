@@ -1,24 +1,25 @@
 {
-  "generated_at": "2026-06-01T05:31:48.950089Z",
+  "generated_at": "2026-06-01T07:34:43.637626Z",
   "top_insights": [
-    "Narrative control beats product quality; the story sells the solution.",
-    "Competition is a myth; monopolies are built by ignoring rivals entirely.",
-    "Discipline isn't willpower; it's designing a life where quitting is hard.",
-    "AI won't replace you; a human using AI will replace you.",
-    "Wealth isn't luck; it's the compound interest of specific, boring habits."
+    "The power of storytelling and narrative control in business and life",
+    "Self-discipline, routine creation, and overcoming distraction",
+    "Entrepreneurial leverage: building products, solving problems, and financial wins",
+    "Critical insights on historical figures, companies, and current events",
+    "The necessity of taking action and shipping work rather than just planning"
   ],
   "hook_patterns": [
-    "Insight-driven hooks presenting a specific, often surprising fact or observation",
-    "Contrarian statements that challenge conventional wisdom or popular trends",
-    "Short, punchy declarations that imply a clear, actionable takeaway"
+    "Contrarian statements challenging popular beliefs (e.g., 'ChatGPT is overhyped')",
+    "Specific financial or status signals (e.g., '$5,000 hit my PayPal')",
+    "Definitive superlatives and historical claims (e.g., 'The most creative company...')"
   ],
   "angles": [],
   "emotional_drivers": [
-    "Validation (feeling confirmed in beliefs or status)",
-    "Ambition (desire for growth, success, and leverage)",
-    "Curiosity (interest in hidden truths or counter-intuitive facts)"
+    "Validation (feeling understood or confirmed in one's views)",
+    "Ambition (desire for growth, wealth, and success)",
+    "Curiosity (interest in behind-the-scenes truths or historical facts)",
+    "Urgency (fear of missing out or falling behind)"
   ],
-  "emerging_narrative": "Audiences are resonating with content that demystifies success by revealing the 'real' mechanics behind wealth, influence, and innovation, often through contrarian takes or specific historical/business case studies that validate their own ambitions or correct misconceptions.",
+  "emerging_narrative": "There is a strong resonance with 'creator-led' problem solving and tangible results over theoretical advice. Audiences are currently engaging with content that exposes hidden truths (historical or political), validates their struggle with discipline, and provides a clear, actionable path to financial or personal leverage. The narrative favors authenticity and 'shipping' work over perfectionism.",
   "viral_examples": [
     {
       "tweet_id": "1706651022423196152",
@@ -65,27 +66,27 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1453725972876775424",
-      "author": "dickiebush",
-      "text": "The most creative company of the last 30 years: Pixar. Back in 2011, Pixar storyboard artist Emma Coats shared their \"22 Rules For Storytelling.\" And the rules are a must-read for writers, entrepreneurs, and anyone who wants to tell captivating stories. Here's the breakdown:",
+      "tweet_id": "1853066574309011776",
+      "author": "gregisenberg",
+      "text": "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair — $5k price tags, long waits, made in china so he built his own factory in the USA now, he sells these $1,000 custom wheelchairs, shipped in weeks we need more creator-led businesses like this.",
       "likes": 0,
       "replies": 0,
       "retweets": 0,
       "rank_score": 53.75,
-      "timestamp": "2021-10-28T14:10:55.513000Z",
+      "timestamp": "2024-11-03T13:27:54.284000Z",
       "source": "creator"
     }
   ],
-  "analyses_count": 20,
+  "analyses_count": 18,
   "winning_patterns": [
-    "Insight-driven hooks presenting a specific, often surprising fact or observation",
-    "Contrarian statements that challenge conventional wisdom or popular trends",
-    "Short, punchy declarations that imply a clear, actionable takeaway"
+    "Contrarian statements challenging popular beliefs (e.g., 'ChatGPT is overhyped')",
+    "Specific financial or status signals (e.g., '$5,000 hit my PayPal')",
+    "Definitive superlatives and historical claims (e.g., 'The most creative company...')"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 20
+    "creator": 18
   }
 }
