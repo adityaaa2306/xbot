@@ -1,28 +1,26 @@
 {
-  "generated_at": "2026-06-02T05:17:46.139064Z",
+  "generated_at": "2026-06-02T17:11:44.744033Z",
   "top_insights": [
-    "Competition is a lie; the real leverage is building what others ignore.",
-    "If you don't design your routine, life will assign you a worse one.",
-    "AI won't replace creators; it will replace those who refuse to build.",
-    "True wealth isn't a salary; it's owning the factory that solves the problem.",
-    "Storytelling isn't marketing fluff; it is the only asset that scales infinitely."
+    "Most people chase attention; the wealthy chase leverage.",
+    "Your routine isn't a habit; it's a cage you built.",
+    "Don't build a brand. Build a factory that solves real pain.",
+    "Storytelling isn't art; it's the highest ROI asset you own.",
+    "Discipline isn't hard. You're just addicted to cheap distractions."
   ],
   "hook_patterns": [
-    "Contrarian statements challenging common wisdom",
-    "Specific financial or status signals (e.g., '$5,000 hit', '9m subs')",
-    "Authoritative insights using historical figures or data points"
+    "insight",
+    "contrarian"
   ],
   "angles": [
-    "Deconstructing popular myths with specific, data-backed counter-examples",
-    "Showcasing the 'behind-the-scenes' reality of high-status success",
-    "Providing actionable, no-fluff frameworks for self-mastery and business growth"
+    "“Cha-ching” $5,000 hit my PayPal account",
+    "Steve Jobs once said: \"The most powerful person is the storyteller",
+    "The single most powerful habit for personal growth: Journaling"
   ],
   "emotional_drivers": [
-    "Validation of existing beliefs or status",
-    "Ambition and desire for success/leverage",
-    "Curiosity regarding hidden truths or 'big lies'"
+    "validation",
+    "ambition"
   ],
-  "emerging_narrative": "Audiences are resonating with authentic, high-leverage stories that cut through noise. There is a strong preference for content that validates the user's desire for autonomy, financial independence, and the belief that individual action (like building a factory or writing a book) can solve systemic problems better than established institutions.",
+  "emerging_narrative": "“Cha-ching” $5,000 hit my PayPal account",
   "viral_examples": [
     {
       "tweet_id": "1706651022423196152",
@@ -58,17 +56,6 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1879968688356642917",
-      "author": "paulg",
-      "text": "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published since) was heavily retouched. This is what he actually looked like.",
-      "likes": 0,
-      "replies": 0,
-      "retweets": 0,
-      "rank_score": 56.25,
-      "timestamp": "2025-01-16T19:07:18.090000Z",
-      "source": "creator"
-    },
-    {
       "tweet_id": "1853066574309011776",
       "author": "gregisenberg",
       "text": "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair — $5k price tags, long waits, made in china so he built his own factory in the USA now, he sells these $1,000 custom wheelchairs, shipped in weeks we need more creator-led businesses like this.",
@@ -78,18 +65,28 @@
       "rank_score": 53.75,
       "timestamp": "2024-11-03T13:27:54.284000Z",
       "source": "creator"
+    },
+    {
+      "tweet_id": "1453725972876775424",
+      "author": "dickiebush",
+      "text": "The most creative company of the last 30 years: Pixar. Back in 2011, Pixar storyboard artist Emma Coats shared their \"22 Rules For Storytelling.\" And the rules are a must-read for writers, entrepreneurs, and anyone who wants to tell captivating stories. Here's the breakdown:",
+      "likes": 0,
+      "replies": 0,
+      "retweets": 0,
+      "rank_score": 53.75,
+      "timestamp": "2021-10-28T14:10:55.513000Z",
+      "source": "creator"
     }
   ],
-  "analyses_count": 20,
+  "analyses_count": 17,
   "winning_patterns": [
-    "Contrarian statements challenging common wisdom",
-    "Specific financial or status signals (e.g., '$5,000 hit', '9m subs')",
-    "Authoritative insights using historical figures or data points"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 20
+    "creator": 17
   }
 }
