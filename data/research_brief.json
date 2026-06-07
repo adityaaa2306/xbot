@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-07T16:02:35.845795Z",
+  "generated_at": "2026-06-07T17:53:30.148357Z",
   "top_insights": [
-    "Most 'overnight' successes are just years of invisible compounding finally cashing out.",
-    "Your routine isn't a choice; it's a default setting you must overwrite.",
-    "Storytelling isn't fluff; it's the only leverage that scales without capital.",
-    "Perfection is just polished procrastination hiding behind high standards.",
-    "True wealth isn't the bank balance; it's the freedom to ignore the noise."
+    "“Cha-ching” $5,000 hit my PayPal account",
+    "Steve Jobs once said: \"The most powerful person is the storyteller",
+    "The single most powerful habit for personal growth: Journaling",
+    "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published",
+    "The most creative company of the last 30 years: Pixar"
   ],
   "hook_patterns": [
     "insight",
@@ -78,7 +78,7 @@
       "source": "creator"
     }
   ],
-  "analyses_count": 20,
+  "analyses_count": 18,
   "winning_patterns": [
     "insight",
     "contrarian"
@@ -87,6 +87,6 @@
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 20
+    "creator": 18
   }
 }
