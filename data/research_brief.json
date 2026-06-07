@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-02T17:11:44.744033Z",
+  "generated_at": "2026-06-07T16:02:35.845795Z",
   "top_insights": [
-    "Most people chase attention; the wealthy chase leverage.",
-    "Your routine isn't a habit; it's a cage you built.",
-    "Don't build a brand. Build a factory that solves real pain.",
-    "Storytelling isn't art; it's the highest ROI asset you own.",
-    "Discipline isn't hard. You're just addicted to cheap distractions."
+    "Most 'overnight' successes are just years of invisible compounding finally cashing out.",
+    "Your routine isn't a choice; it's a default setting you must overwrite.",
+    "Storytelling isn't fluff; it's the only leverage that scales without capital.",
+    "Perfection is just polished procrastination hiding behind high standards.",
+    "True wealth isn't the bank balance; it's the freedom to ignore the noise."
   ],
   "hook_patterns": [
     "insight",
@@ -56,14 +56,14 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1853066574309011776",
-      "author": "gregisenberg",
-      "text": "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair — $5k price tags, long waits, made in china so he built his own factory in the USA now, he sells these $1,000 custom wheelchairs, shipped in weeks we need more creator-led businesses like this.",
+      "tweet_id": "1879968688356642917",
+      "author": "paulg",
+      "text": "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published since) was heavily retouched. This is what he actually looked like.",
       "likes": 0,
       "replies": 0,
       "retweets": 0,
-      "rank_score": 53.75,
-      "timestamp": "2024-11-03T13:27:54.284000Z",
+      "rank_score": 56.25,
+      "timestamp": "2025-01-16T19:07:18.090000Z",
       "source": "creator"
     },
     {
@@ -78,7 +78,7 @@
       "source": "creator"
     }
   ],
-  "analyses_count": 17,
+  "analyses_count": 20,
   "winning_patterns": [
     "insight",
     "contrarian"
@@ -87,6 +87,6 @@
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 17
+    "creator": 20
   }
 }
