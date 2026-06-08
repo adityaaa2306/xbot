@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-07T17:53:30.148357Z",
+  "generated_at": "2026-06-08T07:18:58.802148Z",
   "top_insights": [
-    "“Cha-ching” $5,000 hit my PayPal account",
-    "Steve Jobs once said: \"The most powerful person is the storyteller",
-    "The single most powerful habit for personal growth: Journaling",
-    "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published",
-    "The most creative company of the last 30 years: Pixar"
+    "Money follows the story, not the spreadsheet.",
+    "Journaling isn't reflection; it's data mining for leverage.",
+    "Great brands don't compete; they redefine the category.",
+    "Your image is curated; your results are raw.",
+    "Discipline isn't hard; your distractions are just loud."
   ],
   "hook_patterns": [
     "insight",
@@ -78,7 +78,7 @@
       "source": "creator"
     }
   ],
-  "analyses_count": 18,
+  "analyses_count": 20,
   "winning_patterns": [
     "insight",
     "contrarian"
@@ -87,6 +87,6 @@
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 18
+    "creator": 20
   }
 }
