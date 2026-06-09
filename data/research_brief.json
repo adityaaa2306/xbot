@@ -1,30 +1,26 @@
 {
-  "generated_at": "2026-06-08T14:40:22.993554Z",
+  "generated_at": "2026-06-09T06:39:02.893101Z",
   "top_insights": [
-    "Discipline isn't moral; it's the strategic removal of friction.",
-    "Stop chasing trends. Build the boring infrastructure others ignore.",
-    "Your routine is a cage you built to avoid the unknown.",
-    "Real leverage comes from solving ugly problems, not chasing hype.",
-    "Narrative control beats capital allocation in the modern economy."
+    "“Cha-ching” $5,000 hit my PayPal account",
+    "Steve Jobs once said: \"The most powerful person is the storyteller",
+    "The single most powerful habit for personal growth: Journaling",
+    "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published",
+    "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair —"
   ],
   "hook_patterns": [
-    "Direct financial or status revelation (e.g., '$5,000 hit my account')",
-    "Authoritative historical or celebrity quotes used to frame a lesson",
-    "Provocative 'insight' statements challenging common assumptions or highlighting hidden truths"
+    "insight",
+    "contrarian"
   ],
   "angles": [
-    "Deconstructing a popular trend to reveal the 'real' underlying mechanic",
-    "Sharing a specific, tangible win (financial or operational) to prove a concept",
-    "Using historical precedents to validate modern business or personal strategies",
-    "Framing self-discipline as a strategic advantage rather than a moral virtue",
-    "Highlighting 'creator-led' solutions that bypass traditional inefficiencies"
+    "“Cha-ching” $5,000 hit my PayPal account",
+    "Steve Jobs once said: \"The most powerful person is the storyteller",
+    "The single most powerful habit for personal growth: Journaling"
   ],
   "emotional_drivers": [
-    "Validation (feeling confirmed in one's beliefs or path)",
-    "Ambition (desire for growth, success, and leverage)",
-    "Curiosity (driven by contrast and 'insight' reveals)"
+    "validation",
+    "ambition"
   ],
-  "emerging_narrative": "There is a strong resonance with 'anti-hype' practical wisdom: audiences are moving away from generic motivation toward specific, high-leverage insights that offer clear takeaways, status validation, and actionable strategies for building wealth or influence without relying on trends.",
+  "emerging_narrative": "“Cha-ching” $5,000 hit my PayPal account",
   "viral_examples": [
     {
       "tweet_id": "1706651022423196152",
@@ -71,22 +67,21 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1453725972876775424",
-      "author": "dickiebush",
-      "text": "The most creative company of the last 30 years: Pixar. Back in 2011, Pixar storyboard artist Emma Coats shared their \"22 Rules For Storytelling.\" And the rules are a must-read for writers, entrepreneurs, and anyone who wants to tell captivating stories. Here's the breakdown:",
+      "tweet_id": "1853066574309011776",
+      "author": "gregisenberg",
+      "text": "this youtuber with 9m subs saw his wife struggle to find a quality wheelchair — $5k price tags, long waits, made in china so he built his own factory in the USA now, he sells these $1,000 custom wheelchairs, shipped in weeks we need more creator-led businesses like this.",
       "likes": 0,
       "replies": 0,
       "retweets": 0,
       "rank_score": 53.75,
-      "timestamp": "2021-10-28T14:10:55.513000Z",
+      "timestamp": "2024-11-03T13:27:54.284000Z",
       "source": "creator"
     }
   ],
   "analyses_count": 20,
   "winning_patterns": [
-    "Direct financial or status revelation (e.g., '$5,000 hit my account')",
-    "Authoritative historical or celebrity quotes used to frame a lesson",
-    "Provocative 'insight' statements challenging common assumptions or highlighting hidden truths"
+    "insight",
+    "contrarian"
   ],
   "failed_patterns": [],
   "avoid_recent_hooks": [],
