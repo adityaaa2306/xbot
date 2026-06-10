@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-09T13:35:33.913348Z",
+  "generated_at": "2026-06-10T08:38:53.233341Z",
   "top_insights": [
-    "Money follows stories, not just spreadsheets.",
-    "Retouching history is how legends become untouchable.",
-    "Journaling isn't reflection; it's strategic data mining.",
-    "True creativity hides in boring constraints, not chaos.",
-    "Discipline isn't hard; you're just addicted to noise."
+    "Money follows stories, not spreadsheets.",
+    "Journaling isn't reflection; it's strategic debugging.",
+    "AI won't replace you; the person using AI will.",
+    "Stop chasing trends. Build the factory.",
+    "Discipline isn't hard; your distractions are just loud."
   ],
   "hook_patterns": [
     "insight",
@@ -56,17 +56,6 @@
       "source": "creator"
     },
     {
-      "tweet_id": "1879968688356642917",
-      "author": "paulg",
-      "text": "Every picture of JP Morgan published in his lifetime (and thus nearly every picture published since) was heavily retouched. This is what he actually looked like.",
-      "likes": 0,
-      "replies": 0,
-      "retweets": 0,
-      "rank_score": 56.25,
-      "timestamp": "2025-01-16T19:07:18.090000Z",
-      "source": "creator"
-    },
-    {
       "tweet_id": "1453725972876775424",
       "author": "dickiebush",
       "text": "The most creative company of the last 30 years: Pixar. Back in 2011, Pixar storyboard artist Emma Coats shared their \"22 Rules For Storytelling.\" And the rules are a must-read for writers, entrepreneurs, and anyone who wants to tell captivating stories. Here's the breakdown:",
@@ -76,9 +65,20 @@
       "rank_score": 53.75,
       "timestamp": "2021-10-28T14:10:55.513000Z",
       "source": "creator"
+    },
+    {
+      "tweet_id": "1638906021635837952",
+      "author": "dickiebush",
+      "text": "ChatGPT is overhyped. That's what I told myself after 2 weeks of trying (and failing) to use it well. Turns out, I was just a poor prompt writer. But after spending hundreds of hours tinkering, I've finally cracked it. And now, it's my personal writing assistant. Here's how:",
+      "likes": 0,
+      "replies": 0,
+      "retweets": 0,
+      "rank_score": 53.75,
+      "timestamp": "2023-03-23T14:10:19.616000Z",
+      "source": "creator"
     }
   ],
-  "analyses_count": 20,
+  "analyses_count": 17,
   "winning_patterns": [
     "insight",
     "contrarian"
@@ -87,6 +87,6 @@
   "avoid_recent_hooks": [],
   "avoid_recent_ideas": [],
   "source_summary": {
-    "creator": 20
+    "creator": 17
   }
 }
